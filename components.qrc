@@ -1,0 +1,10 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file>UI/button.qss</file>
+    <file>UI/TextEdit.qss</file>
+    <file>fonts/OpenSans-Italic.ttf</file>
+    <file>fonts/OpenSans-Regular.ttf</file>
+    <file>fonts/OpenSans-SemiBold.ttf</file>
+    <file>fonts/OpenSans-SemiBoldItalic.ttf</file>
+</qresource>
+</RCC>

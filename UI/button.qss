@@ -1,0 +1,13 @@
+QPushButton#sendButton {
+    background-color: rgb(41, 137, 247);
+    border-radius: 4px;
+    color: white;
+    height: 40px;
+    text-align: center;
+    line-height: 1.5;
+}
+
+QPushButton#sendButton:hover {
+
+    background-color: rgb(31, 111, 204);
+}
