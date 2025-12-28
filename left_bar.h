@@ -12,6 +12,7 @@ class left_bar : public QWidget
 public:
     explicit left_bar(QWidget *parent = nullptr);
 
+
 protected:
 
     void paintEvent(QPaintEvent *event) override ;

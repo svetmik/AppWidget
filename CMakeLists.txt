@@ -26,7 +26,6 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         button.cpp button.h font.cpp font.h font_styles.h left_bar.cpp style_widget.cpp style_widget.h textedit.cpp textedit.h
         components.qrc
         left_bar.h
-        deepwidget.h deepwidget.cpp
         global_objects.h
 
     )
