@@ -4,6 +4,9 @@
 #include <thread>  // Required for std::this_thread::sleep_for
 #include <chrono>  // Required for duration types
 
+
+#include "button.h"
+
 #include <QApplication>
 #include <QWidget>
 #include <QPushButton>
@@ -26,14 +29,17 @@ public:
 
    void toggle();
 
-   bool isVisible = false;
    QPropertyAnimation *animation;
 
+   void setVisibleState(bool stateVisible = false);
+   bool visibleState();
 
 protected:
    void resizeEvent(QResizeEvent *event) override;
 
 private:
+
+    bool isVisible = false;
 
     QPushButton *btn1;
     QPushButton *btn2;
