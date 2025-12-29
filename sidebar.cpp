@@ -44,6 +44,7 @@ sidebar::sidebar(QWidget *parent)
     animation = new QPropertyAnimation(this, "pos");
     animation->setDuration(250);
     animation->setEasingCurve(QEasingCurve::OutCubic);
+
 }
 
 void sidebar::toggle()
@@ -80,6 +81,8 @@ bool sidebar::visibleState(){
 void sidebar::resizeEvent(QResizeEvent *event) {
     qDebug() << btn2->size().width();
     qDebug() << btn2->size().height();
+
+
 }
 
 overlay::overlay(QWidget *parent): QWidget(parent) {
@@ -93,21 +96,13 @@ overlay::overlay(QWidget *parent): QWidget(parent) {
 //
 void overlay::mousePressEvent(QMouseEvent *event) {
 
-    bool curState = _sidebar->visibleState(); // cur state = false;
-
-    if (curState) {
-        // Скрываем Боковую панель
-        _sidebar->animation->setStartValue(_sidebar->pos());
-        _sidebar->animation->setEndValue(QPoint(-270, 0));
-        std::this_thread::sleep_for(std::chrono::microseconds(800));
-        _overlay->hide();
+    if (_sidebar->visibleState()) {
+        _sidebar->toggle();
+    } else {
+        _sidebar->toggle();
     }
 
-    _sidebar->animation->start();
-    _sidebar->setVisibleState(!curState);
-
 }
-
 
 void overlay::paintEvent(QPaintEvent *event) {
 

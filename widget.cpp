@@ -63,43 +63,14 @@ Widget::~Widget()
 
 void Widget::toggle()
 {
-    // _sidebar->raise(); // Поднимаем наверх
-    // qDebug() << "click";
-    // if (_sidebar->isVisible) {
-    //     // Скрываем
-    //     _sidebar->animation->setStartValue(_sidebar->pos());
-    //     _sidebar->animation->setEndValue(QPoint(-270, 0));
-    // } else {
-    //     _sidebar->animation->setStartValue(_sidebar->pos());
-    //     _sidebar->animation->setEndValue(QPoint(0, 0));
-    //     std::this_thread::sleep_for(std::chrono::microseconds(800));
-    //     _overlay->show();
+    _sidebar->raise(); // перемещаем виджет на передний план;
 
-    // }
-    // _sidebar->animation->start();
-    // _sidebar->isVisible = !_sidebar->isVisible;
-
-
-    _sidebar->raise(); // Поднимаем наверх
-
-    bool curState = _sidebar->visibleState(); // cur state = false;
-
-    if (curState) {
-        // Скрываем Боковую панель
-        _sidebar->animation->setStartValue(_sidebar->pos());
-        _sidebar->animation->setEndValue(QPoint(-270, 0));
-        std::this_thread::sleep_for(std::chrono::microseconds(800));
-        _overlay->hide();
+    if(_sidebar->visibleState()) {
+        _sidebar->toggle();
     } else {
-        // Показываем Боковую панель
-        _sidebar->animation->setStartValue(_sidebar->pos());
-        _sidebar->animation->setEndValue(QPoint(0, 0));
-        std::this_thread::sleep_for(std::chrono::microseconds(800));
-        _overlay->show();
+        _sidebar->toggle();
     }
 
-    _sidebar->animation->start();
-    _sidebar->setVisibleState(!curState);
 
 }
 
