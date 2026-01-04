@@ -65,12 +65,7 @@ void Widget::toggle()
 {
     _sidebar->raise(); // перемещаем виджет на передний план;
 
-    if(_sidebar->visibleState()) {
-        _sidebar->toggle();
-    } else {
-        _sidebar->toggle();
-    }
-
+    _sidebar->updateState();
 
 }
 
