@@ -29,6 +29,7 @@ Button::Button(const QString &title, QWidget *parent)
     _title{title}
 
 {
+    this->setDefault(false);
     this->setAutoFillBackground(true);
     this->setText(_title);
     this->setCursor(Qt::PointingHandCursor);

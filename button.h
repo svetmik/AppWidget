@@ -20,9 +20,9 @@ class Button : public QPushButton
 {
     Q_OBJECT
 
-
-
 public:
+
+    Button() = default;
 
     Button(QWidget *parent= nullptr);
 
@@ -33,15 +33,13 @@ public:
 
 
     Font _fontWidget;
-
     style_widget *qss;
+
 protected:
 
     void debugFontInfo();
 
     QFont _font;
-
-
 
 private:
     const QString _title{};
