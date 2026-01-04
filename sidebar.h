@@ -34,6 +34,8 @@ public:
    void setVisibleState(bool stateVisible = false);
    bool visibleState();
 
+   void updateState();
+
 protected:
    void resizeEvent(QResizeEvent *event) override;
 

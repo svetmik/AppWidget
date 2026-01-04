@@ -78,6 +78,15 @@ bool sidebar::visibleState(){
     return  this->isVisible;
 }
 
+void sidebar::updateState() {
+
+    if (_sidebar->visibleState()) {
+        _sidebar->toggle();
+    } else {
+        _sidebar->toggle();
+    }
+}
+
 void sidebar::resizeEvent(QResizeEvent *event) {
     qDebug() << btn2->size().width();
     qDebug() << btn2->size().height();
@@ -96,11 +105,7 @@ overlay::overlay(QWidget *parent): QWidget(parent) {
 //
 void overlay::mousePressEvent(QMouseEvent *event) {
 
-    if (_sidebar->visibleState()) {
-        _sidebar->toggle();
-    } else {
-        _sidebar->toggle();
-    }
+    _sidebar->updateState();
 
 }
 
