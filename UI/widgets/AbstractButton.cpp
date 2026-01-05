@@ -9,10 +9,14 @@ AbstractButton::AbstractButton(QWidget *parent)
     , _disabled(true)
     , _enabled(false)
 {
+
     this->setMouseTracking(true);
     this->setCursor(Qt::PointingHandCursor);
 
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+
+
+    _rect = rect();
 }
 
 QSize AbstractButton::sizeHint() const {
@@ -29,44 +33,53 @@ QSize AbstractButton::minimumSizeHint() const {
     return sizeHint();  // Минимальный размер кнопки
 }
 
-void AbstractButton::updateHoverState(QPainter &p) {
+void AbstractButton::updateHoverState(QPainter &p, QRect &r) {
 
     if(hovered) {
-        p.fillRect(_rect, QBrush(_m_Color_hover));
+        p.fillRect(r, QBrush(_m_Color_hover));
     } else {
-        p.fillRect(_rect, QBrush(_m_Color_bg));
+        p.fillRect(r, QBrush(_m_Color_bg));
     }
 
 }
 void AbstractButton::paintEvent(QPaintEvent *event) {
+    Q_UNUSED(event);
+
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing);
 
-    _pen.setColor(_colorText);
-
-    _rect = event->rect();
+    QPen pen;
 
 
-    this->updateHoverState(p);
-    p.setPen(_pen);
-    p.drawText(_rect, Qt::AlignHCenter | Qt::AlignVCenter, _text);
+    p.fillRect(_rect, hovered
+                          ?
+                          _m_Color_hover
+                              :
+                          _m_Color_bg);
 
+    pen.setColor(_colorText);
+
+
+    p.setPen(pen);
+
+    p.drawText(_rect, Qt::AlignCenter, _text);
 
 }
 
 void AbstractButton::enterEvent(QEnterEvent *event) {
     this->hovered = true;
-
     this->update();
+
 }
 void AbstractButton::leaveEvent(QEvent *event) {
     this->hovered = false;
-
     this->update();
 }
 
 void AbstractButton::resizeEvent(QResizeEvent *event) {
+    _rect = rect();
 
+    ui::uiWidget::resizeEvent(event);
 }
 
 void AbstractButton::mousePressEvent(QMouseEvent *event) {

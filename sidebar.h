@@ -12,7 +12,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QResizeEvent>
-
+#include <QHideEvent>
 #include <QPaintEvent>
 #include <QStyleOption>
 #include <QPainter>
@@ -36,7 +36,7 @@ public:
 
 protected:
    void resizeEvent(QResizeEvent *event) override;
-
+   void hideEvent(QHideEvent *event) override;
 private:
 
     bool isVisible = false;
@@ -57,6 +57,7 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
 
     void paintEvent(QPaintEvent *event) override;
+
 
     QWidget *findBarWidget;
 
