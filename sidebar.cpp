@@ -24,7 +24,6 @@ sidebar::sidebar(QWidget *parent)
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setContentsMargins(0,20,0,20);
     btn1 = new QPushButton("Кнопка 1", this);
-
     btn2 = new QPushButton("Кнопка 2", this);
 
     layout->setSpacing(10);
