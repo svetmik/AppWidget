@@ -8,7 +8,6 @@
 
 #include "global_objects.h"
 #include "left_bar.h"
-#include "button.h"
 #include "qboxlayout.h"
 #include "textedit.h"
 

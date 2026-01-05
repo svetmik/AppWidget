@@ -19,8 +19,8 @@ Widget::Widget(QWidget *parent)
 
     leftBar = new left_bar(this);
     btnOpenSideBar = new Button("☰ Меню", leftBar);
-    btnOpenSideBar->setStyleSheet(style_btn_side);
-    btnOpenSideBar->setObjectName(obt_name);
+    // btnOpenSideBar->setStyleSheet(style_btn_side);
+    // btnOpenSideBar->setObjectName(obt_name);
 
     v_controlLayoutSidebar->addWidget(leftBar);
     v_controlLayoutMain= new QVBoxLayout(this);
@@ -49,7 +49,7 @@ Widget::Widget(QWidget *parent)
     _overlay = new overlay(this);
     _overlay->hide();
 
-    QObject::connect(btnOpenSideBar, &QPushButton::clicked, this, &Widget::toggle); //
+    QObject::connect(btnOpenSideBar, &Button::clicked, this, &Widget::toggle); //
 
     qDebug() << this->children();
 

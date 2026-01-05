@@ -23,10 +23,13 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         fonts/OpenSans-Italic.ttf fonts/OpenSans-Regular.ttf fonts/OpenSans-SemiBold.ttf fonts/OpenSans-SemiBoldItalic.ttf sidebar.cpp sidebar.h
-        button.cpp button.h font.cpp font.h font_styles.h left_bar.cpp style_widget.cpp style_widget.h textedit.cpp textedit.h
+        font.cpp font.h font_styles.h left_bar.cpp style_widget.cpp style_widget.h textedit.cpp textedit.h
         components.qrc
         left_bar.h
         global_objects.h
+        UI/widgets/AbstractButton.cpp UI/widgets/AbstractButton.h
+        UI/widgets/basewidget.h UI/widgets/basewidget.cpp
+        UI/widgets/button.h UI/widgets/button.cpp
 
     )
 # Define target properties for Android with Qt 6 as:
