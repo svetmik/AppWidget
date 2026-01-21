@@ -76,6 +76,5 @@ void Widget::mousePressEvent(QMouseEvent *event) {
 
 void Widget::resizeEvent(QResizeEvent *event) {
 
-    _sidebar->setFixedHeight(event->size().height());
     _overlay->resize(event->size().width(), event->size().height());
 }

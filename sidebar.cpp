@@ -1,11 +1,15 @@
 #include "sidebar.h"
 #include "global_objects.h"
 
+
+
 constexpr auto sidebarname = "siBarWidgetPanel";
 
 sidebar::sidebar(QWidget *parent)
     : QWidget{parent}
 {
+
+
     // Начальная позиция - скрыт за левым краем
     move(-230, 0);
 
@@ -22,6 +26,11 @@ sidebar::sidebar(QWidget *parent)
 
     // Layout и содержимое
     QVBoxLayout *layout = new QVBoxLayout(this);
+
+    // bar = new QScrollBar(this);
+
+    barArea = new QScrollArea(this);
+
     layout->setContentsMargins(0,20,0,20);
     btn1 = new QPushButton("Кнопка 1", this);
     btn2 = new QPushButton("Кнопка 2", this);
@@ -32,18 +41,26 @@ sidebar::sidebar(QWidget *parent)
     btn2->setStyleSheet("background-color: white; color: black;");
     layout->addWidget(btn1);
     layout->addWidget(btn2);
-    layout->addWidget(new Button("Кнопка x", this));
-    layout->addWidget(new Button("Кнопка x", this));
-    layout->addWidget(new Button("Кнопка x", this));
-    layout->addWidget(new Button("Кнопка x", this));
-    layout->addWidget(new Button("Кнопка x", this));
+    // layout->addWidget(new Button("Кнопка x", this));
+    // layout->addWidget(new Button("Кнопка x", this));
+    // layout->addWidget(new Button("Кнопка x", this));
+    // layout->addWidget(new Button("Кнопка x", this));
+    // layout->addWidget(new Button("Кнопка x", this));
     layout->addStretch();
-
+    barArea->setWidget(btn1);
+    barArea->setWidget(btn2);
+    layout->addWidget(barArea);
     // Настройка анимации ||
     animation = new QPropertyAnimation(this, "pos");
     animation->setDuration(250);
     animation->setEasingCurve(QEasingCurve::OutCubic);
 
+}
+
+void sidebar::updateSidebarHeight() {
+    if(_sidebar) {
+        _sidebar->setFixedHeight(height());
+    }
 }
 
 void sidebar::toggle()
@@ -69,6 +86,15 @@ void sidebar::toggle()
 }
 
 
+
+void sidebar::showEvent(QShowEvent *event) {
+    if(_sidebar) {
+        _sidebar->setFixedHeight(parentWidget()->height());
+        update();
+    }
+    QWidget::showEvent(event);
+}
+
 void sidebar::setVisibleState(bool stateVisible) {
     this->isVisible = stateVisible;
 }
@@ -87,9 +113,16 @@ void sidebar::updateState() {
 }
 
 void sidebar::resizeEvent(QResizeEvent *event) {
-    qDebug() << btn2->size().width();
-    qDebug() << btn2->size().height();
 
+
+}
+
+
+QSize sidebar::sizeHint() const {
+
+}
+
+QSize sidebar::minimumSizeHint() const {
 
 }
 
@@ -109,6 +142,7 @@ void overlay::mousePressEvent(QMouseEvent *event) {
 }
 
 void overlay::paintEvent(QPaintEvent *event) {
+
 
     QStyleOption opt;
     opt.initFrom(this);

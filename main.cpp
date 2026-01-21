@@ -11,7 +11,9 @@ int main(int argc, char *argv[])
     // Главное окно
     Widget *window = new Widget();
 
+    window->setWindowTitle(" ");
 
+    window->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint);
     window->setMinimumSize(0,0);
     window->resize(800, 500);
     window->show();

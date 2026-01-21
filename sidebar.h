@@ -17,6 +17,9 @@
 #include <QStyleOption>
 #include <QPainter>
 
+#include <QScrollBar>
+#include <QScrollArea>
+
 class overlay;
 
 class sidebar : public QWidget
@@ -34,15 +37,23 @@ public:
 
    void updateState();
 
+   QScrollBar *bar;
+   QScrollArea *barArea;
+
 protected:
    void resizeEvent(QResizeEvent *event) override;
-
+    void showEvent(QShowEvent *event) override;
+    QSize sizeHint() const override;
+    QSize minimumSizeHint() const override;
+    void updateSidebarHeight();
 private:
 
     bool isVisible = false;
 
     QPushButton *btn1;
     QPushButton *btn2;
+
+
 };
 
 
