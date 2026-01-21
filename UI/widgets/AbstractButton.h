@@ -37,6 +37,14 @@ public:
     QColor backgroundColor() const { return _m_Color_bg; }
 
 
+    void setHoverBackgroundColor(const QColor &hoverColor) {
+        if(_m_Color_hover != hoverColor) {
+            _m_Color_hover = hoverColor;
+        }
+    }
+
+    QColor hoverBackgroundColor() const { return _m_Color_hover; }
+
     void setColorText(const QColor &color) {
         if(_colorText != color) {
             _colorText = color;
@@ -90,7 +98,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
 private:
 
-    void updateHoverState(QPainter &p);
+    void updateHoverState(QPainter &p, QRect &r);
 
     QPen _pen;
 

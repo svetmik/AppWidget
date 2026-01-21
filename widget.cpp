@@ -1,12 +1,5 @@
 #include "widget.h"
 
-constexpr auto style_btn_side(" QPushButton#sidebtn { width: 70px; height: 40px;"
-                              "background-color: transparent; "
-                              "border: none; font-size: 12px; color: white; font-weight: 500; } "
-                              "QPushButton#sidebtn:hover { background-color: rgb(123, 134, 140); }");
-
-constexpr auto obt_name("sidebtn");
-
 Widget::Widget(QWidget *parent)
     : QWidget{parent}
 
@@ -19,8 +12,9 @@ Widget::Widget(QWidget *parent)
 
     leftBar = new left_bar(this);
     btnOpenSideBar = new Button("☰ Меню", leftBar);
-    // btnOpenSideBar->setStyleSheet(style_btn_side);
-    // btnOpenSideBar->setObjectName(obt_name);
+    btnOpenSideBar->resize(leftBar->width(), btnOpenSideBar->height() + 15);
+    btnOpenSideBar->setBackgroundColor(QColor(59,67,83));
+    btnOpenSideBar->setHoverBackgroundColor(QColor(83,94,116));
 
     v_controlLayoutSidebar->addWidget(leftBar);
     v_controlLayoutMain= new QVBoxLayout(this);
@@ -49,7 +43,7 @@ Widget::Widget(QWidget *parent)
     _overlay = new overlay(this);
     _overlay->hide();
 
-    QObject::connect(btnOpenSideBar, &Button::clicked, this, &Widget::toggle); //
+    QObject::connect(btnOpenSideBar, &Button::clicked, this, &Widget::toggle);
 
     qDebug() << this->children();
 
@@ -73,6 +67,14 @@ void Widget::mousePressEvent(QMouseEvent *event) {
 
 }
 
+void Widget::hideEvent(QHideEvent *event) {
+
+
+}
+
+void Widget::paintEvent(QPaintEvent *event) {
+
+}
 
 void Widget::resizeEvent(QResizeEvent *event) {
 

@@ -8,8 +8,13 @@ constexpr auto sidebarname = "siBarWidgetPanel";
 sidebar::sidebar(QWidget *parent)
     : QWidget{parent}
 {
+<<<<<<< HEAD
 
 
+=======
+    setAttribute(Qt::WA_StyledBackground, true);
+    setAutoFillBackground(true);
+>>>>>>> d4105f1728a0f9218dea5245871eafb5437f1ba1
     // Начальная позиция - скрыт за левым краем
     move(-230, 0);
 
@@ -17,8 +22,6 @@ sidebar::sidebar(QWidget *parent)
     setFixedWidth(230);
     // Имя виджета
     this->setObjectName(sidebarname);
-
-    setAttribute(Qt::WA_StyledBackground, true);
 
     // Стили виджета
     setStyleSheet("background-color: #2c3e50;");
@@ -65,6 +68,8 @@ void sidebar::updateSidebarHeight() {
 
 void sidebar::toggle()
 {
+    this->raise();
+
     bool curState = _sidebar->visibleState(); // default state = false;
 
     if (curState) {
@@ -72,6 +77,7 @@ void sidebar::toggle()
         _sidebar->animation->setStartValue(_sidebar->pos());
         _sidebar->animation->setEndValue(QPoint(-270, 0));
         std::this_thread::sleep_for(std::chrono::microseconds(800));
+
         _overlay->hide();
     } else {
         // Показываем Боковую панель
@@ -83,6 +89,7 @@ void sidebar::toggle()
 
     _sidebar->animation->start();
     _sidebar->setVisibleState(!curState);
+
 }
 
 
@@ -109,6 +116,7 @@ void sidebar::updateState() {
         _sidebar->toggle();
     } else {
         _sidebar->toggle();
+
     }
 }
 
@@ -117,6 +125,7 @@ void sidebar::resizeEvent(QResizeEvent *event) {
 
 }
 
+<<<<<<< HEAD
 
 QSize sidebar::sizeHint() const {
 
@@ -124,6 +133,9 @@ QSize sidebar::sizeHint() const {
 
 QSize sidebar::minimumSizeHint() const {
 
+=======
+void sidebar::hideEvent(QHideEvent *event) {
+>>>>>>> d4105f1728a0f9218dea5245871eafb5437f1ba1
 }
 
 overlay::overlay(QWidget *parent): QWidget(parent) {

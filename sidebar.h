@@ -12,7 +12,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QResizeEvent>
-
+#include <QHideEvent>
 #include <QPaintEvent>
 #include <QStyleOption>
 #include <QPainter>
@@ -42,10 +42,14 @@ public:
 
 protected:
    void resizeEvent(QResizeEvent *event) override;
+<<<<<<< HEAD
     void showEvent(QShowEvent *event) override;
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
     void updateSidebarHeight();
+=======
+   void hideEvent(QHideEvent *event) override;
+>>>>>>> d4105f1728a0f9218dea5245871eafb5437f1ba1
 private:
 
     bool isVisible = false;
@@ -68,6 +72,7 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
 
     void paintEvent(QPaintEvent *event) override;
+
 
     QWidget *findBarWidget;
 

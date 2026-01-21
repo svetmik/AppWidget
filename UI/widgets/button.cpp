@@ -3,7 +3,6 @@
 Button::Button(QWidget *parent)
     : AbstractButton(parent)
 {
-
 }
 
 Button::Button(const QString &title, QWidget *parent)
