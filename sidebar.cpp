@@ -8,63 +8,65 @@ constexpr auto sidebarname = "siBarWidgetPanel";
 sidebar::sidebar(QWidget *parent)
     : QWidget{parent}
 {
-<<<<<<< HEAD
-
-
-=======
-    setAttribute(Qt::WA_StyledBackground, true);
     setAutoFillBackground(true);
->>>>>>> d4105f1728a0f9218dea5245871eafb5437f1ba1
     // Начальная позиция - скрыт за левым краем
     move(-230, 0);
-
-    // Фиксируем высоту данного виджета
     setFixedWidth(230);
-    // Имя виджета
-    this->setObjectName(sidebarname);
+    setMinimumHeight(300);
+    setContentsMargins(0,0,0,0);
 
-    // Стили виджета
-    setStyleSheet("background-color: #2c3e50;");
+    content = new QWidget;
+    content->setContentsMargins(0,0,0,0);
+    content->setMinimumHeight(450);
+    content->setMinimumWidth(this->width());
+    QVBoxLayout *contentMain = new QVBoxLayout(content);
+    contentMain->setContentsMargins(margin.left, margin.top, margin.rigth, margin.bottom);
+    contentMain->setSpacing(0);
+
+    btn1 = new Button();
+    btn2 = new Button();
+    btn3 = new Button();
+
+    contentMain->addWidget(btn1);
+    contentMain->addWidget(btn2);
+    contentMain->addStretch();
+    contentMain->addWidget(btn3, 0, Qt::AlignBottom);
+
+    content->setLayout(contentMain);
+
+    scrollbar = new TelegramScrollArea;
+    scrollbar->setAlwaysShowWhenNeeded(true);
+    scrollbar->setStyleSheet("border: none;");
+    scrollbar->setGeometry(0,0,width(), height());
+    scrollbar->setUseSmoothScroll(true); // Для TelegramScrollArea
+    // ***
+    scrollbar->setWidget(content);
 
 
-    // Layout и содержимое
-    QVBoxLayout *layout = new QVBoxLayout(this);
+    QVBoxLayout *mainlayout = new QVBoxLayout(this);
+    mainlayout->setContentsMargins(0,0,0,0);
+    mainlayout->addWidget(scrollbar);
 
-    // bar = new QScrollBar(this);
 
-    barArea = new QScrollArea(this);
 
-    layout->setContentsMargins(0,20,0,20);
-    btn1 = new QPushButton("Кнопка 1", this);
-    btn2 = new QPushButton("Кнопка 2", this);
 
-    layout->setSpacing(10);
+    this->setLayout(mainlayout);
 
-    btn1->setStyleSheet("background-color: white; color: black;");
-    btn2->setStyleSheet("background-color: white; color: black;");
-    layout->addWidget(btn1);
-    layout->addWidget(btn2);
-    // layout->addWidget(new Button("Кнопка x", this));
-    // layout->addWidget(new Button("Кнопка x", this));
-    // layout->addWidget(new Button("Кнопка x", this));
-    // layout->addWidget(new Button("Кнопка x", this));
-    // layout->addWidget(new Button("Кнопка x", this));
-    layout->addStretch();
-    barArea->setWidget(btn1);
-    barArea->setWidget(btn2);
-    layout->addWidget(barArea);
-    // Настройка анимации ||
+    // Настройка анимации
     animation = new QPropertyAnimation(this, "pos");
     animation->setDuration(250);
     animation->setEasingCurve(QEasingCurve::OutCubic);
 
 }
 
-void sidebar::updateSidebarHeight() {
-    if(_sidebar) {
-        _sidebar->setFixedHeight(height());
+void sidebar::resizeEvent(QResizeEvent *event) {
+
+    if(content) {
+        qDebug() << "QWidget: content "<< content->minimumHeight();
     }
+
 }
+
 
 void sidebar::toggle()
 {
@@ -77,7 +79,6 @@ void sidebar::toggle()
         _sidebar->animation->setStartValue(_sidebar->pos());
         _sidebar->animation->setEndValue(QPoint(-270, 0));
         std::this_thread::sleep_for(std::chrono::microseconds(800));
-
         _overlay->hide();
     } else {
         // Показываем Боковую панель
@@ -95,19 +96,34 @@ void sidebar::toggle()
 
 
 void sidebar::showEvent(QShowEvent *event) {
-    if(_sidebar) {
-        _sidebar->setFixedHeight(parentWidget()->height());
-        update();
-    }
-    QWidget::showEvent(event);
+
 }
 
+void sidebar::paintEvent(QPaintEvent *event) {
+
+    // Q_UNUSED(event);
+
+    // QStyleOption opt;
+
+    // opt.initFrom(this);
+
+    // QPainter p(this); // Создаем QPainter, привязанный к этому виджету
+    // p.setRenderHint(QPainter::Antialiasing); // Для сглаживания
+
+    // // Рисуем с учетом текущих размеров
+    // p.drawRect(rect()); // Рисует прямоугольник на весь виджет
+    // p.setPen(Qt::red);
+    // p.drawText(rect(), Qt::AlignCenter, "Размер изменился!");
+
+    // style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+
+}
 void sidebar::setVisibleState(bool stateVisible) {
     this->isVisible = stateVisible;
 }
 
 bool sidebar::visibleState(){
-    return  this->isVisible;
+    return this->isVisible;
 }
 
 void sidebar::updateState() {
@@ -120,25 +136,33 @@ void sidebar::updateState() {
     }
 }
 
-void sidebar::resizeEvent(QResizeEvent *event) {
 
-
-}
-
-<<<<<<< HEAD
 
 QSize sidebar::sizeHint() const {
 
 }
 
-QSize sidebar::minimumSizeHint() const {
 
-=======
-void sidebar::hideEvent(QHideEvent *event) {
->>>>>>> d4105f1728a0f9218dea5245871eafb5437f1ba1
+QSize sidebar::minimumSizeHint() const {
+    return sizeHint();
 }
 
-overlay::overlay(QWidget *parent): QWidget(parent) {
+
+void sidebar::hideEvent(QHideEvent *event) {
+
+}
+
+
+
+
+
+
+
+
+
+overlay::overlay(QWidget *parent)
+    : QWidget(parent)
+{
 
     setWindowFlags(Qt::FramelessWindowHint); // удаляет стандартную рамку и заголовок окна приложения
     setAttribute(Qt::WA_TranslucentBackground); // делает окно возможным полупрозрачным

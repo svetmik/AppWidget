@@ -5,6 +5,7 @@
 #include <chrono>  // Required for duration types
 
 #include "ui/widgets/button.h"
+#include "telegramscrollarea.h"
 
 #include <QApplication>
 #include <QPushButton>
@@ -21,6 +22,7 @@
 #include <QScrollArea>
 
 class overlay;
+
 
 class sidebar : public QWidget
 {
@@ -40,24 +42,36 @@ public:
    QScrollBar *bar;
    QScrollArea *barArea;
 
+   QWidget *content;
+
+
+
 protected:
    void resizeEvent(QResizeEvent *event) override;
-<<<<<<< HEAD
+
     void showEvent(QShowEvent *event) override;
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
-    void updateSidebarHeight();
-=======
-   void hideEvent(QHideEvent *event) override;
->>>>>>> d4105f1728a0f9218dea5245871eafb5437f1ba1
+    void hideEvent(QHideEvent *event) override;
+    void paintEvent(QPaintEvent *event) override;
 private:
+
+    struct m_layout
+    {
+        int left = 0;
+        int top = 0;
+        int rigth = 0;
+        int bottom = 0;
+    }margin;
 
     bool isVisible = false;
 
-    QPushButton *btn1;
-    QPushButton *btn2;
+    Button *btn1;
+    Button *btn2;
+    Button *btn3;
+    Button *btn4;
 
-
+    TelegramScrollArea *scrollbar;
 };
 
 

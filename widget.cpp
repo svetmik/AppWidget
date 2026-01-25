@@ -40,6 +40,8 @@ Widget::Widget(QWidget *parent)
 
     _sidebar = new sidebar(this);
 
+    _sidebar->setGeometry(_sidebar->x(), _sidebar->y(), _sidebar->width(), this->height());
+
     _overlay = new overlay(this);
     _overlay->hide();
 
@@ -74,9 +76,17 @@ void Widget::hideEvent(QHideEvent *event) {
 
 void Widget::paintEvent(QPaintEvent *event) {
 
+    QPainter p(this);
 }
 
 void Widget::resizeEvent(QResizeEvent *event) {
+
+
+    if (_sidebar) {
+        _sidebar->setGeometry(_sidebar->x(), _sidebar->y(), _sidebar->width(), height()); // Занимаем весь родительский
+        _sidebar->update(); // Принудительно перерисовать
+    }
+
 
     _overlay->resize(event->size().width(), event->size().height());
 }
