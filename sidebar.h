@@ -5,7 +5,8 @@
 #include <chrono>  // Required for duration types
 
 #include "ui/widgets/button.h"
-#include "telegramscrollarea.h"
+#include "scrollarea.h"
+#include "container.h"
 
 #include <QApplication>
 #include <QPushButton>
@@ -42,9 +43,7 @@ public:
    QScrollBar *bar;
    QScrollArea *barArea;
 
-   QWidget *content;
-
-
+   Container *container;
 
 protected:
    void resizeEvent(QResizeEvent *event) override;
@@ -71,7 +70,7 @@ private:
     Button *btn3;
     Button *btn4;
 
-    TelegramScrollArea *scrollbar;
+    scrollArea *scrollbar;
 };
 
 

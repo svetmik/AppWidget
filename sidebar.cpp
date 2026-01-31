@@ -15,36 +15,42 @@ sidebar::sidebar(QWidget *parent)
     setMinimumHeight(300);
     setContentsMargins(0,0,0,0);
 
-    content = new QWidget;
-    content->setContentsMargins(0,0,0,0);
-    content->setMinimumHeight(450);
-    content->setMinimumWidth(this->width());
-    QVBoxLayout *contentMain = new QVBoxLayout(content);
-    contentMain->setContentsMargins(margin.left, margin.top, margin.rigth, margin.bottom);
-    contentMain->setSpacing(0);
+    //
+    container = new Container;
+    container->setContentsMargins(0,0,0,0);
+    container->setMinimumHeight(450);
+    container->setMinimumWidth(this->width());
 
-    btn1 = new Button();
-    btn2 = new Button();
-    btn3 = new Button();
+    QVBoxLayout *contentLayout = new QVBoxLayout(container);
+    contentLayout->setContentsMargins(margin.left, margin.top, margin.rigth, margin.bottom);
+    contentLayout->setSpacing(0);
 
-    contentMain->addWidget(btn1);
-    contentMain->addWidget(btn2);
-    contentMain->addStretch();
-    contentMain->addWidget(btn3, 0, Qt::AlignBottom);
+    btn1 = new Button("z");
+    btn2 = new Button("d");
+    btn3 = new Button("b");
 
-    content->setLayout(contentMain);
+    contentLayout->addWidget(btn1);
+    contentLayout->addWidget(btn2);
+    contentLayout->addStretch();
+    contentLayout->addWidget(btn3, 0, Qt::AlignBottom);
 
-    scrollbar = new TelegramScrollArea;
+    // ***
+    container->setLayout(contentLayout);
+
+    scrollbar = new scrollArea;
     scrollbar->setAlwaysShowWhenNeeded(true);
     scrollbar->setStyleSheet("border: none;");
     scrollbar->setGeometry(0,0,width(), height());
-    scrollbar->setUseSmoothScroll(true); // Для TelegramScrollArea
+    scrollbar->setUseSmoothScroll(true);
     // ***
-    scrollbar->setWidget(content);
+    scrollbar->setWidget(container);
 
 
     QVBoxLayout *mainlayout = new QVBoxLayout(this);
+
     mainlayout->setContentsMargins(0,0,0,0);
+
+    // ***
     mainlayout->addWidget(scrollbar);
 
 
@@ -61,8 +67,8 @@ sidebar::sidebar(QWidget *parent)
 
 void sidebar::resizeEvent(QResizeEvent *event) {
 
-    if(content) {
-        qDebug() << "QWidget: content "<< content->minimumHeight();
+    if(container) {
+        qDebug() << "QWidget: content "<< container->minimumHeight();
     }
 
 }

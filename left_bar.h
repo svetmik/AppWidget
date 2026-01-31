@@ -6,6 +6,7 @@
 #include <QStyleOption>
 #include <QPainter>
 
+
 class left_bar : public QWidget
 {
     Q_OBJECT

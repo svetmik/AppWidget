@@ -1,6 +1,6 @@
-// telegramscrollarea.h
-#ifndef TELEGRAMSCROLLAREA_H
-#define TELEGRAMSCROLLAREA_H
+// crollarea.h
+#ifndef SCROLLAREA_H
+#define SCROLLAREA_H
 
 #include <QScrollArea>
 #include <QPropertyAnimation>
@@ -9,18 +9,18 @@
 #include <QScrollBar>
 #include <QEasingCurve>
 
-class TelegramScrollArea : public QScrollArea
+class scrollArea : public QScrollArea
 {
     Q_OBJECT
     Q_PROPERTY(int scrollOpacity READ scrollOpacity WRITE setScrollOpacity)
 
 public:
-    explicit TelegramScrollArea(QWidget *parent = nullptr)
+    explicit scrollArea(QWidget *parent = nullptr)
         : QScrollArea(parent)
         , m_scrollOpacity(0)
         , m_smoothScrollEnabled(true)
         , m_targetScrollValue(0)
-        , m_alwaysShowWhenNeeded(true)  // НОВОЕ: всегда показывать если нужно
+        , m_alwaysShowWhenNeeded(true)
     {
         // Настройка области
         setWidgetResizable(true);
@@ -37,26 +37,26 @@ public:
         m_scrollAnimation->setDuration(300);
 
         connect(m_scrollAnimation, &QPropertyAnimation::finished,
-                this, &TelegramScrollArea::onScrollAnimationFinished);
+                this, &scrollArea::onScrollAnimationFinished);
 
         // Таймер для скрытия полосы прокрутки
         m_scrollHideTimer = new QTimer(this);
         m_scrollHideTimer->setSingleShot(true);
         m_scrollHideTimer->setInterval(1500);
         connect(m_scrollHideTimer, &QTimer::timeout,
-                this, &TelegramScrollArea::hideScrollBar);
+                this, &scrollArea::hideScrollBar);
 
         // Начальное состояние
         updateScrollBarStyle();
 
         // Проверяем сразу нужен ли скролл
-        QTimer::singleShot(100, this, &TelegramScrollArea::checkScrollNeeded);
+        QTimer::singleShot(100, this, &scrollArea::checkScrollNeeded);
     }
 
     void setUseSmoothScroll(bool enable) { m_smoothScrollEnabled = enable; }
     bool useSmoothScroll() const { return m_smoothScrollEnabled; }
 
-    // НОВЫЙ МЕТОД: всегда показывать скролл когда он нужен
+    // всегда показывать скролл когда он нужен
     void setAlwaysShowWhenNeeded(bool show) {
         m_alwaysShowWhenNeeded = show;
         checkScrollNeeded();
@@ -87,13 +87,13 @@ public:
         m_scrollHideTimer->start(timeoutMs);
     }
 
-    // НОВЫЙ МЕТОД: принудительно показать скролл
+
     void showScrollBar() {
         fadeInScrollBar();
         m_scrollHideTimer->stop(); // Не скрываем автоматически
     }
 
-    // НОВЫЙ МЕТОД: проверить нужен ли скролл и показать/скрыть
+
     void checkScrollNeeded() {
         if (!widget()) return;
 
@@ -131,13 +131,13 @@ protected:
     void showEvent(QShowEvent *event) override {
         QScrollArea::showEvent(event);
         // Проверяем нужен ли скролл при показе
-        QTimer::singleShot(50, this, &TelegramScrollArea::checkScrollNeeded);
+        QTimer::singleShot(50, this, &scrollArea::checkScrollNeeded);
     }
 
     void resizeEvent(QResizeEvent *event) override {
         QScrollArea::resizeEvent(event);
         // Проверяем нужен ли скролл при изменении размера
-        QTimer::singleShot(50, this, &TelegramScrollArea::checkScrollNeeded);
+        QTimer::singleShot(50, this, &scrollArea::checkScrollNeeded);
     }
 
     // Обработка когда виджет меняется
@@ -145,10 +145,10 @@ protected:
         QScrollArea::setWidget(widget);
         if (widget) {
             connect(widget, &QWidget::destroyed, this, [this]() {
-                QTimer::singleShot(0, this, &TelegramScrollArea::checkScrollNeeded);
+                QTimer::singleShot(0, this, &scrollArea::checkScrollNeeded);
             });
         }
-        QTimer::singleShot(100, this, &TelegramScrollArea::checkScrollNeeded);
+        QTimer::singleShot(100, this, &scrollArea::checkScrollNeeded);
     }
 
 private slots:
@@ -268,4 +268,4 @@ private:
     int m_targetScrollValue;
 };
 
-#endif // TELEGRAMSCROLLAREA_H
+#endif // SCROLLAREA_H
