@@ -172,7 +172,7 @@ private:
         m_scrollBarStyle = R"(
             QScrollBar:vertical {
                 border: none;
-                background: transparent;
+                background: white;
                 width: 6px;
                 margin: 0px;
             }

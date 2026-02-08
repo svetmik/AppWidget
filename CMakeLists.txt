@@ -32,6 +32,19 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         UI/widgets/button.h UI/widgets/button.cpp
         scrollarea.h
         container.h container.cpp
+        Resources/ApplicationIcon.ico
+        Resources/ApplicationIcon.png
+        Resources/Close.png
+        Resources/CloseDeactivated.png
+        Resources/CloseHoverOrPressed.png
+        Resources/Maximize.png
+        Resources/MaximizeDeactivated.png
+        Resources/Minimize.png
+        Resources/MinimizeDeactivated.png
+        Resources/Restore.png
+        Resources/RestoreDeactivated.png
+        Resources/Transparent.png resources.qrc
+        MainWindow.cpp MainWindow.h
 
     )
 # Define target properties for Android with Qt 6 as:
@@ -53,6 +66,15 @@ else()
 endif()
 
 target_link_libraries(app PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+
+# ДОБАВЬ ЭТО ДЛЯ WINDOWS
+if(WIN32)
+    # Для MinGW
+    target_link_libraries(app PRIVATE dwmapi)
+    # Или для всех Windows компиляторов
+    # find_library(DWMAPI dwmapi)
+    # target_link_libraries(st PRIVATE ${DWMAPI})
+endif()
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

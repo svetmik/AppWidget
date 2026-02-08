@@ -1,22 +1,62 @@
-#include "widget.h"
-#include "sidebar.h"
+
+
 
 #include <QApplication>
+#include "MainWindow.h"
+#include "widget.h"
 
 int main(int argc, char *argv[])
 {
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+
     QApplication a(argc, argv);
 
+    MainWindow window;
 
-    // Главное окно
-    Widget *window = new Widget();
+    window.setResizeBorderWidth(6); //! You can set the resize border width.
+    window.setTitlebarHeight(25);   //! You also can set the title bar height.
 
-    window->setWindowTitle(" ");
+    QWidget *non_clickable = new QWidget(&window);
+    non_clickable->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    non_clickable->setProperty("clickable widget", false);
+    window.getCustomTitlebarLayout().addWidget(non_clickable);
 
-    window->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint);
-    window->setMinimumSize(0,0);
-    window->resize(800, 500);
-    window->show();
+    // Set the Icon here.
+    window.setWindowIcon(QIcon(":/icon/ApplicationIcon.png"));
 
+    // Set window size.
+    int window_width = 1024, window_height = 768;
+    window.setGeometry(QApplication::primaryScreen()->geometry().width() / 2 - window_width / 2,
+                  QApplication::primaryScreen()->geometry().height() / 2 - window_height / 2,
+                  window_width, window_height);
+    window.setMinimumSize(400, 300);
+
+    //! MainWindow class provides getTitlebarWidget() function.
+    //! It return title bar widget.
+    // Set titlebar widget palette.
+    auto pal = window.getTitlebarWidget().palette();
+    pal.setColor(QPalette::Window, QColor(241,241,241));
+    window.getTitlebarWidget().setAutoFillBackground(true);
+    window.getTitlebarWidget().setPalette(pal);
+
+    //! MainWindow class provides getContentWidget() function.
+    //! It return main content widget.
+    // Set main content widget palette.
+    pal = window.getContentWidget().palette();
+    pal.setColor(QPalette::Window, QColor(255,255,255));
+    window.getContentWidget().setAutoFillBackground(true);
+    window.getContentWidget().setPalette(pal);
+
+    // Add layout to main content widget.
+    QVBoxLayout *main_widget_layout = new QVBoxLayout(&window);
+    main_widget_layout->setContentsMargins(0,0,0,0);
+    window.getContentWidget().setLayout(main_widget_layout);
+
+    Widget *main_container = new Widget(&window.getContentWidget());
+
+    main_widget_layout->addWidget(main_container);
+
+    window.show();
     return a.exec();
 }
