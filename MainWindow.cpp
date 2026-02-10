@@ -4,6 +4,8 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), m_minimize_btn{nullptr}, m_maximize_btn{nullptr}, m_close_btn{nullptr}, m_resize_border_width{6}
 {
+
+
 #ifdef Q_OS_WIN
     m_hwnd = reinterpret_cast<HWND>(winId());
 
@@ -175,6 +177,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
 }
+
 
 
 #ifdef Q_OS_WIN

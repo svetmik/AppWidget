@@ -1,5 +1,7 @@
 #include "widget.h"
 
+
+
 Widget::Widget(QWidget *parent)
     : QWidget{parent}
 
@@ -25,9 +27,24 @@ Widget::Widget(QWidget *parent)
     edit = new TextEdit(this);
     edit->setPlaceholderText("Описание вашей проблемы");
 
+    QColor bgColorBtn(230,230,230);
+    QColor hoverColorBtn(220,220,220);
+    QColor colorTextBtn(0,0,0);
+
     btnSend = new Button("Отправить заявку");
+    btnSend->setBackgroundColor(bgColorBtn);
+    btnSend->setColorText(colorTextBtn);
+    btnSend->setHoverBackgroundColor(hoverColorBtn);
+
     btnAttachment = new Button("Прикрепить файл к заявке");
+    btnAttachment->setBackgroundColor(bgColorBtn);
+    btnAttachment->setColorText(colorTextBtn);
+    btnAttachment->setHoverBackgroundColor(hoverColorBtn);
+
     btnClose = new Button("Выйти(отмена)");
+    btnClose->setBackgroundColor(bgColorBtn);
+    btnClose->setColorText(colorTextBtn);
+    btnClose->setHoverBackgroundColor(hoverColorBtn);
 
     v_controlLayoutMain->addWidget(edit);
     v_controlLayoutMain->addWidget(btnSend);

@@ -67,12 +67,7 @@ sidebar::sidebar(QWidget *parent)
 
 void sidebar::resizeEvent(QResizeEvent *event) {
 
-    if(container) {
-        qDebug() << "QWidget: content "<< container->minimumHeight();
-    }
-
 }
-
 
 void sidebar::toggle()
 {
@@ -107,23 +102,8 @@ void sidebar::showEvent(QShowEvent *event) {
 
 void sidebar::paintEvent(QPaintEvent *event) {
 
-    // Q_UNUSED(event);
-
-    // QStyleOption opt;
-
-    // opt.initFrom(this);
-
-    // QPainter p(this); // Создаем QPainter, привязанный к этому виджету
-    // p.setRenderHint(QPainter::Antialiasing); // Для сглаживания
-
-    // // Рисуем с учетом текущих размеров
-    // p.drawRect(rect()); // Рисует прямоугольник на весь виджет
-    // p.setPen(Qt::red);
-    // p.drawText(rect(), Qt::AlignCenter, "Размер изменился!");
-
-    // style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
-
 }
+
 void sidebar::setVisibleState(bool stateVisible) {
     this->isVisible = stateVisible;
 }
@@ -145,7 +125,7 @@ void sidebar::updateState() {
 
 
 QSize sidebar::sizeHint() const {
-
+  // .....
 }
 
 

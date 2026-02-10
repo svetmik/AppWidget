@@ -47,6 +47,7 @@ void AbstractButton::paintEvent(QPaintEvent *event) {
 
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing);
+    p.setRenderHint(QPainter::TextAntialiasing); // Специально для текста
 
     QPen pen;
 

@@ -4,15 +4,30 @@
 #include <QApplication>
 #include "MainWindow.h"
 #include "widget.h"
+#include "font.h"
 
 int main(int argc, char *argv[])
 {
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 
-    QApplication a(argc, argv);
+    QApplication app(argc, argv);
+
 
     MainWindow window;
+
+    QFont qAppFont;
+    Font loadFont;
+    loadFont.loadFontForWidget(styleFont::FONT_REGULAR);
+    const auto fontFamily = loadFont.fontFamily();
+
+    qAppFont.setFamily(fontFamily);
+    qAppFont.setPointSizeF(10);
+    qAppFont.setWeight(QFont::Weight::DemiBold);
+    qAppFont.setStyle(QFont::StyleNormal);
+    qAppFont.setStyleStrategy(QFont::PreferAntialias);
+    qAppFont.setKerning(true);
+    app.setFont(qAppFont);
 
     window.setResizeBorderWidth(6); //! You can set the resize border width.
     window.setTitlebarHeight(25);   //! You also can set the title bar height.
@@ -25,12 +40,13 @@ int main(int argc, char *argv[])
     // Set the Icon here.
     window.setWindowIcon(QIcon(":/icon/ApplicationIcon.png"));
 
-    // Set window size.
-    int window_width = 1024, window_height = 768;
-    window.setGeometry(QApplication::primaryScreen()->geometry().width() / 2 - window_width / 2,
-                  QApplication::primaryScreen()->geometry().height() / 2 - window_height / 2,
-                  window_width, window_height);
+    // // Set window size.
+    // int window_width = 1024, window_height = 768;
+    // window.setGeometry(QApplication::primaryScreen()->geometry().width() / 2 - window_width / 2,
+    //               QApplication::primaryScreen()->geometry().height() / 2 - window_height / 2,
+    //               window_width, window_height);
     window.setMinimumSize(400, 300);
+    window.resize(window.minimumSize());
 
     //! MainWindow class provides getTitlebarWidget() function.
     //! It return title bar widget.
@@ -58,5 +74,5 @@ int main(int argc, char *argv[])
     main_widget_layout->addWidget(main_container);
 
     window.show();
-    return a.exec();
+    return app.exec();
 }

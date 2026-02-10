@@ -40,7 +40,7 @@ class MainWindow : public QMainWindow
     QWidget *m_titlebar_widget;
     QHBoxLayout *m_custom_titlebar_layout;
 
-  public:
+public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void setResizeBorderWidth(const int &resize_border_width);
@@ -49,7 +49,7 @@ class MainWindow : public QMainWindow
     QWidget &getTitlebarWidget();
     QHBoxLayout &getCustomTitlebarLayout();
 
-  private:
+private:
 #ifdef Q_OS_WIN
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     bool nativeEvent(const QByteArray &event_type, void *message, long *result);
