@@ -1,12 +1,12 @@
 #ifndef FONT_H
 #define FONT_H
 
-#include <QWidget>
-#include <QFontDatabase>
-#include <QString>
-#include "font_styles.h"
 
-class Font : public QWidget
+
+#include "font_styles.h"
+#include "UI/widgets/basewidget.h"
+
+class Font : public ui::uiWidget
 {
     Q_OBJECT
 public:

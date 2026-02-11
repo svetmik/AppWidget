@@ -2,6 +2,6 @@
 
 #include "sidebar.h"
 
-
-inline sidebar *_sidebar = nullptr;
-inline overlay *_overlay = nullptr;
+// so as not to shoot myself in the leg..
+inline sidebar *_sidebar;
+inline overlay *_overlay;

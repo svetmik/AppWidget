@@ -1,22 +1,13 @@
 #ifndef LEFT_BAR_H
 #define LEFT_BAR_H
 
-#include <QWidget>
-#include <QPaintEvent>
-#include <QStyleOption>
-#include <QPainter>
+#include "UI/widgets/basewidget.h"
 
-
-class left_bar : public QWidget
+class left_bar : public ui::uiWidget
 {
     Q_OBJECT
 public:
     explicit left_bar(QWidget *parent = nullptr);
-
-
-protected:
-
-    void paintEvent(QPaintEvent *event) override ;
 
 signals:
 

@@ -1,7 +1,7 @@
 #include "font.h"
 
 Font::Font(QWidget *parent)
-    : QWidget{parent}
+    : ui::uiWidget{parent}
 {
 
 }

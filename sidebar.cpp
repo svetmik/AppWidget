@@ -6,7 +6,7 @@
 constexpr auto sidebarname = "siBarWidgetPanel";
 
 sidebar::sidebar(QWidget *parent)
-    : QWidget{parent}
+    : ui::uiWidget{parent}
 {
     setAutoFillBackground(true);
     // Начальная позиция - скрыт за левым краем
@@ -22,7 +22,11 @@ sidebar::sidebar(QWidget *parent)
     container->setMinimumWidth(this->width());
 
     QVBoxLayout *contentLayout = new QVBoxLayout(container);
-    contentLayout->setContentsMargins(margin.left, margin.top, margin.rigth, margin.bottom);
+
+    contentLayout->setContentsMargins(margin.left,
+                                      margin.top,
+                                      margin.rigth,
+                                      margin.bottom);
     contentLayout->setSpacing(0);
 
     btn1 = new Button("z");
@@ -54,8 +58,6 @@ sidebar::sidebar(QWidget *parent)
     mainlayout->addWidget(scrollbar);
 
 
-
-
     this->setLayout(mainlayout);
 
     // Настройка анимации
@@ -65,9 +67,6 @@ sidebar::sidebar(QWidget *parent)
 
 }
 
-void sidebar::resizeEvent(QResizeEvent *event) {
-
-}
 
 void sidebar::toggle()
 {
@@ -95,14 +94,6 @@ void sidebar::toggle()
 }
 
 
-
-void sidebar::showEvent(QShowEvent *event) {
-
-}
-
-void sidebar::paintEvent(QPaintEvent *event) {
-
-}
 
 void sidebar::setVisibleState(bool stateVisible) {
     this->isVisible = stateVisible;
@@ -134,20 +125,8 @@ QSize sidebar::minimumSizeHint() const {
 }
 
 
-void sidebar::hideEvent(QHideEvent *event) {
-
-}
-
-
-
-
-
-
-
-
-
 overlay::overlay(QWidget *parent)
-    : QWidget(parent)
+    : ui::uiWidget(parent)
 {
 
     setWindowFlags(Qt::FramelessWindowHint); // удаляет стандартную рамку и заголовок окна приложения
@@ -163,11 +142,3 @@ void overlay::mousePressEvent(QMouseEvent *event) {
 
 }
 
-void overlay::paintEvent(QPaintEvent *event) {
-
-
-    QStyleOption opt;
-    opt.initFrom(this);
-    QPainter p(this);
-    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
-}

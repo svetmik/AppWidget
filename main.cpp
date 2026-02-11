@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
     loadFont.loadFontForWidget(styleFont::FONT_REGULAR);
     const auto fontFamily = loadFont.fontFamily();
 
+
     qAppFont.setFamily(fontFamily);
     qAppFont.setPointSizeF(10);
     qAppFont.setWeight(QFont::Weight::DemiBold);

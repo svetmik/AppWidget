@@ -1,10 +1,10 @@
 #ifndef CONTAINER_H
 #define CONTAINER_H
 
-#include <QWidget>
-#include <QMargins>
 
-class Container : public QWidget
+#include "UI/widgets/basewidget.h"
+
+class Container : public ui::uiWidget
 {
     Q_OBJECT
 public:

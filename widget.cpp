@@ -3,7 +3,7 @@
 
 
 Widget::Widget(QWidget *parent)
-    : QWidget{parent}
+    : ui::uiWidget{parent}
 
 {
 

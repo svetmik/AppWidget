@@ -2,10 +2,24 @@
 #define BASEWIDGET_H
 
 #include <QWidget>
-#include <QPaintEvent>
-#include <QPainter>
+
 #include <QStyleOption>
 #include <QStyle>
+#include <QMargins>
+
+#include <QPropertyAnimation>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+
+#include <QFontDatabase>
+#include <QFont>
+#include <QFontInfo>
+#include <QFontMetrics>
+
+#include <QHideEvent>
+#include <QResizeEvent>
+#include <QPaintEvent>
+#include <QPainter>
 
 template<typename Widget>
 class BaseWidget;
@@ -17,6 +31,7 @@ public:
 
 };
 
+
 template<typename Widget>
 class BaseWidget: public Widget, public DefaultWidgetWrap {
 
@@ -26,6 +41,7 @@ public:
     using Widget::Widget;
 
     virtual ~BaseWidget() = default;
+
 };
 
 namespace ui {

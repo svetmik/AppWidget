@@ -1,24 +1,14 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
-
-#include <thread>  // Required for std::this_thread::sleep_for
-#include <chrono>  // Required for duration types
-#include <iostream>
+#include "UI/widgets/basewidget.h"
 
 #include "global_objects.h"
 #include "left_bar.h"
-#include "qboxlayout.h"
 #include "textedit.h"
 
-#include <QWidget>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QPropertyAnimation>
-#include <QPushButton>
-#include <QResizeEvent>
 
-class Widget : public QWidget
+class Widget : public ui::uiWidget
 {
     Q_OBJECT
 
@@ -38,7 +28,6 @@ public:
 
     TextEdit *edit;
     left_bar *leftBar;
-
 
 protected:
 

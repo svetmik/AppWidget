@@ -2,12 +2,6 @@
 #define FONT_STYLES_H
 
 
-
-#include <QFont>
-#include <QFontInfo>
-#include <QFontMetrics>
-
-
 namespace styleFont  {
 
     constexpr auto FONT_REGULAR = ":/fonts/OpenSans-Regular.ttf";

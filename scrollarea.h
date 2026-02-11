@@ -7,6 +7,7 @@
 #include <QTimer>
 #include <QWheelEvent>
 #include <QScrollBar>
+#include <QScrollArea>
 #include <QEasingCurve>
 
 class scrollArea : public QScrollArea
