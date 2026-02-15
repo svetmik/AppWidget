@@ -1,7 +1,9 @@
 #include "sidebar.h"
 #include "global_objects.h"
 
-
+#include <iostream>
+#include <thread>  // Required for std::this_thread::sleep_for
+#include <chrono>  // Required for duration types
 
 constexpr auto sidebarname = "siBarWidgetPanel";
 
@@ -60,11 +62,12 @@ sidebar::sidebar(QWidget *parent)
 
     this->setLayout(mainlayout);
 
-    // Настройка анимации
-    animation = new QPropertyAnimation(this, "pos");
-    animation->setDuration(250);
-    animation->setEasingCurve(QEasingCurve::OutCubic);
+    // // Настройка анимации
+    // animation = new QPropertyAnimation(this, "pos");
+    // animation->setDuration(250);
+    // animation->setEasingCurve(QEasingCurve::OutCubic);
 
+    anim = new pa::PropertyAnimation(this, "pos");
 }
 
 
@@ -74,21 +77,17 @@ void sidebar::toggle()
 
     bool curState = _sidebar->visibleState(); // default state = false;
 
-    if (curState) {
-        // Скрываем Боковую панель
-        _sidebar->animation->setStartValue(_sidebar->pos());
-        _sidebar->animation->setEndValue(QPoint(-270, 0));
-        std::this_thread::sleep_for(std::chrono::microseconds(800));
-        _overlay->hide();
-    } else {
+    if (!curState) {
         // Показываем Боковую панель
-        _sidebar->animation->setStartValue(_sidebar->pos());
-        _sidebar->animation->setEndValue(QPoint(0, 0));
-        std::this_thread::sleep_for(std::chrono::microseconds(800));
+        _sidebar->anim->setStartAnimation(_sidebar->pos(), QPoint(0,0));
         _overlay->show();
+    } else {
+        // // скрываем Боковую панель
+        _sidebar->anim->setEndAnimation(_sidebar->pos(), QPoint(-270, 0));
+        _overlay->hide();
     }
 
-    _sidebar->animation->start();
+    _sidebar->anim->start();
     _sidebar->setVisibleState(!curState);
 
 }
