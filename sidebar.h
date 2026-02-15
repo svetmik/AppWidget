@@ -1,15 +1,14 @@
 #ifndef SIDEBAR_H
 #define SIDEBAR_H
 
-#include <iostream>
-#include <thread>  // Required for std::this_thread::sleep_for
-#include <chrono>  // Required for duration types
+
 
 
 #include "ui/widgets/button.h"
 #include "UI/widgets/basewidget.h"
 #include "scrollarea.h"
 #include "container.h"
+#include "propertyanimation.h"
 
 class overlay;
 
@@ -24,9 +23,8 @@ public:
    bool visibleState();
    void updateState();
 
-   QScrollArea *barArea;
    Container *container;
-   QPropertyAnimation *animation;
+
 protected:
 
     QSize sizeHint() const override;
@@ -50,6 +48,7 @@ private:
     Button *btn4;
 
     scrollArea *scrollbar;
+    pa::PropertyAnimation *anim;
 };
 
 
