@@ -14,6 +14,7 @@ sidebar::sidebar(QWidget *parent)
     setFixedWidth(230);
     setMinimumHeight(300);
     setContentsMargins(0,0,0,0);
+    setStyleSheet("background-color: white");
 
     //
     container = new Container;
