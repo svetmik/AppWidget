@@ -29,8 +29,8 @@ public:
     TextEdit *edit;
     left_bar *leftBar;
 
+    void closeWindowApp(QMainWindow &handleEvent);
 protected:
-
     void mousePressEvent(QMouseEvent *event) override;
 
     void resizeEvent(QResizeEvent *event) override;

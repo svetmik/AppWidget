@@ -27,24 +27,12 @@ Widget::Widget(QWidget *parent)
     edit = new TextEdit(this);
     edit->setPlaceholderText("Описание вашей проблемы");
 
-    QColor bgColorBtn(230,230,230);
-    QColor hoverColorBtn(220,220,220);
-    QColor colorTextBtn(0,0,0);
-
     btnSend = new Button("Отправить заявку");
-    btnSend->setBackgroundColor(bgColorBtn);
-    btnSend->setColorText(colorTextBtn);
-    btnSend->setHoverBackgroundColor(hoverColorBtn);
-
+    btnSend->setBorderRadius(3,3);
     btnAttachment = new Button("Прикрепить файл к заявке");
-    btnAttachment->setBackgroundColor(bgColorBtn);
-    btnAttachment->setColorText(colorTextBtn);
-    btnAttachment->setHoverBackgroundColor(hoverColorBtn);
-
-    btnClose = new Button("Выйти(отмена)");
-    btnClose->setBackgroundColor(bgColorBtn);
-    btnClose->setColorText(colorTextBtn);
-    btnClose->setHoverBackgroundColor(hoverColorBtn);
+    btnAttachment->setBorderRadius(3,3);
+    btnClose = new Button("Выйти");
+    btnClose->setBorderRadius(3,3);
 
     v_controlLayoutMain->addWidget(edit);
     v_controlLayoutMain->addWidget(btnSend);
@@ -64,8 +52,6 @@ Widget::Widget(QWidget *parent)
 
     QObject::connect(btnOpenSideBar, &Button::clicked, this, &Widget::toggle);
 
-
-
 }
 
 Widget::~Widget()
@@ -81,6 +67,12 @@ void Widget::toggle()
     _sidebar->updateState();
 
 }
+
+void Widget::closeWindowApp(QMainWindow &handleEvent) {
+
+    handleEvent.close();
+}
+
 
 void Widget::mousePressEvent(QMouseEvent *event) {
 

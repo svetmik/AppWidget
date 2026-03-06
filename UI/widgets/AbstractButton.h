@@ -22,7 +22,8 @@ signals:
     void disableChanged(bool flag);
     void enableChanged(bool flag);
     void textChanged(QString title);
-    void clicked(bool flag = false);
+    void clicked();
+    //void clicked(bool flag = false);
 public:
 
     AbstractButton(QWidget *parent = nullptr);
@@ -88,6 +89,17 @@ public:
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
 
+    void setBorderRadius(const int &xRadiusRound, const int &yRadiusRound) {
+        m_xRadiusRound = xRadiusRound;
+        m_yRadiusRound = yRadiusRound;
+    }
+    int xRadius() const {
+        return m_xRadiusRound;
+    }
+
+    int yRadius() const {
+        return m_yRadiusRound;
+    }
 protected:
 
     void paintEvent(QPaintEvent *event) override;
@@ -113,9 +125,11 @@ private:
 
     bool hovered = false;
 
+    //container
     QRect _rect;
 
-
+    int m_xRadiusRound{0};
+    int m_yRadiusRound{0};
 };
 
 

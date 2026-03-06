@@ -4,7 +4,7 @@
 AbstractButton::AbstractButton(QWidget *parent)
     : ui::uiWidget(parent)
     , _colorText(255, 255, 255) // colorText Button Widget
-    , _m_Color_bg(43,137,247)
+    , _m_Color_bg(43,137,247, 235)
     , _m_Color_hover(31,111,204)
     , _disabled(true)
     , _enabled(false)
@@ -12,6 +12,8 @@ AbstractButton::AbstractButton(QWidget *parent)
 
     this->setMouseTracking(true);
     this->setCursor(Qt::PointingHandCursor);
+
+    this->setStyleSheet("border: none;");
 
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
@@ -46,24 +48,22 @@ void AbstractButton::paintEvent(QPaintEvent *event) {
     Q_UNUSED(event);
 
     QPainter p(this);
-    p.setRenderHint(QPainter::Antialiasing);
+    p.setRenderHint(QPainter::Antialiasing, true);
+
+    p.setPen(Qt::NoPen);
+    p.setBrush(hovered ? _m_Color_hover : _m_Color_bg);
+    p.drawRoundedRect(_rect, this->m_xRadiusRound, this->m_yRadiusRound);
+
+    p.setRenderHint(QPainter::Antialiasing, false);
     p.setRenderHint(QPainter::TextAntialiasing); // Специально для текста
-
-    QPen pen;
-
-
-    p.fillRect(_rect, hovered
-                          ?
-                          _m_Color_hover
-                              :
-                          _m_Color_bg);
-
-    pen.setColor(_colorText);
-
-
-    p.setPen(pen);
-
+    p.setPen(_colorText);
     p.drawText(_rect, Qt::AlignCenter, _text);
+
+    // p.fillRect(_rect, hovered
+    //                       ?
+    //                       _m_Color_hover
+    //                       :
+    //                       _m_Color_bg);
 
 }
 
