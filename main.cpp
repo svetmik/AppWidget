@@ -5,6 +5,8 @@
 #include "MainWindow.h"
 #include "widget.h"
 #include "font.h"
+#include "ui/widgets/button.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -74,6 +76,7 @@ int main(int argc, char *argv[])
 
     main_widget_layout->addWidget(main_container);
 
+    QObject::connect(main_container->btnClose, &Button::clicked, &app, &QApplication::quit);
     window.show();
     return app.exec();
 }

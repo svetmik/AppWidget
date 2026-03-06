@@ -25,7 +25,7 @@ void pa::PropertyAnimation::setStartAnimation(const QVariant &begin_val, const Q
 void pa::PropertyAnimation::setEndAnimation(const QVariant &begin_val, const QVariant &end_val, int microsecond) {
     this->setStartValuef(begin_val);
     this->setEndValuef(end_val);
-    // set pause before start animatiom
+    // set pause before start end animatiom
     std::this_thread::sleep_for(std::chrono::microseconds(microsecond));
 }
 
