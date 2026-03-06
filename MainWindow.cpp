@@ -2,18 +2,16 @@
 
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), m_minimize_btn{nullptr}, m_maximize_btn{nullptr}, m_close_btn{nullptr}, m_resize_border_width{6}
+    : QMainWindow(parent),
+    m_minimize_btn{},
+    m_maximize_btn{},
+    m_close_btn{},
+    m_resize_border_width{6}
 {
-
-
 #ifdef Q_OS_WIN
     m_hwnd = reinterpret_cast<HWND>(winId());
-
-    // Set window shadows.
-    const MARGINS aero_shadow_on = {1, 0, 1, 0};
-    ::DwmExtendFrameIntoClientArea(m_hwnd, &aero_shadow_on);
-#endif // Q_OS_WIN
-    QObject::connect(windowHandle(), &QWindow::screenChanged, this, &MainWindow::onScreenChanged);
+    const MARGINS aero_shadow_on = {1, 1, 1, 1};
+    ::DwmExtendFrameIntoClientArea(m_hwnd, & aero_shadow_on);
 
     // Add widget. (Initialize central widget)
     QWidget *entire_widget = new QWidget(this);
@@ -45,6 +43,59 @@ MainWindow::MainWindow(QWidget *parent)
     custom_titlebar_widget->setContentsMargins(0, 0, 0, 0);
     custom_titlebar_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
+#else
+
+    // Флаги и прозрачность для теней в Linux
+    setAttribute(Qt::WA_TranslucentBackground);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowSystemMenuHint | Qt::WindowMinMaxButtonsHint);
+
+    // Внешний контейнер (создает пустое место для тени)
+    QWidget* main_container = new QWidget(this);
+    setCentralWidget(main_container);
+    QVBoxLayout* main_layout = new QVBoxLayout(main_container);
+    main_layout->setContentsMargins(m_shadow_margin, m_shadow_margin, m_shadow_margin, m_shadow_margin);
+    main_layout->setSpacing(0);
+
+    // Тело окна (то, что мы видим)
+    QWidget* entire_widget = new QWidget(this);
+    entire_widget->setObjectName("EntireWidget");
+    entire_widget->setStyleSheet("#EntireWidget { background-color: #23272e; border-radius: 5px; }");
+    main_layout->addWidget(entire_widget);
+
+
+    QGraphicsDropShadowEffect* shadow = new QGraphicsDropShadowEffect(this);
+    shadow->setBlurRadius(10);
+    shadow->setColor(QColor(0, 0, 0, 160));
+    shadow->setOffset(0, 0);
+    entire_widget->setGraphicsEffect(shadow);
+
+    // Внутренняя разметка тела окна
+    QVBoxLayout* entire_layout = new QVBoxLayout(entire_widget);
+    entire_layout->setContentsMargins(0, 0, 0, 0);
+    entire_layout->setSpacing(0);
+
+    // Заголовок
+    m_titlebar_widget = new QWidget(this);
+    m_titlebar_widget->setFixedHeight(35);
+    m_titlebar_widget->setAutoFillBackground(true);
+    m_titlebar_widget->setPalette(QColor(30, 34, 39));
+    entire_layout->addWidget(m_titlebar_widget);
+
+    QHBoxLayout* titlebar_layout = new QHBoxLayout(m_titlebar_widget);
+    titlebar_layout->setContentsMargins(0, 0, 0, 0);
+    titlebar_layout->setSpacing(0);
+
+    QWidget* custom_title_container = new QWidget(this);
+    m_custom_titlebar_layout = new QHBoxLayout(custom_title_container);
+    m_custom_titlebar_layout->setContentsMargins(5, 0, 5, 0);
+    titlebar_layout->addWidget(custom_title_container);
+
+#endif
+    connect(windowHandle(), &QWindow::screenChanged, this, &MainWindow::onScreenChanged);
+    connect(m_minimize_btn, &QPushButton::clicked, this, &MainWindow::onMinimizeButtonClicked);
+    connect(m_maximize_btn, &QPushButton::clicked, this, &MainWindow::onMaximizeButtonClicked);
+    connect(m_close_btn, &QPushButton::clicked, this, &MainWindow::onCloseButtonClicked);
+
     // Minimize button setup.
     m_minimize_btn = new QPushButton(this);
     titlebar_layout->addWidget(m_minimize_btn);
@@ -52,25 +103,25 @@ MainWindow::MainWindow(QWidget *parent)
     m_minimize_btn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     m_minimize_btn->setFocusPolicy(Qt::FocusPolicy::NoFocus);
     m_minimize_btn->setStyleSheet(R"(
-        QPushButton {
-            border-image: url(:/icon/Minimize.png);
-            background-color: rgba(255, 255, 255, 0%);
-            background-repeat: no-repeat;
-        }
+            QPushButton {
+                border-image: url(:/icon/Minimize.png);
+                background-color: rgba(255, 255, 255, 0%);
+                background-repeat: no-repeat;
+            }
 
-        QPushButton:hover {
-            background-color: rgba(255, 255, 255, 20%);
-        }
+            QPushButton:hover {
+                background-color: rgba(255, 255, 255, 20%);
+            }
 
-        QPushButton:pressed {
-            background-color: rgba(255, 255, 255, 40%);
-        }
-      
-        QPushButton:!active {
-            border-image: url(:/icon/MinimizeDeactivated.png);
-        }
-    )");
-    m_minimize_btn->setVisible(false);
+            QPushButton:pressed {
+                background-color: rgba(255, 255, 255, 40%);
+            }
+
+            QPushButton:!active {
+                border-image: url(:/icon/MinimizeDeactivated.png);
+            }
+        )");
+    m_minimize_btn->setVisible(stateFlagTitlesBtn);
 
 
     // Maximize button setup.
@@ -81,36 +132,36 @@ MainWindow::MainWindow(QWidget *parent)
     m_maximize_btn->setCheckable(true);
     m_maximize_btn->setFocusPolicy(Qt::FocusPolicy::NoFocus);
     m_maximize_btn->setStyleSheet(R"(
-        QPushButton {
-            border-image: url(:/icon/Maximize.png);
-            background-color: rgba(255, 255, 255, 0%);
-            background-repeat: no-repeat;
-        }
-        QPushButton:hover {
-            background-color: rgba(255, 255, 255, 20%);
-        }
-        QPushButton:pressed {
-            background-color: rgba(255, 255, 255, 40%);
-        }
-        QPushButton:checked {
-            border-image: url(:/icon/Restore.png);
-            background-color: rgba(255, 255, 255, 0%);
-            background-repeat: no-repeat;
-        }
-        QPushButton:checked:hover {
-            background-color: rgba(255, 255, 255, 20%);
-        }
-        QPushButton:checked:pressed {
-            background-color: rgba(255, 255, 255, 40%);
-        }
-        QPushButton:!active {
-            border-image: url(:/icon/MaximizeDeactivated.png);
-        }
-        QPushButton:checked:!active {
-            border-image: url(:/icon/RestoreDeactivated.png);
-        }
-    )");
-    m_maximize_btn->setVisible(false);
+            QPushButton {
+                border-image: url(:/icon/Maximize.png);
+                background-color: rgba(255, 255, 255, 0%);
+                background-repeat: no-repeat;
+            }
+            QPushButton:hover {
+                background-color: rgba(255, 255, 255, 20%);
+            }
+            QPushButton:pressed {
+                background-color: rgba(255, 255, 255, 40%);
+            }
+            QPushButton:checked {
+                border-image: url(:/icon/Restore.png);
+                background-color: rgba(255, 255, 255, 0%);
+                background-repeat: no-repeat;
+            }
+            QPushButton:checked:hover {
+                background-color: rgba(255, 255, 255, 20%);
+            }
+            QPushButton:checked:pressed {
+                background-color: rgba(255, 255, 255, 40%);
+            }
+            QPushButton:!active {
+                border-image: url(:/icon/MaximizeDeactivated.png);
+            }
+            QPushButton:checked:!active {
+                border-image: url(:/icon/RestoreDeactivated.png);
+            }
+        )");
+    m_maximize_btn->setVisible(stateFlagTitlesBtn);
 
 
     // Close button setup.
@@ -120,27 +171,29 @@ MainWindow::MainWindow(QWidget *parent)
     m_close_btn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     m_close_btn->setFocusPolicy(Qt::FocusPolicy::NoFocus);
     m_close_btn->setStyleSheet(R"(
-        QPushButton {
-            border-image: url(:/icon/Close.png);
-            background-color: rgba(255, 255, 255, 0%);
-            background-repeat: no-repeat;
-        }
-        QPushButton:hover {
-            border-image: url(:/icon/CloseHoverOrPressed.png);
-            background-color: rgba(220, 41, 47, 90%);
-        }
-        QPushButton:pressed {
-            border-image: url(:/icon/CloseHoverOrPressed.png);
-            background-color: rgba(200, 41, 47, 60%);
-        }
-        QPushButton:!active {
-            border-image: url(:/icon/CloseDeactivated.png);
-        }
-        QPushButton:hover:!active {
-            border-image: url(:/icon/CloseHoverOrPressed.png);
-        }
-    )");
-    m_close_btn->setVisible(false);
+            QPushButton {
+                border-image: url(:/icon/Close.png);
+                background-color: rgba(255, 255, 255, 0%);
+                background-repeat: no-repeat;
+            }
+            QPushButton:hover {
+                border-image: url(:/icon/CloseHoverOrPressed.png);
+                background-color: rgba(220, 41, 47, 90%);
+            }
+            QPushButton:pressed {
+                border-image: url(:/icon/CloseHoverOrPressed.png);
+                background-color: rgba(200, 41, 47, 60%);
+            }
+            QPushButton:!active {
+                border-image: url(:/icon/CloseDeactivated.png);
+            }
+            QPushButton:hover:!active {
+                border-image: url(:/icon/CloseHoverOrPressed.png);
+            }
+        )");
+    m_close_btn->setVisible(stateFlagTitlesBtn);
+
+#ifdef Q_OS_WIN
     // Layout for title bar customization.
     m_custom_titlebar_layout = new QHBoxLayout(custom_titlebar_widget);
     custom_titlebar_widget->setLayout(m_custom_titlebar_layout);
@@ -170,15 +223,21 @@ MainWindow::MainWindow(QWidget *parent)
     pal.setColor(QPalette::Window, QColor(35, 39, 46));
     m_content_widget->setAutoFillBackground(true);
     m_content_widget->setPalette(pal);
+#else \
+    // Контент
+    m_content_widget = new QWidget(this);
+    entire_layout->addWidget(m_content_widget);
+
+    setMouseTracking(true);
+    entire_widget->setMouseTracking(true);
+#endif
 
 
 }
 
-MainWindow::~MainWindow()
-{
-}
+MainWindow::~MainWindow() {}
 
-
+#ifdef Q_OS_WIN
 
 #ifdef Q_OS_WIN
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -210,7 +269,7 @@ bool MainWindow::nativeEvent(const QByteArray &event_type, void *message, qintpt
         return true;
     }
 
-    // Process the mouse when it is on the window border.
+        // Process the mouse when it is on the window border.
     case WM_NCHITTEST: {
         RECT winrect;
         GetWindowRect(msg->hwnd, &winrect);
@@ -435,3 +494,240 @@ void MainWindow::onCloseButtonClicked()
     SendMessage(m_hwnd, WM_CLOSE, 0, 0);
 #endif
 }
+#else
+
+#ifdef Q_OS_WIN
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+bool MainWindow::nativeEvent(const QByteArray &event_type, void *message, long *result)
+#else
+bool MainWindow::nativeEvent(const QByteArray &event_type, void *message, qintptr *result)
+#endif
+{
+    MSG *msg = (MSG *)message;
+
+    switch (msg->message)
+    {
+    // Remove the default window frame by hooking the WM_NCCALCSIZE message.
+    case WM_NCCALCSIZE: {
+        if (msg->lParam)
+        {
+            WINDOWPLACEMENT wp;
+            GetWindowPlacement(m_hwnd, &wp);
+
+            if (wp.showCmd == SW_MAXIMIZE)
+            {
+                NCCALCSIZE_PARAMS *sz = (NCCALCSIZE_PARAMS *)msg->lParam;
+                sz->rgrc[0].left += 8;
+                sz->rgrc[0].top += 8;
+                sz->rgrc[0].right -= 8;
+                sz->rgrc[0].bottom -= 8;
+            }
+        }
+        return true;
+    }
+
+        // Process the mouse when it is on the window border.
+    case WM_NCHITTEST: {
+        RECT winrect;
+        GetWindowRect(msg->hwnd, &winrect);
+        long x = GET_X_LPARAM(msg->lParam);
+        long y = GET_Y_LPARAM(msg->lParam);
+        long local_x = x - winrect.left;
+        long local_y = y - winrect.top;
+
+        if (x >= winrect.left && x < winrect.left + m_resize_border_width &&
+            y < winrect.bottom && y >= winrect.bottom - m_resize_border_width)
+        {
+            *result = HTBOTTOMLEFT;
+            return true;
+        }
+
+        if (x < winrect.right && x >= winrect.right - m_resize_border_width &&
+            y < winrect.bottom && y >= winrect.bottom - m_resize_border_width)
+        {
+            *result = HTBOTTOMRIGHT;
+            return true;
+        }
+
+        if (x >= winrect.left && x < winrect.left + m_resize_border_width &&
+            y >= winrect.top && y < winrect.top + m_resize_border_width)
+        {
+            *result = HTTOPLEFT;
+            return true;
+        }
+
+        if (x < winrect.right && x >= winrect.right - m_resize_border_width &&
+            y >= winrect.top && y < winrect.top + m_resize_border_width)
+        {
+            *result = HTTOPRIGHT;
+            return true;
+        }
+
+        if (x >= winrect.left && x < winrect.left + m_resize_border_width)
+        {
+            *result = HTLEFT;
+            return true;
+        }
+
+        if (x < winrect.right && x >= winrect.right - m_resize_border_width)
+        {
+            *result = HTRIGHT;
+            return true;
+        }
+
+        if (y < winrect.bottom && y >= winrect.bottom - m_resize_border_width)
+        {
+            *result = HTBOTTOM;
+            return true;
+        }
+
+        if (y >= winrect.top && y < winrect.top + m_resize_border_width)
+        {
+            *result = HTTOP;
+            return true;
+        }
+
+        // Check the area where the user can click to move the window.
+        if (determineNonClickableWidgetUnderMouse(m_custom_titlebar_layout, local_x, local_y))
+        {
+            *result = HTCAPTION;
+            return true;
+        }
+
+        *result = HTTRANSPARENT;
+        break;
+    }
+    case WM_SIZE: {
+        if (m_maximize_btn)
+        {
+            WINDOWPLACEMENT wp;
+            GetWindowPlacement(m_hwnd, &wp);
+            m_maximize_btn->setChecked(wp.showCmd == SW_MAXIMIZE ? true : false);
+        }
+        break;
+    }
+    default:
+        break;
+    }
+
+    return false;
+}
+#endif // Q_OS_WIN
+
+//УПРАВЛЕНИЕ ОКНОМ (LINUX + WINDOWS) ---
+
+void MainWindow::mousePressEvent(QMouseEvent *event) {
+    if (event->button() == Qt::LeftButton) {
+        const int x = event->pos().x();
+        const int y = event->pos().y();
+        const int w = width();
+        const int h = height();
+        const int border = m_resize_border_width + m_shadow_margin;
+
+        Qt::Edges edges;
+        if (x < border) edges |= Qt::LeftEdge;
+        if (x > w - border) edges |= Qt::RightEdge;
+        if (y < border) edges |= Qt::TopEdge;
+        if (y > h - border) edges |= Qt::BottomEdge;
+
+        if (edges != 0) {
+            windowHandle()->startSystemResize(edges);
+        } else if (m_titlebar_widget->geometry().translated(m_shadow_margin, m_shadow_margin).contains(event->pos())) {
+            // Сдвигаем координаты для проверки виджетов под мышью
+            if (determineNonClickableWidgetUnderMouse(m_custom_titlebar_layout, x - m_shadow_margin, y - m_shadow_margin)) {
+                windowHandle()->startSystemMove();
+            }
+        }
+    }
+    QMainWindow::mousePressEvent(event);
+}
+
+void MainWindow::mouseMoveEvent(QMouseEvent *event) {
+    const int x = event->pos().x();
+    const int y = event->pos().y();
+    const int b = m_resize_border_width + m_shadow_margin;
+    const int w = width();
+    const int h = height();
+
+    bool l = x < b; bool r = x > w - b; bool t = y < b; bool bot = y > h - b;
+    if ((l&&t) || (r&&bot)) setCursor(Qt::SizeFDiagCursor);
+    else if ((l&&bot) || (r&&t)) setCursor(Qt::SizeBDiagCursor);
+    else if (l || r) setCursor(Qt::SizeHorCursor);
+    else if (t || bot) setCursor(Qt::SizeVerCursor);
+    else setCursor(Qt::ArrowCursor);
+}
+
+
+
+bool MainWindow::determineNonClickableWidgetUnderMouse(QLayout *layout, int x, int y) {
+    for (int i = 0; i < layout->count(); ++i) {
+        QLayoutItem* item = layout->itemAt(i);
+        if (QWidget* w = item->widget()) {
+            if (w->geometry().contains(x, y)) return !w->property("clickable widget").toBool();
+        } else if (QLayout* l = item->layout()) {
+            if (determineNonClickableWidgetUnderMouse(l, x, y)) return true;
+        }
+    }
+    return true;
+}
+
+void MainWindow::onMinimizeButtonClicked() {
+#ifdef Q_OS_WIN
+    SendMessage(m_hwnd, WM_SYSCOMMAND, SC_MINIMIZE, 0);
+#else
+    showMinimized();
+#endif
+}
+
+void MainWindow::onMaximizeButtonClicked() {
+#ifdef Q_OS_WIN
+    SendMessage(m_hwnd, WM_SYSCOMMAND, m_maximize_btn->isChecked() ? SC_MAXIMIZE : SC_RESTORE, 0);
+#else
+    if (isMaximized()) showNormal(); else showMaximized();
+#endif
+}
+
+void MainWindow::onCloseButtonClicked() {
+#ifdef Q_OS_WIN
+    SendMessage(m_hwnd, WM_CLOSE, 0, 0);
+#else
+    close();
+#endif
+}
+
+
+// Геттеры и сеттеры (обязательны для сборки)
+QWidget &MainWindow::getContentWidget() { return *m_content_widget; }
+QWidget &MainWindow::getTitlebarWidget() { return *m_titlebar_widget; }
+QHBoxLayout &MainWindow::getCustomTitlebarLayout() { return *m_custom_titlebar_layout; }
+void MainWindow::setResizeBorderWidth(const int &w) { m_resize_border_width = w; }
+void MainWindow::setTitlebarHeight(const int &h) { m_titlebar_widget->setFixedHeight(h); }
+
+void MainWindow::onScreenChanged(QScreen *screen) {
+#ifdef Q_OS_WIN
+    SetWindowPos(m_hwnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE);
+#endif
+}
+
+
+bool MainWindow::event(QEvent *evt) {
+    if (evt->type() == QEvent::WindowActivate || evt->type() == QEvent::WindowDeactivate) {
+        propagateActiveStateInCustomTitlebar(m_custom_titlebar_layout, evt->type() == QEvent::WindowActivate);
+    }
+    return QMainWindow::event(evt);
+}
+
+void MainWindow::propagateActiveStateInCustomTitlebar(QLayout *layout, bool active) {
+    for (int i = 0; i < layout->count(); ++i) {
+        QLayoutItem* item = layout->itemAt(i);
+        if (QWidget* w = item->widget()) {
+            w->setProperty("active", active);
+            w->style()->unpolish(w); w->style()->polish(w);
+        } else if (QLayout* l = item->layout()) {
+            propagateActiveStateInCustomTitlebar(l, active);
+        }
+    }
+}
+
+#endif
+

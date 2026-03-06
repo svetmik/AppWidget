@@ -2,13 +2,15 @@
 #define HEADER__FILE__MAINWINDOW
 
 
-#include <QApplication>
-#include <QLayout>
 #include <QMainWindow>
 #include <QPushButton>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
 #include <QScreen>
-#include <QSpacerItem>
 #include <QWindow>
+#include <QMouseEvent>
+#include <QStyle>
+#include <QGraphicsDropShadowEffect>
 
 #include <cstdlib>
 #include <ctime>
@@ -31,18 +33,18 @@ class MainWindow : public QMainWindow
 #endif
 
     int m_resize_border_width;
-
     QPushButton *m_minimize_btn;
     QPushButton *m_maximize_btn;
     QPushButton *m_close_btn;
-
     QWidget *m_content_widget;
     QWidget *m_titlebar_widget;
     QHBoxLayout *m_custom_titlebar_layout;
 
+    int m_shadow_margin = 5; // Отступ для тени
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
     void setResizeBorderWidth(const int &resize_border_width);
     void setTitlebarHeight(const int &titlebar_height);
     QWidget &getContentWidget();
@@ -56,14 +58,26 @@ private:
 #else
     bool nativeEvent(const QByteArray &event_type, void *message, qintptr *result);
 #endif
+#else
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
 #endif // Q_IS_WIN
+
+    //void mousePressEvent(QMouseEvent *event) override;
+    //void mouseMoveEvent(QMouseEvent *event) override;
+
     bool event(QEvent *evt);
+
     bool determineNonClickableWidgetUnderMouse(QLayout *layout, int x, int y);
     void propagateActiveStateInCustomTitlebar(QLayout *layout, bool active_state);
     void onScreenChanged(QScreen *screen);
     void onMinimizeButtonClicked();
     void onMaximizeButtonClicked();
     void onCloseButtonClicked();
+
+
+    // visible or hidden titlebarBtns
+    bool stateFlagTitlesBtn = false;
 };
 
 #endif // HEADER__FILE__MAINWINDOW
