@@ -3,9 +3,9 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
-    m_minimize_btn{},
-    m_maximize_btn{},
-    m_close_btn{},
+    m_minimize_btn{nullptr},
+    m_maximize_btn{nullptr},
+    m_close_btn{nullptr},
     m_resize_border_width{6}
 {
 #ifdef Q_OS_WIN
@@ -92,9 +92,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 #endif
     connect(windowHandle(), &QWindow::screenChanged, this, &MainWindow::onScreenChanged);
-    connect(m_minimize_btn, &QPushButton::clicked, this, &MainWindow::onMinimizeButtonClicked);
-    connect(m_maximize_btn, &QPushButton::clicked, this, &MainWindow::onMaximizeButtonClicked);
-    connect(m_close_btn, &QPushButton::clicked, this, &MainWindow::onCloseButtonClicked);
+
 
     // Minimize button setup.
     m_minimize_btn = new QPushButton(this);
@@ -232,7 +230,9 @@ MainWindow::MainWindow(QWidget *parent)
     entire_widget->setMouseTracking(true);
 #endif
 
-
+    connect(m_minimize_btn, &QPushButton::clicked, this, &MainWindow::onMinimizeButtonClicked);
+    connect(m_maximize_btn, &QPushButton::clicked, this, &MainWindow::onMaximizeButtonClicked);
+    connect(m_close_btn, &QPushButton::clicked, this, &MainWindow::onCloseButtonClicked);
 }
 
 MainWindow::~MainWindow() {}
