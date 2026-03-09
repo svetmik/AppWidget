@@ -8,6 +8,8 @@ MainWindow::MainWindow(QWidget *parent)
     m_close_btn{nullptr},
     m_resize_border_width{6}
 {
+
+    this->setVisibleTitleBtns(true);
 #ifdef Q_OS_WIN
     m_hwnd = reinterpret_cast<HWND>(winId());
     const MARGINS aero_shadow_on = {1, 1, 1, 1};
@@ -97,98 +99,31 @@ MainWindow::MainWindow(QWidget *parent)
     // Minimize button setup.
     m_minimize_btn = new QPushButton(this);
     titlebar_layout->addWidget(m_minimize_btn);
-    m_minimize_btn->setFixedWidth(25);
+    m_minimize_btn->setFixedWidth(36);
     m_minimize_btn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     m_minimize_btn->setFocusPolicy(Qt::FocusPolicy::NoFocus);
-    m_minimize_btn->setStyleSheet(R"(
-            QPushButton {
-                border-image: url(:/icon/Minimize.png);
-                background-color: rgba(255, 255, 255, 0%);
-                background-repeat: no-repeat;
-            }
-
-            QPushButton:hover {
-                background-color: rgba(255, 255, 255, 20%);
-            }
-
-            QPushButton:pressed {
-                background-color: rgba(255, 255, 255, 40%);
-            }
-
-            QPushButton:!active {
-                border-image: url(:/icon/MinimizeDeactivated.png);
-            }
-        )");
+    m_minimize_btn->setStyleSheet(qss_title_btn_minimize);
     m_minimize_btn->setVisible(stateFlagTitlesBtn);
 
 
     // Maximize button setup.
     m_maximize_btn = new QPushButton(this);
     titlebar_layout->addWidget(m_maximize_btn);
-    m_maximize_btn->setFixedWidth(25);
+    m_maximize_btn->setFixedWidth(36);
     m_maximize_btn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     m_maximize_btn->setCheckable(true);
     m_maximize_btn->setFocusPolicy(Qt::FocusPolicy::NoFocus);
-    m_maximize_btn->setStyleSheet(R"(
-            QPushButton {
-                border-image: url(:/icon/Maximize.png);
-                background-color: rgba(255, 255, 255, 0%);
-                background-repeat: no-repeat;
-            }
-            QPushButton:hover {
-                background-color: rgba(255, 255, 255, 20%);
-            }
-            QPushButton:pressed {
-                background-color: rgba(255, 255, 255, 40%);
-            }
-            QPushButton:checked {
-                border-image: url(:/icon/Restore.png);
-                background-color: rgba(255, 255, 255, 0%);
-                background-repeat: no-repeat;
-            }
-            QPushButton:checked:hover {
-                background-color: rgba(255, 255, 255, 20%);
-            }
-            QPushButton:checked:pressed {
-                background-color: rgba(255, 255, 255, 40%);
-            }
-            QPushButton:!active {
-                border-image: url(:/icon/MaximizeDeactivated.png);
-            }
-            QPushButton:checked:!active {
-                border-image: url(:/icon/RestoreDeactivated.png);
-            }
-        )");
+    m_maximize_btn->setStyleSheet(qss_m_maximize_btn);
     m_maximize_btn->setVisible(stateFlagTitlesBtn);
 
 
     // Close button setup.
     m_close_btn = new QPushButton(this);
     titlebar_layout->addWidget(m_close_btn);
-    m_close_btn->setFixedWidth(25);
+    m_close_btn->setFixedWidth(36);
     m_close_btn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     m_close_btn->setFocusPolicy(Qt::FocusPolicy::NoFocus);
-    m_close_btn->setStyleSheet(R"(
-            QPushButton {
-                border-image: url(:/icon/Close.png);
-                background-color: rgba(255, 255, 255, 0%);
-                background-repeat: no-repeat;
-            }
-            QPushButton:hover {
-                border-image: url(:/icon/CloseHoverOrPressed.png);
-                background-color: rgba(220, 41, 47, 90%);
-            }
-            QPushButton:pressed {
-                border-image: url(:/icon/CloseHoverOrPressed.png);
-                background-color: rgba(200, 41, 47, 60%);
-            }
-            QPushButton:!active {
-                border-image: url(:/icon/CloseDeactivated.png);
-            }
-            QPushButton:hover:!active {
-                border-image: url(:/icon/CloseHoverOrPressed.png);
-            }
-        )");
+    m_close_btn->setStyleSheet(qss_title_btn_close);
     m_close_btn->setVisible(stateFlagTitlesBtn);
 
 #ifdef Q_OS_WIN
@@ -236,6 +171,14 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 MainWindow::~MainWindow() {}
+
+
+void MainWindow::setVisibleTitleBtns(bool flag) {
+
+    if(stateFlagTitlesBtn != flag) {
+        this->stateFlagTitlesBtn = flag;
+    }
+}
 
 #ifdef Q_OS_WIN
 

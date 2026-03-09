@@ -33,7 +33,8 @@ int main(int argc, char *argv[])
     app.setFont(qAppFont);
 
     window.setResizeBorderWidth(6); //! You can set the resize border width.
-    window.setTitlebarHeight(25);   //! You also can set the title bar height.
+    window.setTitlebarHeight(24);   //! You also can set the title bar height.
+
 
     QWidget *non_clickable = new QWidget(&window);
     non_clickable->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);

@@ -24,6 +24,7 @@
 
 #endif // Q_OS_WIN
 
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -51,6 +52,7 @@ public:
     QWidget &getTitlebarWidget();
     QHBoxLayout &getCustomTitlebarLayout();
 
+    void setVisibleTitleBtns(bool flag);
 private:
 #ifdef Q_OS_WIN
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -76,8 +78,82 @@ private:
     void onCloseButtonClicked();
 
 
-    // visible or hidden titlebarBtns
-    bool stateFlagTitlesBtn = false;
+    // visible or hidden titlebarButtons
+    bool stateFlagTitlesBtn;
+
+
+    QString qss_title_btn_close = R"(
+            QPushButton {
+                border-image: url(:/icon/btn_close.png);
+                background-color: rgba(255, 255, 255, 0%);
+                background-repeat: no-repeat;
+            }
+            QPushButton:hover {
+                border-image: url(:/icon/btn_close_hover.png);
+                background-color: #e81123;
+            }
+            QPushButton:pressed {
+                border-image: url(:/icon/btn_close.png);
+                background-color: rgba(200, 41, 47, 60%);
+            }
+            QPushButton:!active {
+                border-image: url(:/icon/btn_close.png);
+            }
+            QPushButton:hover:!active {
+                border-image: url(:/icon/btn_close.png);
+            }
+        )";
+
+    QString qss_title_btn_minimize = R"(
+            QPushButton {
+                border-image: url(:/icon/button_minimize.png);
+                background-color: rgba(255, 255, 255, 0%);
+                background-repeat: no-repeat;
+            }
+
+            QPushButton:hover {
+                background-color: rgba(228, 228, 228, 80%);
+            }
+
+            QPushButton:pressed {
+                background-color: rgba(255, 255, 255, 40%);
+            }
+
+            QPushButton:!active {
+                border-image: url(:/icon/button_minimize.png);
+            }
+        )";
+
+    QString qss_m_maximize_btn = R"(
+            QPushButton {
+                border-image: url(:/icon/button_maximize.png);
+                background-color: rgba(255, 255, 255, 0%);
+                background-repeat: no-repeat;
+            }
+            QPushButton:hover {
+                background-color: rgba(228, 228, 228, 80%);
+            }
+            QPushButton:pressed {
+                background-color: rgba(255, 255, 255, 40%);
+            }
+            QPushButton:checked {
+                border-image: url(:/icon/button_restore.png);
+                background-color: rgba(255, 255, 255, 0%);
+                background-repeat: no-repeat;
+            }
+            QPushButton:checked:hover {
+                background-color: rgba(228, 228, 228, 80%);
+            }
+            QPushButton:checked:pressed {
+                background-color: rgba(255, 255, 255, 40%);
+            }
+            QPushButton:!active {
+                border-image: url(:/icon/button_maximize.png);
+            }
+            QPushButton:checked:!active {
+                border-image: url(:/icon/button_restore.png);
+            }
+        )";
 };
 
 #endif // HEADER__FILE__MAINWINDOW

@@ -29,8 +29,10 @@ Widget::Widget(QWidget *parent)
 
     btnSend = new Button("Отправить заявку");
     btnSend->setBorderRadius(3,3);
+
     btnAttachment = new Button("Прикрепить файл к заявке");
     btnAttachment->setBorderRadius(3,3);
+
     btnClose = new Button("Выйти");
     btnClose->setBorderRadius(3,3);
 
