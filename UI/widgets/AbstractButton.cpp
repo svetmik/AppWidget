@@ -4,7 +4,7 @@
 AbstractButton::AbstractButton(QWidget *parent)
     : ui::uiWidget(parent)
     , _colorText(255, 255, 255) // colorText Button Widget
-    , _m_Color_bg(43,137,247, 235)
+    , _m_Color_bg(0, 150, 237, 255)
     , _m_Color_hover(31,111,204)
     , _disabled(true)
     , _enabled(false)
@@ -35,15 +35,16 @@ QSize AbstractButton::minimumSizeHint() const {
     return sizeHint();  // Минимальный размер кнопки
 }
 
-void AbstractButton::updateHoverState(QPainter &p, QRect &r) {
+// void AbstractButton::updateHoverState(QPainter &p, QRect &r) {
 
-    if(hovered) {
-        p.fillRect(r, QBrush(_m_Color_hover));
-    } else {
-        p.fillRect(r, QBrush(_m_Color_bg));
-    }
+//     if(hovered) {
+//         p.fillRect(r, QBrush(_m_Color_hover));
+//     } else {
+//         p.fillRect(r, QBrush(_m_Color_bg));
+//     }
 
-}
+// }
+
 void AbstractButton::paintEvent(QPaintEvent *event) {
     Q_UNUSED(event);
 
