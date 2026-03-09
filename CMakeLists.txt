@@ -22,28 +22,33 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(app
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        fonts/OpenSans-Italic.ttf fonts/OpenSans-Regular.ttf fonts/OpenSans-SemiBold.ttf fonts/OpenSans-SemiBoldItalic.ttf sidebar.cpp sidebar.h
-        font.cpp font.h font_styles.h left_bar.cpp style_widget.cpp style_widget.h textedit.cpp textedit.h
+        fonts/OpenSans-Italic.ttf
+        fonts/OpenSans-Regular.ttf
+        fonts/OpenSans-SemiBold.ttf
+        fonts/OpenSans-SemiBoldItalic.ttf
+        sidebar.cpp sidebar.h
+        font.cpp
+        font.h
+        font_styles.h
+        left_bar.cpp
+        style_widget.cpp
+        style_widget.h
+        textedit.cpp
+        textedit.h
         components.qrc
         left_bar.h
         global_objects.h
-        UI/widgets/AbstractButton.cpp UI/widgets/AbstractButton.h
-        UI/widgets/basewidget.h UI/widgets/basewidget.cpp
-        UI/widgets/button.h UI/widgets/button.cpp
+        UI/widgets/AbstractButton.cpp
+        UI/widgets/AbstractButton.h
+        UI/widgets/basewidget.h
+        UI/widgets/basewidget.cpp
+        UI/widgets/button.h
+        UI/widgets/button.cpp
         scrollarea.h
         container.h container.cpp
         Resources/ApplicationIcon.ico
         Resources/ApplicationIcon.png
-        Resources/Close.png
-        Resources/CloseDeactivated.png
-        Resources/CloseHoverOrPressed.png
-        Resources/Maximize.png
-        Resources/MaximizeDeactivated.png
-        Resources/Minimize.png
-        Resources/MinimizeDeactivated.png
-        Resources/Restore.png
-        Resources/RestoreDeactivated.png
-        Resources/Transparent.png resources.qrc
+        resources.qrc
         MainWindow.cpp MainWindow.h
         UI/button.qss UI/TextEdit.qss
         propertyanimation.h propertyanimation.cpp
