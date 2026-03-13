@@ -15,6 +15,9 @@
 #include <cstdlib>
 #include <ctime>
 
+#include "zipreader_p.h"
+#include "zipwriter_p.h"
+
 
 #ifdef Q_OS_WIN
 

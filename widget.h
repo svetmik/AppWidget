@@ -6,7 +6,7 @@
 #include "global_objects.h"
 #include "left_bar.h"
 #include "textedit.h"
-
+#include "systeminfo.h"
 
 class Widget : public ui::uiWidget
 {
@@ -31,12 +31,15 @@ public:
 
     void closeWindowApp(QMainWindow &handleEvent);
 protected:
+
+    SystemInfo pc;
     void mousePressEvent(QMouseEvent *event) override;
 
     void resizeEvent(QResizeEvent *event) override;
     void hideEvent(QHideEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
     void toggle();
+
 
 };
 #endif // WIDGET_H

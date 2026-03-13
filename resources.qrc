@@ -9,7 +9,7 @@
         <file alias="button_maximize.png">Resources/title_button_maximize.png</file>
         <file alias="button_restore.png">Resources/title_shadow_restore.png</file>
 
-        <file alias="button_minimize.png">Resources/title_button_minimize_psd.png</file>
+        <file alias="button_minimize.png">Resources/title_button_minimize.png</file>
 
         <file alias="btn_close_2x.png">Resources/title_button_close@2x.png</file> 
         <file alias="btn_close_3x.png">Resources/title_button_close@3x.png</file>

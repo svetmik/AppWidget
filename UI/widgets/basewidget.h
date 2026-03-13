@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QWidget>
 
+#include <QLabel>
+
 #include <QStyleOption>
 #include <QStyle>
 #include <QMargins>
@@ -21,6 +23,9 @@
 #include <QResizeEvent>
 #include <QPaintEvent>
 #include <QPainter>
+
+#include <QPrinter>
+#include <QTcpSocket>
 
 #include <iostream>
 #include <thread>  // Required for std::this_thread::sleep_for

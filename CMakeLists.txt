@@ -9,8 +9,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network PrintSupport)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network PrintSupport)
 
 set(PROJECT_SOURCES
         main.cpp
@@ -52,7 +52,51 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MainWindow.cpp MainWindow.h
         UI/button.qss UI/TextEdit.qss
         propertyanimation.h propertyanimation.cpp
-
+        zipreader_p.h
+        zipwriter_p.h
+        systeminfo.cpp
+        systeminfo.h
+        header/CMakeLists.txt
+        header/emailaddress.cpp
+        header/emailaddress.h
+        header/mimeattachment.cpp
+        header/mimeattachment.h
+        header/mimebase64encoder.cpp
+        header/mimebase64encoder.h
+        header/mimebase64formatter.cpp
+        header/mimebase64formatter.h
+        header/mimebytearrayattachment.cpp
+        header/mimebytearrayattachment.h
+        header/mimecontentencoder.cpp
+        header/mimecontentencoder.h
+        header/mimecontentformatter.cpp
+        header/mimecontentformatter.h
+        header/mimefile.cpp
+        header/mimefile.h
+        header/mimehtml.cpp
+        header/mimehtml.h
+        header/mimeinlinefile.cpp
+        header/mimeinlinefile.h
+        header/mimemessage.cpp
+        header/mimemessage.h
+        header/mimemultipart.cpp
+        header/mimemultipart.h
+        header/mimepart.cpp
+        header/mimepart.h
+        header/mimeqpencoder.cpp
+        header/mimeqpencoder.h
+        header/mimeqpformatter.cpp
+        header/mimeqpformatter.h
+        header/mimetext.cpp
+        header/mimetext.h
+        header/quotedprintable.cpp
+        header/quotedprintable.h
+        header/smtpclient.cpp
+        header/smtpclient.h
+        header/SMTPEmail.pro
+        header/SmtpMime
+        header/smtpmime_global.h
+        header/SmtpMimeConfig.cmake
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET app APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -72,7 +116,10 @@ else()
     endif()
 endif()
 
-target_link_libraries(app PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(app PRIVATE
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::Network
+    Qt${QT_VERSION_MAJOR}::PrintSupport)
 
 # ДОБАВЬ ЭТО ДЛЯ WINDOWS
 if(WIN32)

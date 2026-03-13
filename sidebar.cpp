@@ -16,11 +16,55 @@ sidebar::sidebar(QWidget *parent)
     setContentsMargins(0,0,0,0);
     setStyleSheet("background-color: white");
 
-    //
+    // widget
     container = new Container;
     container->setContentsMargins(0,0,0,0);
     container->setMinimumHeight(450);
     container->setMinimumWidth(this->width());
+
+    // widget
+    infoContaier = new Container;
+    infoContaier->setMinimumHeight(100);
+    infoContaier->setMinimumWidth(this->width());
+    infoContaier->setStyleSheet("border-bottom: 1px solid #CCCCCC;");
+
+    v_box = new QVBoxLayout(infoContaier);
+    h_box_child = new QHBoxLayout();
+    v_box_child = new QVBoxLayout();
+
+    infoLabelFont = this->font();
+    infoLabelFont.setWeight(QFont::Weight::Normal);
+
+    infoMessageAboutPc.setText("Техническая информация");
+    infoMessageAboutPc.setStyleSheet("border: none; color: rgba(0, 150, 237, 255); font-size: 14px;");
+
+    infoAboutIpPc.setWordWrap(true);
+    infoAboutIpPc.setText("Имя компьютера: " + this->pcInfo->localIpAddressPc());
+    infoAboutIpPc.setFont(infoLabelFont);
+    infoAboutIpPc.setStyleSheet("border: none; color: #303030;");
+
+    infoAboutDomainName.setWordWrap(true);
+    infoAboutDomainName.setText("IPv4: " + this->pcInfo->localHostName());
+    infoAboutDomainName.setFont(infoLabelFont);
+    infoAboutDomainName.setStyleSheet("border: none; color: #303030;");
+
+    infoAboutPrinter.setWordWrap(true);
+    infoAboutPrinter.setText("Модель принтера: " + this->pcInfo->localPrinterName());
+    infoAboutPrinter.setFont(infoLabelFont);
+    infoAboutPrinter.setStyleSheet("border: none; color: #303030;");
+
+
+    h_box_child->addWidget(&infoMessageAboutPc, 0, Qt::AlignTop | Qt::AlignHCenter);
+    v_box->addLayout(h_box_child);
+
+    v_box_child->setContentsMargins(15, 0, 15, 0);
+    v_box_child->addWidget(&infoAboutDomainName);
+    v_box_child->addWidget(&infoAboutIpPc);
+    v_box_child->addWidget(&infoAboutPrinter);
+    v_box->addLayout(v_box_child);
+
+
+
 
     QVBoxLayout *contentLayout = new QVBoxLayout(container);
 
@@ -56,6 +100,7 @@ sidebar::sidebar(QWidget *parent)
     mainlayout->setContentsMargins(0,0,0,0);
 
     // ***
+    mainlayout->addWidget(infoContaier);
     mainlayout->addWidget(scrollbar);
 
 

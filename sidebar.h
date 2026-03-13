@@ -9,6 +9,8 @@
 #include "scrollarea.h"
 #include "container.h"
 #include "propertyanimation.h"
+#include "systeminfo.h"
+
 
 class overlay;
 
@@ -22,8 +24,6 @@ public:
    void setVisibleState(bool stateVisible = false);
    bool visibleState();
    void updateState();
-
-   Container *container;
 
 protected:
 
@@ -40,15 +40,32 @@ private:
         int bottom = 0;
     }margin;
 
-    bool isVisible = false;
-
     Button *btn1;
     Button *btn2;
     Button *btn3;
     Button *btn4;
 
+    Container *container;
+    Container *infoContaier;
+
+    QLabel infoMessageAboutPc;
+
+    QLabel infoAboutPrinter;
+    QLabel infoAboutIpPc;
+    QLabel infoAboutDomainName
+        ;
+    QVBoxLayout *v_box;
+    QVBoxLayout *v_box_child;
+
+    QHBoxLayout *h_box_child;
+
+    SystemInfo *pcInfo;
     scrollArea *scrollbar;
     pa::PropertyAnimation *anim;
+
+    QFont infoLabelFont;
+
+    bool isVisible = false;
 };
 
 
