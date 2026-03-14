@@ -32,14 +32,6 @@ protected:
 
 private:
 
-    struct m_layout
-    {
-        int left = 0;
-        int top = 0;
-        int rigth = 0;
-        int bottom = 0;
-    }margin;
-
     Button *btn1;
     Button *btn2;
     Button *btn3;
@@ -52,12 +44,17 @@ private:
 
     QLabel infoAboutPrinter;
     QLabel infoAboutIpPc;
-    QLabel infoAboutDomainName
-        ;
+    QLabel infoAboutDomainName;
+
+    QLabel infoVerionApp;
+    QLabel infoNameDesktopApp;
+
     QVBoxLayout *v_box;
     QVBoxLayout *v_box_child;
 
+    QVBoxLayout *v_box_1;
     QHBoxLayout *h_box_child;
+
 
     SystemInfo *pcInfo;
     scrollArea *scrollbar;
