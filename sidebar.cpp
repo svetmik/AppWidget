@@ -39,12 +39,12 @@ sidebar::sidebar(QWidget *parent)
     infoMessageAboutPc.setStyleSheet("border: none; color: rgba(0, 150, 237, 255); font-size: 14px;");
 
     infoAboutIpPc.setWordWrap(true);
-    infoAboutIpPc.setText("Имя компьютера: " + this->pcInfo->localIpAddressPc());
+    infoAboutIpPc.setText("Имя компьютера: " + this->pcInfo->localHostName());
     infoAboutIpPc.setFont(infoLabelFont);
     infoAboutIpPc.setStyleSheet("border: none; color: #303030;");
 
     infoAboutDomainName.setWordWrap(true);
-    infoAboutDomainName.setText("IPv4: " + this->pcInfo->localHostName());
+    infoAboutDomainName.setText("IPv4: " + this->pcInfo->localIpAddressPc());
     infoAboutDomainName.setFont(infoLabelFont);
     infoAboutDomainName.setStyleSheet("border: none; color: #303030;");
 
@@ -57,7 +57,7 @@ sidebar::sidebar(QWidget *parent)
     h_box_child->addWidget(&infoMessageAboutPc, 0, Qt::AlignTop | Qt::AlignHCenter);
     v_box->addLayout(h_box_child);
 
-    v_box_child->setContentsMargins(15, 0, 15, 0);
+    v_box_child->setContentsMargins(15, 5, 15, 0);
     v_box_child->addWidget(&infoAboutDomainName);
     v_box_child->addWidget(&infoAboutIpPc);
     v_box_child->addWidget(&infoAboutPrinter);

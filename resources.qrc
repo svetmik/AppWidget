@@ -11,7 +11,5 @@
 
         <file alias="button_minimize.png">Resources/title_button_minimize.png</file>
 
-        <file alias="btn_close_2x.png">Resources/title_button_close@2x.png</file> 
-        <file alias="btn_close_3x.png">Resources/title_button_close@3x.png</file>
     </qresource>
 </RCC>
