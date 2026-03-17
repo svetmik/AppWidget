@@ -25,6 +25,7 @@ public:
    bool visibleState();
    void updateState();
 
+   SystemInfo *pcInfo;
 protected:
 
     QSize sizeHint() const override;
@@ -56,7 +57,6 @@ private:
     QHBoxLayout *h_box_child;
 
 
-    SystemInfo *pcInfo;
     scrollArea *scrollbar;
     pa::PropertyAnimation *anim;
 
