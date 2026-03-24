@@ -87,12 +87,15 @@ sidebar::sidebar(QWidget *parent)
     contentLayout->setContentsMargins(0,0,0,0);
     contentLayout->setSpacing(0);
 
-    //btn1 = new Button("z");
-    //btn2 = new Button("d");
+    btn1 = new Button("Контакты");
+    btn1->setBackgroundColor(QColor(255,255,255,255));
+    btn1->setHoverBackgroundColor(QColor(235, 235, 235, 255));
+    btn1->setColorText(QColor(0,0,0));
+    btn2 = new Button("d");
     //btn3 = new Button("b");
 
-    //contentLayout->addWidget(btn1);
-    //contentLayout->addWidget(btn2);
+    contentLayout->addWidget(btn1);
+    contentLayout->addWidget(btn2);
     contentLayout->addStretch();
     contentLayout->addLayout(v_box_1);
 
@@ -102,7 +105,6 @@ sidebar::sidebar(QWidget *parent)
 
     scrollbar = new scrollArea;
     scrollbar->setAlwaysShowWhenNeeded(true);
-    scrollbar->setStyleSheet("border: none;");
     scrollbar->setGeometry(0,0,width(), height());
     scrollbar->setUseSmoothScroll(true);
     // ***
@@ -117,9 +119,7 @@ sidebar::sidebar(QWidget *parent)
     mainlayout->addWidget(infoContaier);
     mainlayout->addWidget(scrollbar);
 
-
     this->setLayout(mainlayout);
-
     // // Настройка анимации
     // animation = new QPropertyAnimation(this, "pos");
     // animation->setDuration(250);

@@ -91,20 +91,20 @@ void Widget::sendFileToMail() {
 
     MimeText text(edit->toPlainText()); // Текст сообщени
 
-    QFile addAttachement(filePathDialog);
+    QFile addAttachement(getfilePathDialog());
     QFile ZipFile("file.zip");
 
     MimeAttachment mime(&ZipFile);
     mime.setContentType("zip");
     MimeAttachment mime_1(&addAttachement);
 
-    if(!filePathDialog.isEmpty())
+    if(!getfilePathDialog().isEmpty())
     {
         message.addPart(&text);  // описание заявки
         message.addPart(&mime);  // zip архив с вложенным скриншотом экрана.
         message.addPart(&mime_1); //  прикрепленный файл
 
-    }  else if(filePathDialog.isEmpty()) {
+    }  else if(getfilePathDialog().isEmpty()) {
         message.addPart(&text);
         message.addPart(&mime);
     }
@@ -195,26 +195,47 @@ void Widget::writetoFile(const char *path, const char *name, QByteArray &data) {
     file.waitForBytesWritten(1000);
 }
 
+bool Widget::setfilePathDialog(const QString &filePath) {
+
+    // 25 мбайт максимальный размер файла
+    qint64 maxSize = 25 * 1024 * 1024;
+
+    QFileInfo info{filePath};
+
+    if(info.exists() and info.size() <= maxSize) {
+        this->m_filePath = filePath;
+
+        return true;
+
+    }
+
+    return false;
+}
+
+
+QString Widget::getfilePathDialog() const {
+
+    return this->m_filePath;
+}
 
 void Widget::openFileDialog() {
 
-    const QVector<QString> settingsFileDialog = { tr("Выбрать файл"), "All files (*);; Archives (*.zip *.rar)" };
-
     // Desktop Path
     QString dirDestopPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
-
     dirDestopPath = QDir::toNativeSeparators(dirDestopPath);
 
-    filePathDialog = QFileDialog::getOpenFileName(
+    QString filePath = QFileDialog::getOpenFileName(
 
         this,
-        settingsFileDialog.at(0),
+        tr("Выбрать файл"),
         dirDestopPath,
-        settingsFileDialog.at(1)
+        "All files (*);; Archives (*.zip *.rar)"
         );
 
-    if(!filePathDialog.isEmpty()) {
-        qDebug() << "Файл успешно прикреплён";
+    if(setfilePathDialog(filePath)) {
+        qDebug() << "успешно";
+    } else {
+        qDebug() << "что то пошло не так";
     }
 }
 

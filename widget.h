@@ -62,8 +62,14 @@ protected:
     // create zip arhive
     int zipFileAttachement(const char *FileNamePicture, const char *ZipFileName, QByteArray &data);
 
-    // get FilePath Dialog
-    QString filePathDialog;
+    // var get FilePath Dialog
+    QString m_filePath{};
+
+    // ;
+    bool setfilePathDialog(const QString &filePath);
+
+    // get
+    QString getfilePathDialog() const;
 
 };
 #endif // WIDGET_H

@@ -35,7 +35,7 @@ public:
         // Анимация скролла
         m_scrollAnimation = new QPropertyAnimation(verticalScrollBar(), "value", this);
         m_scrollAnimation->setEasingCurve(QEasingCurve::OutCubic);
-        m_scrollAnimation->setDuration(300);
+        m_scrollAnimation->setDuration(10);
 
         connect(m_scrollAnimation, &QPropertyAnimation::finished,
                 this, &scrollArea::onScrollAnimationFinished);
@@ -176,24 +176,33 @@ private:
                 background: white;
                 width: 6px;
                 margin: 0px;
+                margin-right: 2px;
+
             }
 
             QScrollBar::handle:vertical {
-                background: rgba(150, 150, 150, %1);
-                border-radius: 3px;
+                background-color: rgba(45, 45, 45, %1);
+                border-radius: 6px;
                 min-height: 20px;
             }
 
             QScrollBar::handle:vertical:hover {
-                background: rgba(120, 120, 120, %1);
+                background-color: rgba(0, 0, 0, %1);
             }
 
             QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
                 height: 0px;
+                border-radius: 6px;
             }
 
             QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
-                background: none;
+                background: rgba(173, 173, 173, %1);
+                border-radius: 6px;
+            }
+
+            QScrollBar::groove:vertical {
+                background-color: none;
+                border: none;
             }
         )";
     }
@@ -265,7 +274,7 @@ private:
     QString m_scrollBarStyle;
     int m_scrollOpacity;
     bool m_smoothScrollEnabled;
-    bool m_alwaysShowWhenNeeded;  // НОВОЕ: всегда показывать если нужно
+    bool m_alwaysShowWhenNeeded;  // всегда показывать если нужно
     int m_targetScrollValue;
 };
 
