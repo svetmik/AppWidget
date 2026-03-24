@@ -1,5 +1,7 @@
 #include "systeminfo.h"
 
+
+
 SystemInfo::SystemInfo() {
 
 }
@@ -8,13 +10,25 @@ SystemInfo::SystemInfo() {
 
 QString SystemInfo::localIpAddressPc()
 {
-    for(const QHostAddress &address : QNetworkInterface::allAddresses())
-    {
-        if(address.protocol() == QAbstractSocket::IPv4Protocol && !address.isLoopback())
+
+    const QList<QHostAddress> &local_address = QNetworkInterface::allAddresses();
+
+    //fix
+    if(local_address.isEmpty()) {
+        qWarning() << "No network interfaces found";
+    } else {
+
+        for(const QHostAddress &local_address : QNetworkInterface::allAddresses())
         {
-            return address.toString();
+            if(local_address.protocol() == QAbstractSocket::IPv4Protocol && !local_address.isLoopback())
+            {
+                return local_address.toString();
+            }
         }
+
     }
+
+    return QString();
 }
 
 QString SystemInfo::localPrinterName()

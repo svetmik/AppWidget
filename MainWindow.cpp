@@ -557,7 +557,7 @@ bool MainWindow::nativeEvent(const QByteArray &event_type, void *message, qintpt
 }
 #endif // Q_OS_WIN
 
-//УПРАВЛЕНИЕ ОКНОМ (LINUX + WINDOWS) ---
+//УПРАВЛЕНИЕ ОКНОМ (LINUX) ---
 
 void MainWindow::mousePressEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton) {

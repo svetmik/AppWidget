@@ -14,8 +14,6 @@ class SystemInfo
 
 private:
 
-
-
 public:
 
     explicit SystemInfo();
