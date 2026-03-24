@@ -173,30 +173,15 @@ private:
         m_scrollBarStyle = R"(
             QScrollBar:vertical {
                 border: none;
-                border-radius: 3px;
                 background-color: rgba(173, 173, 173, 100);
                 width: 7px;
                 margin: 0px;
                 margin-right: 3px;
-            }
-
-            QScrollBar::handle:vertical {
-                background: rgba(55, 55, 55, %1);
-                border-radius: 3px;
-                margin-right: 2px;
-
-            }
-
-            QScrollBar::handle:vertical {
-                background-color: rgba(45, 45, 45, %1);
                 border-radius: 6px;
-                margin-right: 2px;
-
             }
 
             QScrollBar::handle:vertical {
                 background-color: rgba(45, 45, 45, %1);
-
                 min-height: 20px;
 
             }
@@ -204,16 +189,10 @@ private:
             QScrollBar::handle:vertical:hover {
 
                 background: rgba(25, 25, 25, %1);
-
-                background-color: rgba(0, 0, 0, %1);
-
-                background-color: rgba(0, 0, 0, %1);
-
             }
 
             QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
                 height: 0px;
-
                 background-color: transparent;
             }
 
@@ -221,24 +200,8 @@ private:
                 background-color: transparent;
                 height: 0px;
                 width: 0px;
-
-                border-radius: 6px;
             }
 
-            QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
-
-                border-radius: 6px;
-            }
-
-            QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
-                background: rgba(173, 173, 173, %1);
-                border-radius: 6px;
-            }
-
-            QScrollBar::groove:vertical {
-                background-color: none;
-                border: none;
-            }
         )";
     }
 
