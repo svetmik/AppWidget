@@ -44,6 +44,7 @@ class MainWindow : public QMainWindow
     QWidget *m_titlebar_widget;
     QHBoxLayout *m_custom_titlebar_layout;
 
+    // for linux OS
     int m_shadow_margin = 5; // Отступ для тени
 public:
     explicit MainWindow(QWidget *parent = nullptr);
@@ -96,14 +97,16 @@ private:
                 background-color: #e81123;
             }
             QPushButton:pressed {
-                border-image: url(:/icon/btn_close.png);
-                background-color: rgba(200, 41, 47, 60%);
+                border-image: url(:/icon/btn_close_hover.png);
+                background-color: #e81123;
             }
             QPushButton:!active {
                 border-image: url(:/icon/btn_close.png);
+
             }
             QPushButton:hover:!active {
-                border-image: url(:/icon/btn_close.png);
+                border-image: url(:/icon/btn_close_hover.png);
+                background-color: #e81123;
             }
         )";
 
