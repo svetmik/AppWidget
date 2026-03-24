@@ -178,6 +178,7 @@ private:
                 width: 7px;
                 margin: 0px;
 <<<<<<< HEAD
+<<<<<<< HEAD
                 margin-right: 3px;
             }
 
@@ -193,13 +194,26 @@ private:
                 background-color: rgba(45, 45, 45, %1);
                 border-radius: 6px;
 >>>>>>> 47a05d776223a50fbe412107c6d20a64d92c2628
+=======
+                margin-right: 2px;
+
+            }
+
+            QScrollBar::handle:vertical {
+                background-color: rgba(45, 45, 45, %1);
+                border-radius: 6px;
+>>>>>>> 47a05d776223a50fbe412107c6d20a64d92c2628
                 min-height: 20px;
 
             }
 
             QScrollBar::handle:vertical:hover {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 background: rgba(25, 25, 25, %1);
+=======
+                background-color: rgba(0, 0, 0, %1);
+>>>>>>> 47a05d776223a50fbe412107c6d20a64d92c2628
 =======
                 background-color: rgba(0, 0, 0, %1);
 >>>>>>> 47a05d776223a50fbe412107c6d20a64d92c2628
@@ -207,6 +221,7 @@ private:
 
             QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
                 height: 0px;
+<<<<<<< HEAD
 <<<<<<< HEAD
                 background-color: transparent;
             }
@@ -220,6 +235,12 @@ private:
             }
 
             QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+=======
+                border-radius: 6px;
+            }
+
+            QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+>>>>>>> 47a05d776223a50fbe412107c6d20a64d92c2628
                 background: rgba(173, 173, 173, %1);
                 border-radius: 6px;
             }
@@ -227,6 +248,9 @@ private:
             QScrollBar::groove:vertical {
                 background-color: none;
                 border: none;
+<<<<<<< HEAD
+>>>>>>> 47a05d776223a50fbe412107c6d20a64d92c2628
+=======
 >>>>>>> 47a05d776223a50fbe412107c6d20a64d92c2628
             }
         )";
