@@ -27,9 +27,17 @@
 #include <QPrinter>
 #include <QTcpSocket>
 
+
+#include <QFileDialog>
+#include <QStandardPaths>
+#include <QApplication>
+#include <QBuffer>
+
+
 #include <iostream>
 #include <thread>  // Required for std::this_thread::sleep_for
 #include <chrono>  // Required for duration types
+
 
 template<typename Widget>
 class BaseWidget;

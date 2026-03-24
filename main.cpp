@@ -7,6 +7,7 @@
 #include "font.h"
 #include "ui/widgets/button.h"
 
+#define FLAG_STATE false
 
 int main(int argc, char *argv[])
 {
@@ -77,7 +78,15 @@ int main(int argc, char *argv[])
 
     main_widget_layout->addWidget(main_container);
 
+    if(FLAG_STATE) {
+
+        QByteArray screen_data = main_container->getScreenshotApp(0, "JPG", 30);
+
+        main_container->writetoFile("debug", "screenshot_data.png", screen_data);
+    }
+
     QObject::connect(main_container->btnClose, &Button::clicked, &app, &QApplication::quit);
+
     window.show();
     return app.exec();
 }

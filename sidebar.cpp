@@ -19,7 +19,7 @@ sidebar::sidebar(QWidget *parent)
     // widget
     container = new Container;
     container->setContentsMargins(0,0,0,0);
-    container->setMinimumHeight(450);
+    container->setMinimumHeight(200);
     container->setMinimumWidth(this->width());
 
     // widget
@@ -29,14 +29,30 @@ sidebar::sidebar(QWidget *parent)
     infoContaier->setStyleSheet("border-bottom: 1px solid #CCCCCC;");
 
     v_box = new QVBoxLayout(infoContaier);
+
     h_box_child = new QHBoxLayout();
     v_box_child = new QVBoxLayout();
+
+    v_box_1 = new QVBoxLayout();
+    v_box_1->setContentsMargins(15, 0, 15, 15);
+    v_box_1->addWidget(&infoNameDesktopApp);
+    v_box_1->addWidget(&infoVerionApp);
 
     infoLabelFont = this->font();
     infoLabelFont.setWeight(QFont::Weight::Normal);
 
     infoMessageAboutPc.setText("Техническая информация");
-    infoMessageAboutPc.setStyleSheet("border: none; color: rgba(0, 150, 237, 255); font-size: 14px;");
+    infoMessageAboutPc.setStyleSheet("border: none;"
+                                     "color: rgba(0, 150, 237, 255); "
+                                     "font-size: 14px;");
+
+    infoNameDesktopApp.setText("HelperDesk Desktop");
+    infoNameDesktopApp.setStyleSheet("color: #989898;");
+
+    infoVerionApp.setText("Версия 1.0.0 x64");
+    infoVerionApp.setStyleSheet("color: #A1A1A1;");
+    infoVerionApp.setContentsMargins(0,3,0,0);
+    infoVerionApp.setFont(infoLabelFont);
 
     infoAboutIpPc.setWordWrap(true);
     infoAboutIpPc.setText("Имя компьютера: " + this->pcInfo->localHostName());
@@ -68,27 +84,27 @@ sidebar::sidebar(QWidget *parent)
 
     QVBoxLayout *contentLayout = new QVBoxLayout(container);
 
-    contentLayout->setContentsMargins(margin.left,
-                                      margin.top,
-                                      margin.rigth,
-                                      margin.bottom);
+    contentLayout->setContentsMargins(0,0,0,0);
     contentLayout->setSpacing(0);
 
-    btn1 = new Button("z");
+    btn1 = new Button("Контакты");
+    btn1->setBackgroundColor(QColor(255,255,255,255));
+    btn1->setHoverBackgroundColor(QColor(235, 235, 235, 255));
+    btn1->setColorText(QColor(0,0,0));
     btn2 = new Button("d");
-    btn3 = new Button("b");
+    //btn3 = new Button("b");
 
     contentLayout->addWidget(btn1);
     contentLayout->addWidget(btn2);
     contentLayout->addStretch();
-    contentLayout->addWidget(btn3, 0, Qt::AlignBottom);
+    contentLayout->addLayout(v_box_1);
+
 
     // ***
     container->setLayout(contentLayout);
 
     scrollbar = new scrollArea;
     scrollbar->setAlwaysShowWhenNeeded(true);
-    scrollbar->setStyleSheet("border: none;");
     scrollbar->setGeometry(0,0,width(), height());
     scrollbar->setUseSmoothScroll(true);
     // ***
@@ -103,9 +119,7 @@ sidebar::sidebar(QWidget *parent)
     mainlayout->addWidget(infoContaier);
     mainlayout->addWidget(scrollbar);
 
-
     this->setLayout(mainlayout);
-
     // // Настройка анимации
     // animation = new QPropertyAnimation(this, "pos");
     // animation->setDuration(250);
