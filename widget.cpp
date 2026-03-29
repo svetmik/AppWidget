@@ -203,6 +203,7 @@ bool Widget::setfilePathDialog(const QString &filePath) {
     QFileInfo info{filePath};
 
     if(info.exists() and info.size() <= maxSize) {
+
         this->m_filePath = filePath;
 
         return true;
@@ -237,11 +238,6 @@ void Widget::openFileDialog() {
     } else {
         qDebug() << "что то пошло не так";
     }
-}
-
-void Widget::closeWindowApp(QMainWindow &handleEvent) {
-
-    handleEvent.close();
 }
 
 

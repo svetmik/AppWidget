@@ -53,9 +53,6 @@ protected:
     // QObject connect slot
     void openFileDialog();
 
-    //QObject connect slot
-    void closeWindowApp(QMainWindow &handleEvent);
-
     // QObject connect slot
     void sendFileToMail();
 
