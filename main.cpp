@@ -86,7 +86,8 @@ int main(int argc, char *argv[])
     }
 
     QObject::connect(main_container->btnClose, &Button::clicked, &app, &QApplication::quit);
-
+    window.setMinimumSize(450,320);
+    window.setMaximumSize(650,400);
     window.show();
     return app.exec();
 }
