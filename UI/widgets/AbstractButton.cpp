@@ -1,13 +1,15 @@
 #include "AbstractButton.h"
 
 
-AbstractButton::AbstractButton(QWidget *parent)
+
+AbstractButton::AbstractButton(QWidget *parent, FlagText flag)
     : ui::uiWidget(parent)
     , _colorText(255, 255, 255) // colorText Button Widget
     , _m_Color_bg(0, 150, 237, 255)
     , _m_Color_hover(31,111,204)
     , _disabled(true)
     , _enabled(false)
+    , _alignFlag(flag)
 {
 
     this->setMouseTracking(true);
@@ -45,6 +47,31 @@ QSize AbstractButton::minimumSizeHint() const {
 
 // }
 
+
+void AbstractButton::setPaddingsWidth(const int &left, const int &right) {
+
+    this->_actual_padding_left = left;
+    this->_actual_padding_right = right;
+
+}
+
+void AbstractButton::updatePaddingWidth()
+{
+    // Здесь можно пересчитать отступы в зависимости от размера текста
+    QFontMetrics fm(this->font());
+
+    int widthFont = fm.horizontalAdvance(_text);
+
+    if(_actual_padding_left + _actual_padding_right > widthFont) {
+        _actual_padding_left = 0;
+        _actual_padding_right = 0;
+        qDebug() << "Fatal width";
+    }
+}
+
+
+
+
 void AbstractButton::paintEvent(QPaintEvent *event) {
     Q_UNUSED(event);
 
@@ -56,15 +83,20 @@ void AbstractButton::paintEvent(QPaintEvent *event) {
     p.drawRoundedRect(_rect, this->m_xRadiusRound, this->m_yRadiusRound);
 
     p.setRenderHint(QPainter::Antialiasing, false);
-    p.setRenderHint(QPainter::TextAntialiasing); // Специально для текста
+    p.setRenderHint(QPainter::TextAntialiasing);
     p.setPen(_colorText);
-    p.drawText(_rect, Qt::AlignCenter, _text);
 
-    // p.fillRect(_rect, hovered
-    //                       ?
-    //                       _m_Color_hover
-    //                       :
-    //                       _m_Color_bg);
+
+    // Используем отступы
+    QRect textRect = _rect.adjusted(
+        _actual_padding_left,
+        _actual_padding_top,
+        -_actual_padding_right,
+        -_actual_padding_bottom
+    );
+
+    p.drawText(textRect, static_cast<int>(_alignFlag), _text);
+
 
 }
 

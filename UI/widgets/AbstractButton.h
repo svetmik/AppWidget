@@ -5,16 +5,16 @@
 #include "basewidget.h"
 
 
+
 class AbstractButton : public ui::uiWidget {
 
     Q_OBJECT
 
-    Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged FINAL)
-    Q_PROPERTY(QColor colorText READ colorText WRITE setColorText NOTIFY colorTextChanged FINAL)
-    Q_PROPERTY(bool isDisable READ isDisable WRITE setDisable NOTIFY disableChanged FINAL)
-    Q_PROPERTY(bool isEnable READ isEnable WRITE setEnable NOTIFY  enableChanged FINAL)
-    Q_PROPERTY(QString text READ text WRITE setText NOTIFY textChanged FINAL)
-
+    Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor)
+    Q_PROPERTY(QColor colorText READ colorText WRITE setColorText)
+    Q_PROPERTY(bool isDisable READ isDisable WRITE setDisable)
+    Q_PROPERTY(bool isEnable READ isEnable WRITE setEnable)
+    Q_PROPERTY(QString text READ text WRITE setText)
 
 signals:
     void backgroundColorChanged(QColor color);
@@ -26,12 +26,19 @@ signals:
     //void clicked(bool flag = false);
 public:
 
-    AbstractButton(QWidget *parent = nullptr);
+    enum class FlagText {
+        leftText = Qt::AlignLeft | Qt::AlignVCenter,
+        rigthText = Qt::AlignRight | Qt::AlignVCenter,
+        center = Qt::AlignCenter,
+    };
+
+    AbstractButton(QWidget *parent = nullptr, FlagText flag = FlagText::center);
+
 
     void setBackgroundColor(const QColor &bgColor) {
         if(_m_Color_bg != bgColor) {
             _m_Color_bg = bgColor;
-            emit backgroundColorChanged(bgColor);
+            update();
         }
 
     }
@@ -41,6 +48,7 @@ public:
     void setHoverBackgroundColor(const QColor &hoverColor) {
         if(_m_Color_hover != hoverColor) {
             _m_Color_hover = hoverColor;
+            update();
         }
     }
 
@@ -49,7 +57,7 @@ public:
     void setColorText(const QColor &color) {
         if(_colorText != color) {
             _colorText = color;
-            emit backgroundColorChanged(color);
+            update();
         }
 
     }
@@ -59,7 +67,7 @@ public:
     void setDisable(bool disable = true) {
         if(_disabled != disable ) {
             _disabled = disable;
-            emit disableChanged(disable);
+            update();
         }
 
     }
@@ -70,7 +78,7 @@ public:
     void setEnable(bool enable = false) {
         if(_enabled != enable) {
             _enabled = enable;
-            emit enableChanged(enable);
+            update();
         }
 
     }
@@ -80,7 +88,8 @@ public:
     void setText(const QString &text) {
         if(_text != text) {
             _text = text;
-            emit textChanged(text);
+            update();
+            updatePaddingWidth();
         }
     }
     QString text() const { return _text; }
@@ -100,8 +109,16 @@ public:
     int yRadius() const {
         return m_yRadiusRound;
     }
-protected:
 
+    // default Align text Qt::AlignCenter
+    void setAlignText(const FlagText &flag) {
+        this->_alignFlag = flag;
+    }
+
+    void setPaddingsWidth(const int &left, const int &right);
+    void updatePaddingWidth();
+
+protected:
     void paintEvent(QPaintEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
     void leaveEvent(QEvent *event) override;
@@ -125,12 +142,22 @@ private:
 
     bool hovered = false;
 
-    //container
     QRect _rect;
 
     int m_xRadiusRound{0};
     int m_yRadiusRound{0};
+
+    //enum class
+    FlagText _alignFlag;
+
+    int _actual_padding_left = 0;
+    int _actual_padding_top = 0;
+    int _actual_padding_right = 0;
+    int _actual_padding_bottom = 0;
+
 };
+
+
 
 
 
