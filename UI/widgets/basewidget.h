@@ -5,7 +5,9 @@
 #include <QWidget>
 
 #include <QLabel>
+#include <QPushButton>
 
+#include <QIcon>
 #include <QStyleOption>
 #include <QStyle>
 #include <QMargins>
