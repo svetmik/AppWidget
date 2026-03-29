@@ -8,8 +8,9 @@ MainWindow::MainWindow(QWidget *parent)
     m_close_btn{nullptr},
     m_resize_border_width{6}
 {
+    // !!!
+    this->setVisibleTitleBtns(false);
 
-    this->setVisibleTitleBtns(true);
 #ifdef Q_OS_WIN
     m_hwnd = reinterpret_cast<HWND>(winId());
     const MARGINS aero_shadow_on = {1, 1, 1, 1};
