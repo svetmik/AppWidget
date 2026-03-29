@@ -33,10 +33,9 @@ protected:
 
 private:
 
-    Button *btn1;
-    Button *btn2;
-    Button *btn3;
-    Button *btn4;
+    LinkButton *link;
+    LinkButton *link_1;
+    LinkButton *link_2;
 
     Container *container;
     Container *infoContaier;

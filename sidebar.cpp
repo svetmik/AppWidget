@@ -79,23 +79,19 @@ sidebar::sidebar(QWidget *parent)
     v_box_child->addWidget(&infoAboutPrinter);
     v_box->addLayout(v_box_child);
 
-
-
-
     QVBoxLayout *contentLayout = new QVBoxLayout(container);
-
     contentLayout->setContentsMargins(0,0,0,0);
     contentLayout->setSpacing(0);
 
-    btn1 = new Button("Контакты");
-    btn1->setBackgroundColor(QColor(255,255,255,255));
-    btn1->setHoverBackgroundColor(QColor(235, 235, 235, 255));
-    btn1->setColorText(QColor(0,0,0));
-    btn2 = new Button("d");
-    //btn3 = new Button("b");
 
-    contentLayout->addWidget(btn1);
-    contentLayout->addWidget(btn2);
+    link = new LinkButton("link");
+    link_1 = new LinkButton("link_1");
+    link_2 = new LinkButton("link_2");
+
+
+    contentLayout->addWidget(link);
+    contentLayout->addWidget(link_1);
+    contentLayout->addWidget(link_2);
     contentLayout->addStretch();
     contentLayout->addLayout(v_box_1);
 
@@ -112,7 +108,6 @@ sidebar::sidebar(QWidget *parent)
 
 
     QVBoxLayout *mainlayout = new QVBoxLayout(this);
-
     mainlayout->setContentsMargins(0,0,0,0);
 
     // ***
@@ -120,10 +115,6 @@ sidebar::sidebar(QWidget *parent)
     mainlayout->addWidget(scrollbar);
 
     this->setLayout(mainlayout);
-    // // Настройка анимации
-    // animation = new QPropertyAnimation(this, "pos");
-    // animation->setDuration(250);
-    // animation->setEasingCurve(QEasingCurve::OutCubic);
 
     anim = new pa::PropertyAnimation(this, "pos");
 }
