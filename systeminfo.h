@@ -9,8 +9,7 @@
 #include <QHostInfo>
 #include <QNetworkInterface>
 
-class SystemInfo
-{
+class SystemInfo {
 
 private:
 
@@ -18,9 +17,10 @@ public:
 
     explicit SystemInfo();
 
-
     QString localIpAddressPc();
+
     QString localPrinterName();
+
     QString localHostName();
 
 };

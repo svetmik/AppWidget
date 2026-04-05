@@ -6,69 +6,66 @@ Widget::Widget(QWidget *parent)
     : ui::uiWidget{parent}
 
 {
-
     h_controlLayout = new QHBoxLayout(this); // main layout;
     h_controlLayout->setContentsMargins(0,0,0,0);
 
-    leftBar = new left_bar(this);
+    _leftPanel = new Container(this);
+    if(_leftPanel) {
+        _leftPanel->setFixedSize(70, maximumHeight());
+    }
+    _leftPanel->setStyleSheet("background-color: #3b4353;");
 
-    btnOpenSideBar = new Button("☰ Меню", leftBar);
-    btnOpenSideBar->resize(leftBar->width(), btnOpenSideBar->height() + 15);
-    btnOpenSideBar->setBackgroundColor(QColor(59,67,83));
-    btnOpenSideBar->setHoverBackgroundColor(QColor(83,94,116));
+    _menuButton = new Button("☰ Меню", _leftPanel);
+    if(_menuButton) {
+        _menuButton->resize(_leftPanel->width(), _menuButton->height() + 15);
+    }
+    _menuButton->setBackgroundColor(QColor(59,67,83));
+    _menuButton->setHoverBackgroundColor(QColor(83,94,116));
 
-    v_controlLayoutSidebar = new QVBoxLayout(); // layout для TextEdit, btnsend, btnAttchment, btnClose
-    v_controlLayoutSidebar->addWidget(leftBar);
+    v_controlLayoutSidebar = new QVBoxLayout();
+    v_controlLayoutSidebar->addWidget(_leftPanel);
 
+    // layout для TextEdit, btnsend, btnAttchment, btnClose
     v_controlLayoutMain= new QVBoxLayout(this);
-    v_controlLayoutMain->setAlignment(Qt::AlignBottom | Qt::AlignCenter);
-    v_controlLayoutMain->setContentsMargins(0,5,5,5);
+    v_controlLayoutMain->setContentsMargins(0,10,5,5);
 
-    edit = new TextEdit(this);
-    edit->setPlaceholderText("Описание");
+    _edit = new TextEdit(this);
+    _edit->setPlaceholderText("Описание");
 
-    btnSend = new Button("Отправить заявку в ИТ-отдел");
-    btnSend->setBorderRadius(3,3);
+    _submitButton = new Button("Отправить заявку в ИТ-отдел");
+    _attachButton = new Button("Прикрепить файл");
+    _exitAppButton = new Button("Закрыть программу");
 
-    btnAttachment = new Button("Прикрепить файл");
-    btnAttachment->setBorderRadius(3,3);
 
-    btnClose = new Button("Закрыть программу");
-    btnClose->setBorderRadius(3,3);
-
-    v_controlLayoutMain->addWidget(edit);
-    v_controlLayoutMain->addWidget(btnSend);
-    v_controlLayoutMain->addWidget(btnAttachment);
-    v_controlLayoutMain->addWidget(btnClose);
+    v_controlLayoutMain->addWidget(_edit);
+    v_controlLayoutMain->addWidget(_submitButton);
+    v_controlLayoutMain->addWidget(_attachButton);
+    v_controlLayoutMain->addWidget(_exitAppButton);
 
 
     h_controlLayout->addLayout(v_controlLayoutSidebar);
     h_controlLayout->addLayout(v_controlLayoutMain);
 
-
+    // Боковая панель
     _sidebar = new sidebar(this);
-    _sidebar->setGeometry(_sidebar->x(), _sidebar->y(), _sidebar->width(), this->height());
 
+    // overlay shadow
     _overlay = new overlay(this);
-    _overlay->hide();
 
-    QObject::connect(btnOpenSideBar, &Button::clicked, this, &Widget::toggle);
-    QObject::connect(btnAttachment, &Button::clicked, this, &Widget::openFileDialog);
-    QObject::connect(btnSend, &Button::clicked, this, &Widget::sendFileToMail);
+
+    QObject::connect(_menuButton, &Button::clicked, this, &Widget::hookToggle);
+    QObject::connect(_attachButton, &Button::clicked, this, &Widget::openFileDialog);
+    QObject::connect(_submitButton, &Button::clicked, this, &Widget::sendFileToMail);
 }
 
-Widget::~Widget()
+Widget::~Widget() = default;
+
+
+void Widget::hookToggle()
 {
-
-}
-
-
-void Widget::toggle()
-{
-    _sidebar->raise(); // перемещаем виджет на передний план;
-
-    _sidebar->updateState();
-
+    if(_sidebar) {
+        _sidebar->updateState();
+    }
 }
 
 void Widget::sendFileToMail() {
@@ -89,7 +86,7 @@ void Widget::sendFileToMail() {
 
     message.setSubject(subject); // Тема сообщения
 
-    MimeText text(edit->toPlainText()); // Текст сообщени
+    MimeText text(_edit->toPlainText()); // Текст сообщени
 
     QFile addAttachement(getfilePathDialog());
     QFile ZipFile("file.zip");
@@ -133,7 +130,7 @@ void Widget::sendFileToMail() {
         return;
     } else {
         //очистка поля ввода текста
-        this->edit->clear();
+        this->_edit->clear();
     }
 
 
@@ -221,7 +218,7 @@ QString Widget::getfilePathDialog() const {
 
 void Widget::openFileDialog() {
 
-    // Desktop Path
+    // Dir Desktop
     QString dirDestopPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
     dirDestopPath = QDir::toNativeSeparators(dirDestopPath);
 
@@ -236,7 +233,7 @@ void Widget::openFileDialog() {
     if(setfilePathDialog(filePath)) {
         qDebug() << "успешно";
     } else {
-        qDebug() << "что то пошло не так";
+        qDebug() << "Файл не был выбран";
     }
 }
 
@@ -257,14 +254,12 @@ void Widget::paintEvent(QPaintEvent *event) {
 
 void Widget::resizeEvent(QResizeEvent *event) {
 
-
     if (_sidebar) {
-        _sidebar->setGeometry(_sidebar->x(), _sidebar->y(), _sidebar->width(), height()); // Занимаем весь родительский
-        _sidebar->update(); // Принудительно перерисовать
+        _sidebar->setGeometry(QRect(QPoint(_sidebar->pos()), QSize(size())));
     }
 
 
     if(_overlay) {
-        _overlay->resize(event->size().width(), event->size().height());
+        _overlay->setGeometry(rect());
     }
 }

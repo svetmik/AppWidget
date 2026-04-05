@@ -34,6 +34,8 @@ private:
 
     void defaultStyles();
 
+    void Settings();
+
 };
 
 #endif // BUTTON_H

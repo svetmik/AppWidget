@@ -3,14 +3,13 @@
 
 
 
-
-#include "ui/widgets/button.h"
 #include "UI/widgets/basewidget.h"
+#include "ui/widgets/button.h"
 #include "scrollarea.h"
 #include "container.h"
 #include "propertyanimation.h"
 #include "systeminfo.h"
-
+#include "sidebar_panel.h"
 
 class overlay;
 
@@ -21,8 +20,11 @@ public:
    explicit sidebar(QWidget *parent = nullptr);
 
    void toggle();
+
    void setVisibleState(bool stateVisible = false);
+
    bool visibleState();
+
    void updateState();
 
    SystemInfo *pcInfo;
@@ -31,35 +33,13 @@ protected:
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
 
+    void resizeEvent(QResizeEvent *event) override;
+
 private:
 
-    LinkButton *link;
-    LinkButton *link_1;
-    LinkButton *link_2;
+    Sidebar_panel *panel_widget;
 
-    Container *container;
-    Container *infoContaier;
-
-    QLabel infoMessageAboutPc;
-
-    QLabel infoAboutPrinter;
-    QLabel infoAboutIpPc;
-    QLabel infoAboutDomainName;
-
-    QLabel infoVerionApp;
-    QLabel infoNameDesktopApp;
-
-    QVBoxLayout *v_box;
-    QVBoxLayout *v_box_child;
-
-    QVBoxLayout *v_box_1;
-    QHBoxLayout *h_box_child;
-
-
-    scrollArea *scrollbar;
     pa::PropertyAnimation *anim;
-
-    QFont infoLabelFont;
 
     bool isVisible = false;
 };
@@ -69,13 +49,12 @@ class overlay : public ui::uiWidget
 {
     Q_OBJECT
 public:
-    void extracted(QWidget *&child);
+
     explicit overlay(QWidget *parent = nullptr);
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
 
-    QWidget *findBarWidget;
 
 };
 

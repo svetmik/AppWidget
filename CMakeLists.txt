@@ -30,13 +30,11 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         font.cpp
         font.h
         font_styles.h
-        left_bar.cpp
         style_widget.cpp
         style_widget.h
         textedit.cpp
         textedit.h
         components.qrc
-        left_bar.h
         global_objects.h
         UI/widgets/AbstractButton.cpp
         UI/widgets/AbstractButton.h
@@ -50,7 +48,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Resources/ApplicationIcon.png
         resources.qrc
         MainWindow.cpp MainWindow.h
-        UI/button.qss UI/TextEdit.qss
+        UI/style.qss
         propertyanimation.h propertyanimation.cpp
         zipreader_p.h
         zipwriter_p.h
@@ -97,6 +95,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         header/SmtpMime
         header/smtpmime_global.h
         header/SmtpMimeConfig.cmake
+        sidebar_panel.h sidebar_panel.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET app APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

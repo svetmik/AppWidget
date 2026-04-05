@@ -5,6 +5,8 @@
 #include "MainWindow.h"
 #include "widget.h"
 #include "font.h"
+
+
 #include "ui/widgets/button.h"
 
 #define FLAG_STATE false
@@ -85,7 +87,7 @@ int main(int argc, char *argv[])
         main_container->writetoFile("debug", "screenshot_data.png", screen_data);
     }
 
-    QObject::connect(main_container->btnClose, &Button::clicked, &app, &QApplication::quit);
+    QObject::connect(main_container->_exitAppButton, &Button::clicked, &app, &QApplication::quit);
     window.setMinimumSize(450,320);
     window.setMaximumSize(650,400);
     window.show();

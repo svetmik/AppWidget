@@ -10,13 +10,13 @@
 #include <QScrollArea>
 #include <QEasingCurve>
 
-class scrollArea : public QScrollArea
+class ScrollArea : public QScrollArea
 {
     Q_OBJECT
     Q_PROPERTY(int scrollOpacity READ scrollOpacity WRITE setScrollOpacity)
 
 public:
-    explicit scrollArea(QWidget *parent = nullptr)
+    explicit ScrollArea(QWidget *parent = nullptr)
         : QScrollArea(parent)
         , m_scrollOpacity(0)
         , m_smoothScrollEnabled(true)
@@ -38,20 +38,20 @@ public:
         m_scrollAnimation->setDuration(10);
 
         connect(m_scrollAnimation, &QPropertyAnimation::finished,
-                this, &scrollArea::onScrollAnimationFinished);
+                this, &ScrollArea::onScrollAnimationFinished);
 
         // Таймер для скрытия полосы прокрутки
         m_scrollHideTimer = new QTimer(this);
         m_scrollHideTimer->setSingleShot(true);
         m_scrollHideTimer->setInterval(1500);
         connect(m_scrollHideTimer, &QTimer::timeout,
-                this, &scrollArea::hideScrollBar);
+                this, &ScrollArea::hideScrollBar);
 
         // Начальное состояние
         updateScrollBarStyle();
 
         // Проверяем сразу нужен ли скролл
-        QTimer::singleShot(100, this, &scrollArea::checkScrollNeeded);
+        QTimer::singleShot(100, this, &ScrollArea::checkScrollNeeded);
     }
 
     void setUseSmoothScroll(bool enable) { m_smoothScrollEnabled = enable; }
@@ -132,13 +132,13 @@ protected:
     void showEvent(QShowEvent *event) override {
         QScrollArea::showEvent(event);
         // Проверяем нужен ли скролл при показе
-        QTimer::singleShot(50, this, &scrollArea::checkScrollNeeded);
+        QTimer::singleShot(50, this, &ScrollArea::checkScrollNeeded);
     }
 
     void resizeEvent(QResizeEvent *event) override {
         QScrollArea::resizeEvent(event);
         // Проверяем нужен ли скролл при изменении размера
-        QTimer::singleShot(50, this, &scrollArea::checkScrollNeeded);
+        QTimer::singleShot(50, this, &ScrollArea::checkScrollNeeded);
     }
 
     // Обработка когда виджет меняется
@@ -146,10 +146,10 @@ protected:
         QScrollArea::setWidget(widget);
         if (widget) {
             connect(widget, &QWidget::destroyed, this, [this]() {
-                QTimer::singleShot(0, this, &scrollArea::checkScrollNeeded);
+                QTimer::singleShot(0, this, &ScrollArea::checkScrollNeeded);
             });
         }
-        QTimer::singleShot(100, this, &scrollArea::checkScrollNeeded);
+        QTimer::singleShot(100, this, &ScrollArea::checkScrollNeeded);
     }
 
 private slots:

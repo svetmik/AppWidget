@@ -1,13 +1,18 @@
-QPushButton#sendButton {
-    background-color: rgb(41, 137, 247);
-    border-radius: 4px;
-    color: white;
-    height: 40px;
-    text-align: center;
-    line-height: 1.5;
+
+
+#widget_container {
+    border-bottom: 1px solid #CCCCCC;
 }
 
-QPushButton#sendButton:hover {
-
-    background-color: rgb(31, 111, 204);
+#widget_label_row {
+    border: none;
+    color: #303030;
+    font-weight: normal;
 }
+
+#widget_label_title {
+    border: none;
+    color: rgba(0, 150, 237, 255);
+    font-size: 14px;
+}
+

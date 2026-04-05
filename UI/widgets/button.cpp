@@ -29,6 +29,7 @@ LinkButton::LinkButton(QWidget *parent)
     : AbstractButton{parent}
 {
     this->defaultStyles();
+    this->Settings();
 };
 
 
@@ -36,6 +37,8 @@ LinkButton::LinkButton(const QString &title, QWidget *parent, const FlagText fla
     : AbstractButton{parent}
 {
     this->defaultStyles();
+    this->Settings();
+
     setText(title);
     setAlignText(flag);
     setPaddingsWidth(25,25);
@@ -53,3 +56,6 @@ void LinkButton::defaultStyles() {
     setColorText(textColor);
 }
 
+void LinkButton::Settings() {
+    this->setBorderRadius(0,0);
+}

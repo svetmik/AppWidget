@@ -4,9 +4,10 @@
 #include "UI/widgets/basewidget.h"
 
 #include "global_objects.h"
-#include "left_bar.h"
 #include "textedit.h"
 #include "systeminfo.h"
+#include "container.h"
+
 #include "zipwriter_p.h"
 #include "header/SmtpMime"
 
@@ -18,18 +19,27 @@ public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
 
-    Button *btnSend;
-    Button *btnAttachment;
-    Button *btnClose;
-    Button *btnOpenSideBar;
+    // mail send;
+    Button *_submitButton;
+
+    // attch file;
+    Button *_attachButton;
+
+    // exit App;
+    Button *_exitAppButton;
+
+    // open sidebar Panel;
+    Button *_menuButton;
 
     QHBoxLayout *h_controlLayout;
     QVBoxLayout *v_controlLayoutSidebar;
     QVBoxLayout *v_controlLayoutMain;
 
+    //
+    Container *_leftPanel;
 
-    TextEdit *edit;
-    left_bar *leftBar;
+    TextEdit *_edit;
+
 
     // get screen_data from monitor
     QByteArray getScreenshotApp(int screen, const char *format, int quality = -1);
@@ -48,12 +58,12 @@ protected:
     SystemInfo pc;
 
     // state left sidebar ON || OFF
-    void toggle();
+    void hookToggle();
 
-    // QObject connect slot
+    // func for QObject connect slot
     void openFileDialog();
 
-    // QObject connect slot
+    // func for QObject connect slot
     void sendFileToMail();
 
     // create zip arhive

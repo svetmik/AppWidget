@@ -1,6 +1,0 @@
-QTextEdit#TextInput {
-
-    background-color: rgb(250, 253, 222);
-    color:black;
-
-}

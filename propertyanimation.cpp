@@ -3,16 +3,16 @@
 pa::PropertyAnimation::PropertyAnimation(ui::uiWidget *parent)
     : QPropertyAnimation(parent)
 {
-    this->setDurationf(250);
-    this->setEsingCurvef(QEasingCurve::OutCubic);
+    this->setDurationf(370);
+    this->setEsingCurvef(QEasingCurve::OutQuint);
 }
 
 pa::PropertyAnimation::PropertyAnimation(ui::uiWidget *parent, const QByteArray &prop)
     : QPropertyAnimation(parent, prop)
 
 {
-    this->setDurationf(250);
-    this->setEsingCurvef(QEasingCurve::OutCubic);
+    this->setDurationf(370);
+    this->setEsingCurvef(QEasingCurve::OutQuint);
 }
 
 void pa::PropertyAnimation::setStartAnimation(const QVariant &begin_val, const QVariant &end_val, int microsecond) {

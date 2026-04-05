@@ -19,6 +19,7 @@ AbstractButton::AbstractButton(QWidget *parent, FlagText flag)
 
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
+    this->setBorderRadius(3,3);
 
     _rect = rect();
 }
