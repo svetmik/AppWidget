@@ -18,11 +18,11 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
-
     MainWindow window;
 
     QFont qAppFont;
     Font loadFont;
+
     loadFont.loadFontForWidget(styleFont::FONT_REGULAR);
     const auto fontFamily = loadFont.fontFamily();
 
@@ -46,12 +46,6 @@ int main(int argc, char *argv[])
 
     // Set the Icon here.
     window.setWindowIcon(QIcon(":/icon/ApplicationIcon.png"));
-
-    // // Set window size.
-    // int window_width = 1024, window_height = 768;
-    // window.setGeometry(QApplication::primaryScreen()->geometry().width() / 2 - window_width / 2,
-    //               QApplication::primaryScreen()->geometry().height() / 2 - window_height / 2,
-    //               window_width, window_height);
     window.setMinimumSize(400, 300);
     window.resize(window.minimumSize());
 
@@ -88,8 +82,8 @@ int main(int argc, char *argv[])
     }
 
     QObject::connect(main_container->_exitAppButton, &Button::clicked, &app, &QApplication::quit);
-    window.setMinimumSize(450,320);
-    window.setMaximumSize(650,400);
+    window.setMinimumSize(550,350);
+    window.setMaximumSize(550,350);
     window.show();
     return app.exec();
 }

@@ -12,7 +12,11 @@ void style_widget::setOpenStyleQss(const QString &fileName)  {
 
     readStyleQss.setFileName(_fileName);
 
-    readStyleQss.open(QFile::ReadOnly);
+    if(readStyleQss.exists()) {
+
+        readStyleQss.open(QFile::ReadOnly);
+
+    }
 
 }
 

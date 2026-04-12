@@ -3,6 +3,8 @@
 Sidebar_panel::Sidebar_panel(QWidget *parent)
     : ui::uiWidget{parent}
 {
+    //base style.qss
+    includeStyle();
 
     infoLabelFont = this->font();
     infoLabelFont.setWeight(QFont::Weight::Normal);
@@ -11,95 +13,102 @@ Sidebar_panel::Sidebar_panel(QWidget *parent)
     _scrollArea->setAlwaysShowWhenNeeded(true);
     _scrollArea->setUseSmoothScroll(true);
 
-    _container = new Container(_scrollArea);
-    _container->setContentsMargins(0,0,0,0);
-    _container->setMinimumHeight(200);
-
-    _layout_container = new QVBoxLayout(_container);
-    _layout_container->setContentsMargins(0, 0, 0, 0);
-    _layout_container->setSpacing(0);
-
-
-    v_box_1 = new QVBoxLayout();
-    v_box_1->setContentsMargins(15, 0, 15, 15);
-    v_box_1->addWidget(&infoNameDesktopApp);
-    v_box_1->addWidget(&infoVerionApp);
-
-    infoNameDesktopApp.setText("HelperDesk Desktop");
-    infoNameDesktopApp.setStyleSheet("color: #989898;");
-
-    infoVerionApp.setText("Версия 1.0.0 x64");
-    infoVerionApp.setStyleSheet("color: #A1A1A1;");
-    infoVerionApp.setContentsMargins(0,3,0,0);
-    infoVerionApp.setFont(infoLabelFont);
-
-    _scrollArea->setWidget(_container);
-
-    _link_btn = new LinkButton("btn");
-    _layout_container->addWidget(_link_btn);
-    _layout_container->addStretch();
-    _layout_container->addLayout(v_box_1);
-
     // Главный лейаут самого виджета только для того, чтобы растянуть ScrollArea
     _layout_main = new QVBoxLayout(this);
     _layout_main->setContentsMargins(0, 0, 0, 0);
 
     this->setupHeader(_layout_main);
 
+    this->setupMain(_scrollArea);
+
     _layout_main->addWidget(_scrollArea);
+
 
     this->setLayout(_layout_main);
 }
 
-void Sidebar_panel::setStyle(QWidget *widget){
-
+void Sidebar_panel::includeStyle() {
 
     qss.setOpenStyleQss(":/UI/style.qss");
 
     qss.readAll();
 
-    widget->setStyleSheet(qss.getStyle());
-
 }
+
+void Sidebar_panel::setStyle(QWidget *widget){
+
+    widget->setStyleSheet(qss.getStyle());
+}
+
 
 void Sidebar_panel::setupHeader(QLayout *parentLayout) {
 
+    const auto header_box = createHeader();
     const auto main_header_layout = vLayout();
+
     const auto info_layout = hLayout();
     const auto info_text = vLayout();
-    const auto header_box = createHeader();
+
+    if(!header_box) return;
+
+    header_box->setMinimumHeight(Ui::headerHeight);
+
+    header_box->setLayout(main_header_layout);
+    main_header_layout->setContentsMargins(15,5,15,0);
+
+    info_layout->addWidget(infoRowTitle("Техническая информация", false), 0, Qt::AlignTop | Qt::AlignHCenter);
+
+    info_text->addWidget(infoRowText("Имя компьютера", pcInfo->localHostName()));
+    info_text->addWidget(infoRowText("IP-адрес (IPv4)",  pcInfo->localIpAddressPc()));
+    info_text->addWidget(infoRowText("Принтер по умолчанию", pcInfo->localPrinterName()));
+
+    info_text->setContentsMargins(QMargins(10,0,5,8));
+
+    //row title
+    main_header_layout->addLayout(info_layout);
+    // rows text
+    main_header_layout->addLayout(info_text);
 
     setStyle(this);
 
-    if(header_box) {
-
-        header_box->setMinimumHeight(Ui::headerHeight);
-        header_box->setLayout(main_header_layout);
-
-        if(info_layout) {
-
-            auto row_title = infoRowTitle("Техническая информация", false);
-
-            info_layout->addWidget(row_title, 0, Qt::AlignTop | Qt::AlignHCenter);
-
-        }
-
-        if(info_text) {
-
-            info_text->setContentsMargins(Ui::margin, Ui::margin_5, Ui::margin, 0);
-
-            info_text->addWidget(infoRowText("Имя компьютера: ", pcInfo->localHostName()));
-            info_text->addWidget(infoRowText("IP-адрес (IPv4): ",  pcInfo->localIpAddressPc()));
-            info_text->addWidget(infoRowText("Принтер по умолчанию: ", pcInfo->localPrinterName()));
-        }
-        if(main_header_layout) {
-
-            main_header_layout->addLayout(info_layout);
-            main_header_layout->addLayout(info_text);
-        }
-    }
-
     parentLayout->addWidget(header_box);
+}
+
+void Sidebar_panel::setupMain(ScrollArea *parent) {
+
+    const auto main_box = createMain();
+    const auto main_layout_box = vLayout();
+
+    const auto footer_layout = vLayout();
+
+    if(!main_box) return ;
+
+    main_box->setMinimumHeight(Ui::kMinHeight);
+    main_box->setLayout(main_layout_box);
+
+    main_layout_box->setSpacing(0);
+
+    footer_layout->setContentsMargins(15,0,15,15);
+
+    const auto appName = infoRowText("HelperDesk");
+    appName->setObjectName("widget_label_appName");
+
+    const auto appVersion = infoRowText("Версия 1.0.1 x64");
+    appVersion->setObjectName("widget_label_appVersion");
+    appVersion->setContentsMargins(0,3,0,0);
+    appVersion->setFont(infoLabelFont);
+
+    footer_layout->addWidget(appName);
+    footer_layout->addWidget(appVersion);
+
+    main_layout_box->addStretch();
+    main_layout_box->addLayout(footer_layout);
+
+
+    setStyle(this);
+
+    parent->setWidget(main_box);
+
 }
 
 // qss example #header_panel
@@ -107,21 +116,37 @@ ui::uiWidget *Sidebar_panel::createHeader() {
 
     auto header = new Container();
 
-    header->setObjectName("widget_container");
+    header->setObjectName("widget_container_header");
 
     return header;
 }
 
-QVBoxLayout *Sidebar_panel::vLayout() {
 
-    auto layout = new QVBoxLayout();
+ui::uiWidget *Sidebar_panel::createMain() {
+
+    auto main = new Container();
+
+    main->setContentsMargins(0,0,0,0);
+
+    main->setObjectName("widget_container_main");
+
+    return main;
+}
+
+QVBoxLayout *Sidebar_panel::vLayout(QWidget *parent) {
+
+    auto layout = new QVBoxLayout(parent);
+
+    layout->setContentsMargins(0,0,0,0);
 
     return layout;
 }
 
-QHBoxLayout *Sidebar_panel::hLayout() {
+QHBoxLayout *Sidebar_panel::hLayout(QWidget *parent) {
 
-    auto layout = new QHBoxLayout();
+    auto layout = new QHBoxLayout(parent);
+
+    layout->setContentsMargins(0,0,0,0);
 
     return layout;
 }
@@ -131,7 +156,7 @@ QLabel *Sidebar_panel::infoRowTitle(const QString &text, bool wrap)
 {
     auto *label = new QLabel(this);
 
-    label->setText(text);
+    label->setText(QString("%1").arg(text));
 
     label->setObjectName("widget_label_title");
 
@@ -158,10 +183,11 @@ QLabel *Sidebar_panel::infoRowText(const QString &text, const QString &value, bo
 {
     auto *label = new QLabel(this);
 
-    label->setText(text + " " + value);
-
+    const auto row = QString("%1: %2")
+                         .arg(text)
+                         .arg(value);
+    label->setText(row);
     label->setObjectName("widget_label_row");
-
     label->setWordWrap(wrap);
 
     return label;

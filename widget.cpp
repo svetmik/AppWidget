@@ -27,7 +27,7 @@ Widget::Widget(QWidget *parent)
 
     // layout для TextEdit, btnsend, btnAttchment, btnClose
     v_controlLayoutMain= new QVBoxLayout(this);
-    v_controlLayoutMain->setContentsMargins(0,10,5,5);
+    v_controlLayoutMain->setContentsMargins(QMargins(0,6,5,5));
 
     _edit = new TextEdit(this);
     _edit->setPlaceholderText("Описание");
@@ -255,7 +255,7 @@ void Widget::paintEvent(QPaintEvent *event) {
 void Widget::resizeEvent(QResizeEvent *event) {
 
     if (_sidebar) {
-        _sidebar->setGeometry(QRect(QPoint(_sidebar->pos()), QSize(size())));
+        _sidebar->setGeometry(QRect(QPoint(_sidebar->pos()), QSize(this->size())));
     }
 
 

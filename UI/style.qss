@@ -1,6 +1,6 @@
 
 
-#widget_container {
+#widget_container_header {
     border-bottom: 1px solid #CCCCCC;
 }
 
@@ -16,3 +16,12 @@
     font-size: 14px;
 }
 
+
+#widget_label_appName {
+    color: #989898;
+}
+
+
+#widget_label_appVersion {
+    color: #A1A1A1;
+}

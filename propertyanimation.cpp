@@ -3,7 +3,7 @@
 pa::PropertyAnimation::PropertyAnimation(ui::uiWidget *parent)
     : QPropertyAnimation(parent)
 {
-    this->setDurationf(370);
+    this->setDurationf(270);
     this->setEsingCurvef(QEasingCurve::OutQuint);
 }
 
@@ -11,7 +11,7 @@ pa::PropertyAnimation::PropertyAnimation(ui::uiWidget *parent, const QByteArray 
     : QPropertyAnimation(parent, prop)
 
 {
-    this->setDurationf(370);
+    this->setDurationf(270);
     this->setEsingCurvef(QEasingCurve::OutQuint);
 }
 
