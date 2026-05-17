@@ -68,13 +68,9 @@ QString &FileController::file_attachment()  {
 
 void FileController::clearFile() {
 
-    if(!m_filePath.isEmpty()) {
+    m_filePath.clear();
 
-        m_filePath.clear();
-
-        emit checkCleared();
-    }
-
+    emit checkCleared();
 }
 
 bool FileController::checkFileSize(const QString &filePath) {
