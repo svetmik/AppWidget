@@ -2,6 +2,7 @@
 #define WIDGET_H
 
 #include "UI/widgets/basewidget.h"
+#include "UI/Controller/filecontroller.h"
 
 #include "global_objects.h"
 #include "textedit.h"
@@ -11,6 +12,8 @@
 #include "zipwriter_p.h"
 #include "header/SmtpMime"
 
+#include "style_widget.h"
+
 class Widget : public ui::uiWidget
 {
     Q_OBJECT
@@ -18,6 +21,9 @@ class Widget : public ui::uiWidget
 public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
+
+
+    style_widget qss;
 
     // mail send;
     Button *_submitButton;
@@ -40,7 +46,6 @@ public:
 
     TextEdit *_edit;
 
-
     // get screen_data from monitor
     QByteArray getScreenshotApp(int screen, const char *format, int quality = -1);
 
@@ -54,6 +59,8 @@ protected:
     void hideEvent(QHideEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
 
+    void connectController();
+
     // infomation ip-pc, domainName, printerName
     SystemInfo pc;
 
@@ -61,22 +68,15 @@ protected:
     void hookToggle();
 
     // func for QObject connect slot
-    void openFileDialog();
-
-    // func for QObject connect slot
     void sendFileToMail();
 
     // create zip arhive
     int zipFileAttachement(const char *FileNamePicture, const char *ZipFileName, QByteArray &data);
 
-    // var get FilePath Dialog
-    QString m_filePath{};
+    QFont fontWeight;
+private:
 
-    // ;
-    bool setfilePathDialog(const QString &filePath);
-
-    // get
-    QString getfilePathDialog() const;
+    FileController *controller;
 
 };
 #endif // WIDGET_H

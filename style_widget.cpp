@@ -6,6 +6,18 @@ style_widget::style_widget(QWidget *parent)
 
 }
 
+void style_widget::includeStyle() {
+
+    setOpenStyleQss(filePathUiStyle);
+
+    readAll();
+}
+
+void style_widget::setStyle(QWidget *parent) {
+
+    parent->setStyleSheet(getStyle());
+}
+
 void style_widget::setOpenStyleQss(const QString &fileName)  {
 
     this->_fileName = fileName;

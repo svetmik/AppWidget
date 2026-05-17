@@ -5,24 +5,34 @@
 #include <QFile>
 #include <QString>
 
+namespace {
+    constexpr char filePathUiStyle[] = ":/UI/style.qss";
+}
+
 
 class style_widget : public QWidget
 {
     Q_OBJECT
 public:
+
     explicit style_widget(QWidget *parent = nullptr);
 
+    void includeStyle();
+
+    void setStyle(QWidget *parent = nullptr);
+
+private:
+
+
+    QString _fileName;
+    QFile readStyleQss;
 
     void setOpenStyleQss(const QString &fileName);
 
     void readAll();
 
+    //подключить стили к виджету
     QString getStyle();
-
-private:
-
-    QString _fileName;
-    QFile readStyleQss;
 
 signals:
 };

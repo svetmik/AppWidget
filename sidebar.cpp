@@ -66,7 +66,7 @@ void sidebar::updateState() {
 
 void sidebar::resizeEvent(QResizeEvent *event) {
     if(panel_widget) {
-        panel_widget->setGeometry(QRect(panel_widget->pos(), QSize(size())));
+        panel_widget->setGeometry(QRect(panel_widget->pos(), QSize(this->size())));
     }
 }
 

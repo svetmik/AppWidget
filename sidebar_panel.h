@@ -24,9 +24,6 @@ signals:
 
 private:
 
-    style_widget qss;
-    void setStyle(QWidget *widget);
-    void includeStyle();
 
     void setupHeader(QLayout *parentLayout = nullptr);
     ui::uiWidget *createHeader();

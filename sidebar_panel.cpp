@@ -3,9 +3,6 @@
 Sidebar_panel::Sidebar_panel(QWidget *parent)
     : ui::uiWidget{parent}
 {
-    //base style.qss
-    includeStyle();
-
     infoLabelFont = this->font();
     infoLabelFont.setWeight(QFont::Weight::Normal);
 
@@ -18,27 +15,14 @@ Sidebar_panel::Sidebar_panel(QWidget *parent)
     _layout_main->setContentsMargins(0, 0, 0, 0);
 
     this->setupHeader(_layout_main);
-
     this->setupMain(_scrollArea);
 
     _layout_main->addWidget(_scrollArea);
 
-
     this->setLayout(_layout_main);
 }
 
-void Sidebar_panel::includeStyle() {
 
-    qss.setOpenStyleQss(":/UI/style.qss");
-
-    qss.readAll();
-
-}
-
-void Sidebar_panel::setStyle(QWidget *widget){
-
-    widget->setStyleSheet(qss.getStyle());
-}
 
 
 void Sidebar_panel::setupHeader(QLayout *parentLayout) {
@@ -68,8 +52,6 @@ void Sidebar_panel::setupHeader(QLayout *parentLayout) {
     main_header_layout->addLayout(info_layout);
     // rows text
     main_header_layout->addLayout(info_text);
-
-    setStyle(this);
 
     parentLayout->addWidget(header_box);
 }
@@ -105,7 +87,7 @@ void Sidebar_panel::setupMain(ScrollArea *parent) {
     main_layout_box->addLayout(footer_layout);
 
 
-    setStyle(this);
+    //setStyle(this);
 
     parent->setWidget(main_box);
 

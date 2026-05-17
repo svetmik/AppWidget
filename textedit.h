@@ -12,8 +12,6 @@ public:
 
     explicit TextEdit(QWidget *parent = nullptr);
 
-
-
 signals:
 };
 
