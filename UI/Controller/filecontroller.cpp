@@ -38,27 +38,18 @@ void FileController::filePath(Button *btn) {
 
     if(checkFileSize(filePath)) {
 
-        if(!filePath.isEmpty()) {
+        this->m_filePath = filePath;
 
-            this->m_filePath = filePath;
+        emit selectFile(m_filePath);
 
-            emit selectFile(m_filePath);
-        }
-    } else {
+    } else if(!checkFileSize(filePath)) {
+
         clearFile();
-    }
 
-    if(!checkFileSize(filePath)) {
-
-        if(!filePath.isEmpty()) {
-            qDebug() << "гг файл превышает 25 мбайт...";
-        }
+        qDebug() << "Размер файла превышает 25 мбайт";
     }
 
 }
-
-
-
 
 
 QString &FileController::file_attachment()  {
@@ -79,8 +70,12 @@ bool FileController::checkFileSize(const QString &filePath) {
 
     QFileInfo info{filePath};
 
+    if(filePath.isEmpty()) {
+        return false;
+    }
     if(info.exists() and info.size() <= maxSize) {
         return true;
     }
+
     return false;
 }
