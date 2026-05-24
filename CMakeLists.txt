@@ -98,6 +98,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         sidebar_panel.h sidebar_panel.cpp
         UI/Controller/filecontroller.h
         UI/Controller/filecontroller.cpp
+        UI/overlay/overlay_box.cpp
+        UI/overlay/overlay_box.h
+        UI/overlay/box.h
+        UI/overlay/box.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET app APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

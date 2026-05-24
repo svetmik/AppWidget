@@ -16,7 +16,7 @@ public:
 
     void controllerSelectFile(Button *btn);
 
-    QString &file_attachment();
+    const QString &file_attachment() const ;
 
     void clearFile();
 
@@ -30,11 +30,18 @@ signals:
 
     void checkCleared();
 
+
+    void showModuleBox();
+
+    void showModuleBoxEmptyFile();
+
+    void successSendMail();
 private:
 
     QString m_filePath;
 
     bool checkFileSize(const QString &filePath);
+
 
 };
 

@@ -1,4 +1,3 @@
-// crollarea.h
 #ifndef SCROLLAREA_H
 #define SCROLLAREA_H
 

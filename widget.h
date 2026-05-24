@@ -3,6 +3,7 @@
 
 #include "UI/widgets/basewidget.h"
 #include "UI/Controller/filecontroller.h"
+#include "UI/overlay/overlay_box.h"
 
 #include "global_objects.h"
 #include "textedit.h"
@@ -77,6 +78,8 @@ protected:
 private:
 
     FileController *controller;
+
+    QPointer<OverlayBox> overlay_box;
 
 };
 #endif // WIDGET_H

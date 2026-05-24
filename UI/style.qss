@@ -25,3 +25,11 @@
 #widget_label_appVersion {
     color: #A1A1A1;
 }
+
+
+#widget_module_box_caption_lbl {
+
+    color: rgba(0, 150, 237, 255);
+
+}
+

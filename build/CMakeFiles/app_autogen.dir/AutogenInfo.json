@@ -316,6 +316,18 @@
 			null
 		],
 		[
+			"C:/Users/fantom/repos/AppWidget/UI/overlay/box.h",
+			"MU",
+			"5E5FZGSZKX/moc_box.cpp",
+			null
+		],
+		[
+			"C:/Users/fantom/repos/AppWidget/UI/overlay/overlay_box.h",
+			"MU",
+			"5E5FZGSZKX/moc_overlay_box.cpp",
+			null
+		],
+		[
 			"C:/Users/fantom/repos/AppWidget/UI/widgets/AbstractButton.h",
 			"MU",
 			"OIPEHFUJI4/moc_AbstractButton.cpp",
@@ -609,6 +621,12 @@
 		[ "C:/Users/fantom/repos/AppWidget/MainWindow.cpp", "MU", null ],
 		[
 			"C:/Users/fantom/repos/AppWidget/UI/Controller/filecontroller.cpp",
+			"MU",
+			null
+		],
+		[ "C:/Users/fantom/repos/AppWidget/UI/overlay/box.cpp", "MU", null ],
+		[
+			"C:/Users/fantom/repos/AppWidget/UI/overlay/overlay_box.cpp",
 			"MU",
 			null
 		],

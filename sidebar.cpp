@@ -1,10 +1,6 @@
 #include "sidebar.h"
 #include "global_objects.h"
 
-
-
-
-
 sidebar::sidebar(QWidget *parent)
     : ui::uiWidget{parent}
 {

@@ -921,6 +921,10 @@ app_autogen/timestamp: \
 	C:/Users/fantom/repos/AppWidget/MainWindow.h \
 	C:/Users/fantom/repos/AppWidget/UI/Controller/filecontroller.cpp \
 	C:/Users/fantom/repos/AppWidget/UI/Controller/filecontroller.h \
+	C:/Users/fantom/repos/AppWidget/UI/overlay/box.cpp \
+	C:/Users/fantom/repos/AppWidget/UI/overlay/box.h \
+	C:/Users/fantom/repos/AppWidget/UI/overlay/overlay_box.cpp \
+	C:/Users/fantom/repos/AppWidget/UI/overlay/overlay_box.h \
 	C:/Users/fantom/repos/AppWidget/UI/widgets/AbstractButton.cpp \
 	C:/Users/fantom/repos/AppWidget/UI/widgets/AbstractButton.h \
 	C:/Users/fantom/repos/AppWidget/UI/widgets/basewidget.cpp \

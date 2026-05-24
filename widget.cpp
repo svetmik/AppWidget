@@ -58,11 +58,35 @@ Widget::Widget(QWidget *parent)
     _overlay = new overlay(this);
 
     this->controller = new FileController(this);
-
     controller->controllerSelectFile(_attachButton);
+
+    overlay_box = new OverlayBox(this);
 
     QObject::connect(_menuButton, &Button::clicked, this, &Widget::hookToggle);
     QObject::connect(_submitButton, &Button::clicked, this, &Widget::sendFileToMail);
+
+    QObject::connect(controller, &FileController::showModuleBox, this, [=]() {
+
+        overlay_box->bodyText("Размер файла превышает 25 МБ");
+
+        overlay_box->show();
+    });
+
+
+    QObject::connect(controller, &FileController::showModuleBoxEmptyFile, this, [=]() {
+
+        overlay_box->bodyText("Файл не выбран");
+
+        overlay_box->show();
+    });
+
+
+    QObject::connect(controller, &FileController::successSendMail, this, [=]() {
+
+        overlay_box->bodyText("Заявка в IT-отдел отправлена");
+
+        overlay_box->show();
+    });
 }
 
 Widget::~Widget() = default;
@@ -142,6 +166,8 @@ void Widget::sendFileToMail() {
         //errorMessage("Failed to send mail!");
         return;
     } else {
+
+        emit controller->successSendMail();
         //очистка поля ввода текста QTextEdit
         this->_edit->clear();
 
@@ -235,4 +261,6 @@ void Widget::resizeEvent(QResizeEvent *event) {
     if(_overlay) {
         _overlay->setGeometry(rect());
     }
+
+    overlay_box->resize(event->size().width(), event->size().height());
 }

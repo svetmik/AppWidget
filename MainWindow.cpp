@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_resize_border_width{6}
 {
     // !!!
-    this->setVisibleTitleBtns(true);
+    this->setVisibleTitleBtns(false);
 
 #ifdef Q_OS_WIN
     m_hwnd = reinterpret_cast<HWND>(winId());

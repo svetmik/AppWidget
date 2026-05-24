@@ -1,14 +1,8 @@
-C:/Users/fantom/repos/AppWidget/build/app_autogen/EWIEGA46WW/moc_widget.cpp: C:/Users/fantom/repos/AppWidget/widget.h \
+C:/Users/fantom/repos/AppWidget/build/app_autogen/5E5FZGSZKX/moc_box.cpp: C:/Users/fantom/repos/AppWidget/UI/overlay/box.h \
   C:/Users/fantom/repos/AppWidget/build/app_autogen/moc_predefs.h \
   C:/Qt/6.6.2/mingw_64/include/QtCore/QBuffer \
-  C:/Qt/6.6.2/mingw_64/include/QtCore/QByteArray \
-  C:/Qt/6.6.2/mingw_64/include/QtCore/QEasingCurve \
-  C:/Qt/6.6.2/mingw_64/include/QtCore/QEventLoop \
-  C:/Qt/6.6.2/mingw_64/include/QtCore/QFile \
-  C:/Qt/6.6.2/mingw_64/include/QtCore/QFlags \
   C:/Qt/6.6.2/mingw_64/include/QtCore/QList \
   C:/Qt/6.6.2/mingw_64/include/QtCore/QMargins \
-  C:/Qt/6.6.2/mingw_64/include/QtCore/QMetaEnum \
   C:/Qt/6.6.2/mingw_64/include/QtCore/QObject \
   C:/Qt/6.6.2/mingw_64/include/QtCore/QPointer \
   C:/Qt/6.6.2/mingw_64/include/QtCore/QPropertyAnimation \
@@ -16,10 +10,6 @@ C:/Users/fantom/repos/AppWidget/build/app_autogen/EWIEGA46WW/moc_widget.cpp: C:/
   C:/Qt/6.6.2/mingw_64/include/QtCore/QSize \
   C:/Qt/6.6.2/mingw_64/include/QtCore/QSizeF \
   C:/Qt/6.6.2/mingw_64/include/QtCore/QStandardPaths \
-  C:/Qt/6.6.2/mingw_64/include/QtCore/QString \
-  C:/Qt/6.6.2/mingw_64/include/QtCore/QStringList \
-  C:/Qt/6.6.2/mingw_64/include/QtCore/QTextStream \
-  C:/Qt/6.6.2/mingw_64/include/QtCore/QTimer \
   C:/Qt/6.6.2/mingw_64/include/QtCore/q20functional.h \
   C:/Qt/6.6.2/mingw_64/include/QtCore/q20memory.h \
   C:/Qt/6.6.2/mingw_64/include/QtCore/q20type_traits.h \
@@ -35,7 +25,6 @@ C:/Users/fantom/repos/AppWidget/build/app_autogen/EWIEGA46WW/moc_widget.cpp: C:/
   C:/Qt/6.6.2/mingw_64/include/QtCore/qatomic.h \
   C:/Qt/6.6.2/mingw_64/include/QtCore/qatomic_cxx11.h \
   C:/Qt/6.6.2/mingw_64/include/QtCore/qbasicatomic.h \
-  C:/Qt/6.6.2/mingw_64/include/QtCore/qbasictimer.h \
   C:/Qt/6.6.2/mingw_64/include/QtCore/qbindingstorage.h \
   C:/Qt/6.6.2/mingw_64/include/QtCore/qbuffer.h \
   C:/Qt/6.6.2/mingw_64/include/QtCore/qbytearray.h \
@@ -56,7 +45,6 @@ C:/Users/fantom/repos/AppWidget/build/app_autogen/EWIEGA46WW/moc_widget.cpp: C:/
   C:/Qt/6.6.2/mingw_64/include/QtCore/qcoreapplication.h \
   C:/Qt/6.6.2/mingw_64/include/QtCore/qcoreapplication_platform.h \
   C:/Qt/6.6.2/mingw_64/include/QtCore/qcoreevent.h \
-  C:/Qt/6.6.2/mingw_64/include/QtCore/qcryptographichash.h \
   C:/Qt/6.6.2/mingw_64/include/QtCore/qdarwinhelpers.h \
   C:/Qt/6.6.2/mingw_64/include/QtCore/qdatastream.h \
   C:/Qt/6.6.2/mingw_64/include/QtCore/qdatetime.h \
@@ -92,7 +80,6 @@ C:/Users/fantom/repos/AppWidget/build/app_autogen/EWIEGA46WW/moc_widget.cpp: C:/
   C:/Qt/6.6.2/mingw_64/include/QtCore/qmargins.h \
   C:/Qt/6.6.2/mingw_64/include/QtCore/qmath.h \
   C:/Qt/6.6.2/mingw_64/include/QtCore/qmetacontainer.h \
-  C:/Qt/6.6.2/mingw_64/include/QtCore/qmetaobject.h \
   C:/Qt/6.6.2/mingw_64/include/QtCore/qmetatype.h \
   C:/Qt/6.6.2/mingw_64/include/QtCore/qminmax.h \
   C:/Qt/6.6.2/mingw_64/include/QtCore/qnamespace.h \
@@ -142,7 +129,6 @@ C:/Users/fantom/repos/AppWidget/build/app_autogen/EWIEGA46WW/moc_widget.cpp: C:/
   C:/Qt/6.6.2/mingw_64/include/QtCore/qtdeprecationmarkers.h \
   C:/Qt/6.6.2/mingw_64/include/QtCore/qtenvironmentvariables.h \
   C:/Qt/6.6.2/mingw_64/include/QtCore/qtextstream.h \
-  C:/Qt/6.6.2/mingw_64/include/QtCore/qtimer.h \
   C:/Qt/6.6.2/mingw_64/include/QtCore/qtimezone.h \
   C:/Qt/6.6.2/mingw_64/include/QtCore/qtmetamacros.h \
   C:/Qt/6.6.2/mingw_64/include/QtCore/qtnoop.h \
@@ -171,7 +157,6 @@ C:/Users/fantom/repos/AppWidget/build/app_autogen/EWIEGA46WW/moc_widget.cpp: C:/
   C:/Qt/6.6.2/mingw_64/include/QtGui/QPainter \
   C:/Qt/6.6.2/mingw_64/include/QtGui/QResizeEvent \
   C:/Qt/6.6.2/mingw_64/include/QtGui/QTransform \
-  C:/Qt/6.6.2/mingw_64/include/QtGui/QWheelEvent \
   C:/Qt/6.6.2/mingw_64/include/QtGui/qaction.h \
   C:/Qt/6.6.2/mingw_64/include/QtGui/qbitmap.h \
   C:/Qt/6.6.2/mingw_64/include/QtGui/qbrush.h \
@@ -207,9 +192,7 @@ C:/Users/fantom/repos/AppWidget/build/app_autogen/EWIEGA46WW/moc_widget.cpp: C:/
   C:/Qt/6.6.2/mingw_64/include/QtGui/qrgb.h \
   C:/Qt/6.6.2/mingw_64/include/QtGui/qrgba64.h \
   C:/Qt/6.6.2/mingw_64/include/QtGui/qscreen.h \
-  C:/Qt/6.6.2/mingw_64/include/QtGui/qtextcursor.h \
   C:/Qt/6.6.2/mingw_64/include/QtGui/qtextdocument.h \
-  C:/Qt/6.6.2/mingw_64/include/QtGui/qtextformat.h \
   C:/Qt/6.6.2/mingw_64/include/QtGui/qtextoption.h \
   C:/Qt/6.6.2/mingw_64/include/QtGui/qtgui-config.h \
   C:/Qt/6.6.2/mingw_64/include/QtGui/qtguiexports.h \
@@ -220,18 +203,9 @@ C:/Users/fantom/repos/AppWidget/build/app_autogen/EWIEGA46WW/moc_widget.cpp: C:/
   C:/Qt/6.6.2/mingw_64/include/QtGui/qvectornd.h \
   C:/Qt/6.6.2/mingw_64/include/QtGui/qwindowdefs.h \
   C:/Qt/6.6.2/mingw_64/include/QtGui/qwindowdefs_win.h \
-  C:/Qt/6.6.2/mingw_64/include/QtNetwork/QHostInfo \
-  C:/Qt/6.6.2/mingw_64/include/QtNetwork/QNetworkInterface \
-  C:/Qt/6.6.2/mingw_64/include/QtNetwork/QSslSocket \
   C:/Qt/6.6.2/mingw_64/include/QtNetwork/QTcpSocket \
   C:/Qt/6.6.2/mingw_64/include/QtNetwork/qabstractsocket.h \
   C:/Qt/6.6.2/mingw_64/include/QtNetwork/qhostaddress.h \
-  C:/Qt/6.6.2/mingw_64/include/QtNetwork/qhostinfo.h \
-  C:/Qt/6.6.2/mingw_64/include/QtNetwork/qnetworkinterface.h \
-  C:/Qt/6.6.2/mingw_64/include/QtNetwork/qssl.h \
-  C:/Qt/6.6.2/mingw_64/include/QtNetwork/qsslcertificate.h \
-  C:/Qt/6.6.2/mingw_64/include/QtNetwork/qsslerror.h \
-  C:/Qt/6.6.2/mingw_64/include/QtNetwork/qsslsocket.h \
   C:/Qt/6.6.2/mingw_64/include/QtNetwork/qtcpsocket.h \
   C:/Qt/6.6.2/mingw_64/include/QtNetwork/qtnetwork-config.h \
   C:/Qt/6.6.2/mingw_64/include/QtNetwork/qtnetworkexports.h \
@@ -247,15 +221,11 @@ C:/Users/fantom/repos/AppWidget/build/app_autogen/EWIEGA46WW/moc_widget.cpp: C:/
   C:/Qt/6.6.2/mingw_64/include/QtWidgets/QLabel \
   C:/Qt/6.6.2/mingw_64/include/QtWidgets/QMainWindow \
   C:/Qt/6.6.2/mingw_64/include/QtWidgets/QPushButton \
-  C:/Qt/6.6.2/mingw_64/include/QtWidgets/QScrollArea \
-  C:/Qt/6.6.2/mingw_64/include/QtWidgets/QScrollBar \
   C:/Qt/6.6.2/mingw_64/include/QtWidgets/QStyle \
   C:/Qt/6.6.2/mingw_64/include/QtWidgets/QStyleOption \
-  C:/Qt/6.6.2/mingw_64/include/QtWidgets/QTextEdit \
   C:/Qt/6.6.2/mingw_64/include/QtWidgets/QVBoxLayout \
   C:/Qt/6.6.2/mingw_64/include/QtWidgets/QWidget \
   C:/Qt/6.6.2/mingw_64/include/QtWidgets/qabstractbutton.h \
-  C:/Qt/6.6.2/mingw_64/include/QtWidgets/qabstractscrollarea.h \
   C:/Qt/6.6.2/mingw_64/include/QtWidgets/qabstractslider.h \
   C:/Qt/6.6.2/mingw_64/include/QtWidgets/qabstractspinbox.h \
   C:/Qt/6.6.2/mingw_64/include/QtWidgets/qapplication.h \
@@ -270,15 +240,12 @@ C:/Users/fantom/repos/AppWidget/build/app_autogen/EWIEGA46WW/moc_widget.cpp: C:/
   C:/Qt/6.6.2/mingw_64/include/QtWidgets/qmainwindow.h \
   C:/Qt/6.6.2/mingw_64/include/QtWidgets/qpushbutton.h \
   C:/Qt/6.6.2/mingw_64/include/QtWidgets/qrubberband.h \
-  C:/Qt/6.6.2/mingw_64/include/QtWidgets/qscrollarea.h \
-  C:/Qt/6.6.2/mingw_64/include/QtWidgets/qscrollbar.h \
   C:/Qt/6.6.2/mingw_64/include/QtWidgets/qsizepolicy.h \
   C:/Qt/6.6.2/mingw_64/include/QtWidgets/qslider.h \
   C:/Qt/6.6.2/mingw_64/include/QtWidgets/qstyle.h \
   C:/Qt/6.6.2/mingw_64/include/QtWidgets/qstyleoption.h \
   C:/Qt/6.6.2/mingw_64/include/QtWidgets/qtabbar.h \
   C:/Qt/6.6.2/mingw_64/include/QtWidgets/qtabwidget.h \
-  C:/Qt/6.6.2/mingw_64/include/QtWidgets/qtextedit.h \
   C:/Qt/6.6.2/mingw_64/include/QtWidgets/qtwidgets-config.h \
   C:/Qt/6.6.2/mingw_64/include/QtWidgets/qtwidgetsexports.h \
   C:/Qt/6.6.2/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -516,32 +483,4 @@ C:/Users/fantom/repos/AppWidget/build/app_autogen/EWIEGA46WW/moc_widget.cpp: C:/
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/vadefs.h \
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wchar.h \
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wctype.h \
-  C:/Users/fantom/repos/AppWidget/UI/Controller/filecontroller.h \
-  C:/Users/fantom/repos/AppWidget/UI/overlay/box.h \
-  C:/Users/fantom/repos/AppWidget/UI/overlay/overlay_box.h \
-  C:/Users/fantom/repos/AppWidget/UI/widgets/AbstractButton.h \
-  C:/Users/fantom/repos/AppWidget/UI/widgets/basewidget.h \
-  C:/Users/fantom/repos/AppWidget/UI/widgets/button.h \
-  C:/Users/fantom/repos/AppWidget/container.h \
-  C:/Users/fantom/repos/AppWidget/global_objects.h \
-  C:/Users/fantom/repos/AppWidget/header/SmtpMime \
-  C:/Users/fantom/repos/AppWidget/header/emailaddress.h \
-  C:/Users/fantom/repos/AppWidget/header/mimeattachment.h \
-  C:/Users/fantom/repos/AppWidget/header/mimebytearrayattachment.h \
-  C:/Users/fantom/repos/AppWidget/header/mimefile.h \
-  C:/Users/fantom/repos/AppWidget/header/mimehtml.h \
-  C:/Users/fantom/repos/AppWidget/header/mimeinlinefile.h \
-  C:/Users/fantom/repos/AppWidget/header/mimemessage.h \
-  C:/Users/fantom/repos/AppWidget/header/mimepart.h \
-  C:/Users/fantom/repos/AppWidget/header/mimetext.h \
-  C:/Users/fantom/repos/AppWidget/header/smtpclient.h \
-  C:/Users/fantom/repos/AppWidget/header/smtpmime_global.h \
-  C:/Users/fantom/repos/AppWidget/propertyanimation.h \
-  C:/Users/fantom/repos/AppWidget/scrollarea.h \
-  C:/Users/fantom/repos/AppWidget/sidebar.h \
-  C:/Users/fantom/repos/AppWidget/sidebar_panel.h \
-  C:/Users/fantom/repos/AppWidget/style_widget.h \
-  C:/Users/fantom/repos/AppWidget/systeminfo.h \
-  C:/Users/fantom/repos/AppWidget/textedit.h \
-  C:/Users/fantom/repos/AppWidget/ui/widgets/button.h \
-  C:/Users/fantom/repos/AppWidget/zipwriter_p.h
+  C:/Users/fantom/repos/AppWidget/UI/widgets/basewidget.h
