@@ -1,0 +1,29 @@
+{
+	"BUILD_DIR" : "C:/Users/fantom/repos/AppWidget/build/app_autogen",
+	"CMAKE_BINARY_DIR" : "C:/Users/fantom/repos/AppWidget/build",
+	"CMAKE_CURRENT_BINARY_DIR" : "C:/Users/fantom/repos/AppWidget/build",
+	"CMAKE_CURRENT_SOURCE_DIR" : "C:/Users/fantom/repos/AppWidget",
+	"CMAKE_SOURCE_DIR" : "C:/Users/fantom/repos/AppWidget",
+	"CROSS_CONFIG" : false,
+	"GENERATOR" : "Ninja",
+	"INCLUDE_DIR" : "C:/Users/fantom/repos/AppWidget/build/app_autogen/include",
+	"INPUTS" : 
+	[
+		"C:/Users/fantom/repos/AppWidget/UI/style.qss",
+		"C:/Users/fantom/repos/AppWidget/fonts/OpenSans-SemiBold.ttf",
+		"C:/Users/fantom/repos/AppWidget/fonts/OpenSans-Regular.ttf",
+		"C:/Users/fantom/repos/AppWidget/fonts/OpenSans-Italic.ttf",
+		"C:/Users/fantom/repos/AppWidget/fonts/OpenSans-SemiBoldItalic.ttf"
+	],
+	"LOCK_FILE" : "C:/Users/fantom/repos/AppWidget/build/CMakeFiles/app_autogen.dir/AutoRcc_components_EWIEGA46WW_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "--no-zstd", "-name", "components" ],
+	"OUTPUT_CHECKSUM" : "EWIEGA46WW",
+	"OUTPUT_NAME" : "qrc_components.cpp",
+	"RCC_EXECUTABLE" : "C:/Qt/6.6.2/mingw_64/./bin/rcc.exe",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "C:/Users/fantom/repos/AppWidget/build/CMakeFiles/app_autogen.dir/AutoRcc_components_EWIEGA46WW_Used.txt",
+	"SOURCE" : "C:/Users/fantom/repos/AppWidget/components.qrc",
+	"USE_BETTER_GRAPH" : false,
+	"VERBOSITY" : 0
+}

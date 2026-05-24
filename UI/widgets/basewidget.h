@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QWidget>
 
+#include <QPointer>
+
 #include <QLabel>
 #include <QPushButton>
 

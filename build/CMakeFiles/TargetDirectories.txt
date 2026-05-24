@@ -1,0 +1,9 @@
+C:/Users/fantom/repos/AppWidget/build/CMakeFiles/app.dir
+C:/Users/fantom/repos/AppWidget/build/CMakeFiles/edit_cache.dir
+C:/Users/fantom/repos/AppWidget/build/CMakeFiles/rebuild_cache.dir
+C:/Users/fantom/repos/AppWidget/build/CMakeFiles/list_install_components.dir
+C:/Users/fantom/repos/AppWidget/build/CMakeFiles/install.dir
+C:/Users/fantom/repos/AppWidget/build/CMakeFiles/install/local.dir
+C:/Users/fantom/repos/AppWidget/build/CMakeFiles/install/strip.dir
+C:/Users/fantom/repos/AppWidget/build/CMakeFiles/app_autogen_timestamp_deps.dir
+C:/Users/fantom/repos/AppWidget/build/CMakeFiles/app_autogen.dir
