@@ -21,7 +21,8 @@ class Widget : public ui::uiWidget
 
 public:
     Widget(QWidget *parent = nullptr);
-    ~Widget();
+    
+    ~Widget() = default;
 
 
     style_widget qss;

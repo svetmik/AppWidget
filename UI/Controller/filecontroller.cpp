@@ -8,14 +8,23 @@ FileController::FileController(QObject *parent)
 void FileController::controllerSelectFile(Button *btn)
 {
 
-    QObject::connect(btn, &Button::clicked, this, [this, btn]()
-                     { this->filePath(btn); });
+    QObject::connect(btn, &Button::clicked, this, [this, btn](){ 
+        this->filePath(btn); 
+    });
 
-    QObject::connect(this, &FileController::checkCleared, this, [this, btn]()
-                     { btn->setText("Прикрепить файл"); });
+    QObject::connect(this, &FileController::checkCleared, this, [this, btn](){ 
+        btn->setText("Прикрепить файл"); 
+    });
 
-    QObject::connect(this, &FileController::selectFile, this, [this, btn]()
-                     { btn->setText("Файл успешно прикреплён"); });
+    QObject::connect(this, &FileController::selectFile, this, [this, btn]() { 
+        btn->setText("Файл прикреплён"); 
+    });
+
+
+}
+
+void FileController::freeFile() {
+    this->m_filePath.clear();
 }
 
 void FileController::filePath(Button *btn)
@@ -32,7 +41,9 @@ void FileController::filePath(Button *btn)
 
     if (filePath.isEmpty())
     {
-        clearFile();
+
+        emit checkCleared();
+
         emit showModuleBoxEmptyFile();
 
         return;
@@ -40,32 +51,25 @@ void FileController::filePath(Button *btn)
 
     if (checkFileSize(filePath))
     {
-
         this->m_filePath = filePath;
 
-        emit selectFile(m_filePath);
+        emit selectFile();
 
-    } else if (!checkFileSize(filePath))
+        emit successAttchFile();
+
+    }
+    else if (!checkFileSize(filePath))
     {
 
-        clearFile();
+        emit checkCleared();
 
         emit showModuleBox();
-
-    } 
+    }
 }
 
 const QString &FileController::file_attachment() const
 {
     return m_filePath;
-}
-
-void FileController::clearFile()
-{
-
-    m_filePath.clear();
-
-    emit checkCleared();
 }
 
 bool FileController::checkFileSize(const QString &filePath)

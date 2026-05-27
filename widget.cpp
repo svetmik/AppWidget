@@ -36,28 +36,25 @@ Widget::Widget(QWidget *parent)
 
     _edit = new TextEdit(this);
     _edit->setPlaceholderText("Описание");
-
+    _edit->setObjectName("widget_edit_test");
     _submitButton = new Button("Отправить заявку в ИТ-отдел");
     _attachButton = new Button("Прикрепить файл");
     _exitAppButton = new Button("Закрыть программу");
-
 
     v_controlLayoutMain->addWidget(_edit);
     v_controlLayoutMain->addWidget(_submitButton);
     v_controlLayoutMain->addWidget(_attachButton);
     v_controlLayoutMain->addWidget(_exitAppButton);
 
-
     h_controlLayout->addLayout(v_controlLayoutSidebar);
     h_controlLayout->addLayout(v_controlLayoutMain);
 
     // Боковая панель
     _sidebar = new sidebar(this);
-
     // overlay shadow
     _overlay = new overlay(this);
 
-    this->controller = new FileController(this);
+    controller = new FileController(this);
     controller->controllerSelectFile(_attachButton);
 
     overlay_box = new OverlayBox(this);
@@ -69,33 +66,44 @@ Widget::Widget(QWidget *parent)
 
         overlay_box->bodyText("Размер файла превышает 25 МБ");
 
-        overlay_box->show();
+        overlay_box->show(); 
     });
-
 
     QObject::connect(controller, &FileController::showModuleBoxEmptyFile, this, [=]() {
 
         overlay_box->bodyText("Файл не выбран");
 
-        overlay_box->show();
+        overlay_box->show(); 
     });
-
 
     QObject::connect(controller, &FileController::successSendMail, this, [=]() {
 
         overlay_box->bodyText("Заявка в IT-отдел отправлена");
 
-        overlay_box->show();
+        overlay_box->show(); 
     });
+
+    QObject::connect(controller, &FileController::failedSendMail, this, [=]() {
+
+        overlay_box->bodyText("Ошибка: Не удалось отравить заявку");
+
+        overlay_box->show(); 
+    });
+
+    QObject::connect(controller, &FileController::successAttchFile, this, [=]() {
+
+        overlay_box->bodyText("Файл успешно прикреплен");
+
+        overlay_box->show(); 
+    });
+
 }
 
-Widget::~Widget() = default;
 
 void Widget::connectController() {
 
-
-
 }
+
 void Widget::hookToggle()
 {
     if(_sidebar) {
@@ -149,32 +157,41 @@ void Widget::sendFileToMail() {
     smtp.connectToHost();
     if (!smtp.waitForReadyConnected()) {
         //errorMessage("Failed to connect host");
+
+        overlay_box->bodyText("Не удалось подключиться к хосту");
+        overlay_box->show();
+
         return;
     }
 
     // login
-    // указать почту, в который был создан приватный ключ, для внешних приложений
+    // указать почту, в которой был создан приватный ключ, для внешних приложений
     // указать сам приватный ключ
     smtp.login("ivan-svet@mail.ru", "D17FAOL2bYSkXSbbaP5A");
     if (!smtp.waitForAuthenticated()) {
         //errorMessage("Failed to login!");
+
+        overlay_box->bodyText("Не удалось войти");
+        overlay_box->show();
         return;
     }
 
     smtp.sendMail(message);
     if (!smtp.waitForMailSent()) {
         //errorMessage("Failed to send mail!");
+
+        emit controller->failedSendMail();
+
         return;
     } else {
 
-        emit controller->successSendMail();
-        //очистка поля ввода текста QTextEdit
         this->_edit->clear();
+        this->controller->freeFile();
+        
+        emit controller->successSendMail();
+        emit controller->checkCleared();
+        //очистка поля ввода текста QTextEdit
 
-        if(!controller->file_attachment().isEmpty()) {
-
-            controller->clearFile();
-        }
     }
 
     smtp.quit();

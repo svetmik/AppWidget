@@ -4,7 +4,9 @@
 #include <QObject>
 #include <QFileDialog>
 
+
 #include "../widgets/button.h"
+
 
 class FileController : public QObject
 {
@@ -18,7 +20,7 @@ public:
 
     const QString &file_attachment() const ;
 
-    void clearFile();
+    void freeFile();
 
 private slots:
 
@@ -26,22 +28,25 @@ private slots:
 
 signals:
 
-    void selectFile(const QString &filePath);
+    void selectFile();
 
     void checkCleared();
-
 
     void showModuleBox();
 
     void showModuleBoxEmptyFile();
 
     void successSendMail();
+
+    void failedSendMail();
+
+    void successAttchFile();
+
 private:
 
     QString m_filePath;
 
     bool checkFileSize(const QString &filePath);
-
 
 };
 

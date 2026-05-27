@@ -36,12 +36,14 @@ void Box::paintEvent(QPaintEvent *event) {
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing, true);
 
-    
+    p.fillRect(rect(), Qt::transparent);
     p.setPen(Qt::NoPen);
 
     p.setBrush(QBrush(QColor(255,255,255)));
 
-    p.drawRoundedRect(rect(), 6,6);
+    QRect _rect = this->rect().adjusted(1,1,-1,-1);
+
+    p.drawRoundedRect(_rect, 6,6);
 
 }
 
