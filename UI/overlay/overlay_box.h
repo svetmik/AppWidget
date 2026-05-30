@@ -2,7 +2,7 @@
 #ifndef OVERLAYBOX
 #define OVERLAYBOX
 
-#include "../../../AppWidget/UI/widgets/basewidget.h"
+#include "../widgets/basewidget.h"
 #include "box.h"
 
 class OverlayBox : public ui::uiWidget {

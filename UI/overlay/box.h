@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../../../AppWidget/UI/widgets/basewidget.h"
+
+#include "../widgets/basewidget.h"
 
 class Box : public ui::uiWidget
 {

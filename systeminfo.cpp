@@ -7,28 +7,19 @@ SystemInfo::SystemInfo() {
 }
 
 
-
 QString SystemInfo::localIpAddressPc()
 {
 
-    const QList<QHostAddress> &local_address = QNetworkInterface::allAddresses();
+    for(const QHostAddress &local_address : QNetworkInterface::allAddresses()) {
 
-    //fix
-    if(local_address.isEmpty()) {
-        qWarning() << "No network interfaces found";
-    } else {
-
-        for(const QHostAddress &local_address : QNetworkInterface::allAddresses())
-        {
-            if(local_address.protocol() == QAbstractSocket::IPv4Protocol && !local_address.isLoopback())
-            {
+        if(local_address.protocol() == QAbstractSocket::IPv4Protocol && local_address != QHostAddress(QHostAddress::LocalHost)) {
                 return local_address.toString();
-            }
+
         }
 
     }
 
-    return QString();
+    return QString("None");
 }
 
 QString SystemInfo::localPrinterName()
