@@ -91,6 +91,8 @@ private:
                 border-image: url(:/icon/btn_close.png);
                 background-color: rgba(255, 255, 255, 0%);
                 background-repeat: no-repeat;
+                border: none;
+                padding: 4px;
             }
             QPushButton:hover {
                 border-image: url(:/icon/btn_close_hover.png);
@@ -115,6 +117,8 @@ private:
                 border-image: url(:/icon/button_minimize.png);
                 background-color: rgba(255, 255, 255, 0%);
                 background-repeat: no-repeat;
+                border: none;
+                padding: 4px;
             }
 
             QPushButton:hover {
@@ -135,6 +139,8 @@ private:
                 border-image: url(:/icon/button_maximize.png);
                 background-color: rgba(255, 255, 255, 0%);
                 background-repeat: no-repeat;
+                border: none;
+                padding: 4px;
             }
             QPushButton:hover {
                 background-color: rgba(228, 228, 228, 80%);

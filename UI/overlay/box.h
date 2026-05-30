@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "../widgets/basewidget.h"
 
 class Box : public ui::uiWidget
