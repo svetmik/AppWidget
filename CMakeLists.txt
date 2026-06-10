@@ -102,6 +102,15 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         UI/overlay/overlay_box.h
         UI/overlay/box.h
         UI/overlay/box.cpp
+        api/ui/res.h
+        api/ui/window_main.cpp
+        api/ui/window_main.h
+        api/api_window.cpp
+        api/api_window.h
+        api/api_window_helper.cpp
+        api/api_window_helper.h
+        api/api_window_shadow.cpp
+        api/api_window_shadow.h
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET app APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

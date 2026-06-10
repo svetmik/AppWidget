@@ -58,8 +58,8 @@ void OverlayBox::boxSize() {
     if (!moduleBox)
         return;
 
-    int kwidth = (width() - moduleBox->width()) / 2;
-    int kheight = (height() - moduleBox->height()) / 2;
+    const int kwidth = (width() - moduleBox->width()) / 2;
+    const int kheight = (height() - moduleBox->height()) / 2;
 
     moduleBox->move(kwidth, kheight);
 

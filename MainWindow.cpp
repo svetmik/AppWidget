@@ -1,329 +1,86 @@
-﻿#include "MainWindow.h"
+#include "mainwindow.h"
 
+#define FLAG_STATE false
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent),
-    m_minimize_btn{nullptr},
-    m_maximize_btn{nullptr},
-    m_close_btn{nullptr},
-    m_resize_border_width{6}
+    : QMainWindow(parent)
 {
     // !!!
     this->setVisibleTitleBtns(true);
 
-#ifdef Q_OS_WIN
-    m_hwnd = reinterpret_cast<HWND>(winId());
-    const MARGINS aero_shadow_on = {1, 1, 1, 1};
-    ::DwmExtendFrameIntoClientArea(m_hwnd, & aero_shadow_on);
+    QWidget *non_clickable = new QWidget(this);
+    non_clickable->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    non_clickable->setProperty("clickable widget", false);
+    m_uiHelper->getCustomTitlebarLayout().addWidget(non_clickable);
 
-    // Add widget. (Initialize central widget)
-    QWidget *entire_widget = new QWidget(this);
-    entire_widget->setContentsMargins(0, 0, 0, 0);
-    setCentralWidget(entire_widget);
+    m_widget = new Widget(&m_uiHelper->getContentWidget());
 
+    QVBoxLayout *main_widget_layout = new QVBoxLayout(this);
+    main_widget_layout->setContentsMargins(0,0,0,0);
+    main_widget_layout->addWidget(m_widget);
 
-    // Layout for entire widgets.
-    QVBoxLayout *entire_layout = new QVBoxLayout(this);
-    entire_widget->setLayout(entire_layout);
-    entire_layout->setContentsMargins(0, 0, 0, 0);
-    entire_layout->setSpacing(0);
+    m_uiHelper->getContentWidget().setLayout(main_widget_layout);
 
-    // Initialize title bar widget
-    m_titlebar_widget = new QWidget(this);
-    entire_layout->addWidget(m_titlebar_widget);
-    m_titlebar_widget->setFixedHeight(35); // Default title bar height is 35
-    m_titlebar_widget->setContentsMargins(0, 0, 0, 0);
-    m_titlebar_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    m_widget->qss.includeStyle();
 
-    // Layout for title bar
-    QHBoxLayout *titlebar_layout = new QHBoxLayout(this);
-    m_titlebar_widget->setLayout(titlebar_layout);
-    titlebar_layout->setContentsMargins(0, 0, 0, 0);
-    titlebar_layout->setSpacing(0);
+    m_widget->qss.setStyle(m_widget);
 
-    QWidget *custom_titlebar_widget = new QWidget(this);
-    titlebar_layout->addWidget(custom_titlebar_widget);
-    custom_titlebar_widget->setContentsMargins(0, 0, 0, 0);
-    custom_titlebar_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    if(FLAG_STATE) {
 
-#else
+        QByteArray screen_data = m_widget->getScreenshotApp(0, "JPG", 30);
 
-    // Флаги и прозрачность для теней в Linux
-    setAttribute(Qt::WA_TranslucentBackground);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowSystemMenuHint | Qt::WindowMinMaxButtonsHint);
-
-    // Внешний контейнер (создает пустое место для тени)
-    QWidget* main_container = new QWidget(this);
-    setCentralWidget(main_container);
-    QVBoxLayout* main_layout = new QVBoxLayout(main_container);
-    main_layout->setContentsMargins(m_shadow_margin, m_shadow_margin, m_shadow_margin, m_shadow_margin);
-    main_layout->setSpacing(0);
-
-    // Тело окна (то, что мы видим)
-    QWidget* entire_widget = new QWidget(this);
-    entire_widget->setObjectName("EntireWidget");
-    entire_widget->setStyleSheet("#EntireWidget { background-color: #23272e; border-radius: 5px; }");
-    main_layout->addWidget(entire_widget);
-
-
-    QGraphicsDropShadowEffect* shadow = new QGraphicsDropShadowEffect(this);
-    shadow->setBlurRadius(10);
-    shadow->setColor(QColor(0, 0, 0, 160));
-    shadow->setOffset(0, 0);
-    entire_widget->setGraphicsEffect(shadow);
-
-    // Внутренняя разметка тела окна
-    QVBoxLayout* entire_layout = new QVBoxLayout(entire_widget);
-    entire_layout->setContentsMargins(0, 0, 0, 0);
-    entire_layout->setSpacing(0);
-
-    // Заголовок
-    m_titlebar_widget = new QWidget(this);
-    m_titlebar_widget->setFixedHeight(35);
-    m_titlebar_widget->setAutoFillBackground(true);
-    m_titlebar_widget->setPalette(QColor(30, 34, 39));
-    entire_layout->addWidget(m_titlebar_widget);
-
-    QHBoxLayout* titlebar_layout = new QHBoxLayout(m_titlebar_widget);
-    titlebar_layout->setContentsMargins(0, 0, 0, 0);
-    titlebar_layout->setSpacing(0);
-
-    QWidget* custom_title_container = new QWidget(this);
-    m_custom_titlebar_layout = new QHBoxLayout(custom_title_container);
-    m_custom_titlebar_layout->setContentsMargins(5, 0, 5, 0);
-    titlebar_layout->addWidget(custom_title_container);
-
-#endif
-    connect(windowHandle(), &QWindow::screenChanged, this, &MainWindow::onScreenChanged);
-
-
-    // Minimize button setup.
-    m_minimize_btn = new QPushButton(this);
-    titlebar_layout->addWidget(m_minimize_btn);
-    m_minimize_btn->setFixedWidth(36);
-    m_minimize_btn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-    m_minimize_btn->setFocusPolicy(Qt::FocusPolicy::NoFocus);
-    m_minimize_btn->setStyleSheet(qss_title_btn_minimize);
-    m_minimize_btn->setVisible(stateFlagTitlesBtn);
-
-
-    // Maximize button setup.
-    m_maximize_btn = new QPushButton(this);
-    titlebar_layout->addWidget(m_maximize_btn);
-    m_maximize_btn->setFixedWidth(36);
-    m_maximize_btn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-    m_maximize_btn->setCheckable(true);
-    m_maximize_btn->setFocusPolicy(Qt::FocusPolicy::NoFocus);
-    m_maximize_btn->setStyleSheet(qss_m_maximize_btn);
-    m_maximize_btn->setVisible(stateFlagTitlesBtn);
-
-
-    // Close button setup.
-    m_close_btn = new QPushButton(this);
-    titlebar_layout->addWidget(m_close_btn);
-    m_close_btn->setFixedWidth(36);
-    m_close_btn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-    m_close_btn->setFocusPolicy(Qt::FocusPolicy::NoFocus);
-    m_close_btn->setStyleSheet(qss_title_btn_close);
-    m_close_btn->setVisible(stateFlagTitlesBtn);
-
-#ifdef Q_OS_WIN
-    // Layout for title bar customization.
-    m_custom_titlebar_layout = new QHBoxLayout(custom_titlebar_widget);
-    custom_titlebar_widget->setLayout(m_custom_titlebar_layout);
-    m_custom_titlebar_layout->setContentsMargins(0, 0, 0, 0);
-    m_custom_titlebar_layout->setSpacing(0);
-    m_custom_titlebar_layout->setAlignment(Qt::AlignLeft);
-
-    QObject::connect(m_minimize_btn, &QPushButton::clicked, this, &MainWindow::onMinimizeButtonClicked);
-    QObject::connect(m_maximize_btn, &QPushButton::clicked, this, &MainWindow::onMaximizeButtonClicked);
-    QObject::connect(m_close_btn, &QPushButton::clicked, this, &MainWindow::onCloseButtonClicked);
-
-    //entire_layout->setAlignment(titlebar_layout, Qt::AlignTop);
-
-    m_content_widget = new QWidget(this);
-    entire_layout->addWidget(m_content_widget);
-    m_content_widget->setContentsMargins(0, 0, 0, 0);
-    m_content_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-    // Set default title bar palette.
-    auto pal = m_titlebar_widget->palette();
-    pal.setColor(QPalette::Window, QColor(30, 34, 39));
-    m_titlebar_widget->setAutoFillBackground(true);
-    m_titlebar_widget->setPalette(pal);
-
-    // Set default content widget palette.
-    pal = m_content_widget->palette();
-    pal.setColor(QPalette::Window, QColor(35, 39, 46));
-    m_content_widget->setAutoFillBackground(true);
-    m_content_widget->setPalette(pal);
-#else \
-    // Контент
-    m_content_widget = new QWidget(this);
-    entire_layout->addWidget(m_content_widget);
-
-    setMouseTracking(true);
-    entire_widget->setMouseTracking(true);
-#endif
-
-    connect(m_minimize_btn, &QPushButton::clicked, this, &MainWindow::onMinimizeButtonClicked);
-    connect(m_maximize_btn, &QPushButton::clicked, this, &MainWindow::onMaximizeButtonClicked);
-    connect(m_close_btn, &QPushButton::clicked, this, &MainWindow::onCloseButtonClicked);
-}
-
-MainWindow::~MainWindow() {}
-
-
-void MainWindow::setVisibleTitleBtns(bool flag) {
-
-    if(stateFlagTitlesBtn != flag) {
-        this->stateFlagTitlesBtn = flag;
+        m_widget->writetoFile("debug", "screenshot_data.png", screen_data);
     }
+
 }
 
-#ifdef Q_OS_WIN
+MainWindow::~MainWindow() {
 
-#ifdef Q_OS_WIN
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-bool MainWindow::nativeEvent(const QByteArray &event_type, void *message, long *result)
-#else
-bool MainWindow::nativeEvent(const QByteArray &event_type, void *message, qintptr *result)
-#endif
+}
+
+
+bool MainWindow::nativeEvent(
+
+    const QByteArray &eventType,
+    void *message,
+    qintptr *result)
 {
-    MSG *msg = (MSG *)message;
+    MSG *msg = static_cast<MSG*>(message);
 
-    switch (msg->message)
-    {
-    // Remove the default window frame by hooking the WM_NCCALCSIZE message.
-    case WM_NCCALCSIZE: {
-        if (msg->lParam)
-        {
-            WINDOWPLACEMENT wp;
-            GetWindowPlacement(m_hwnd, &wp);
-
-            if (wp.showCmd == SW_MAXIMIZE)
-            {
-                NCCALCSIZE_PARAMS *sz = (NCCALCSIZE_PARAMS *)msg->lParam;
-                sz->rgrc[0].left += 8;
-                sz->rgrc[0].top += 8;
-                sz->rgrc[0].right -= 8;
-                sz->rgrc[0].bottom -= 8;
-            }
-        }
+    if(m_uiHelper->nativeEvent(eventType, msg, result)) {
         return true;
     }
 
-        // Process the mouse when it is on the window border.
-    case WM_NCHITTEST: {
-        RECT winrect;
-        GetWindowRect(msg->hwnd, &winrect);
-        long x = GET_X_LPARAM(msg->lParam);
-        long y = GET_Y_LPARAM(msg->lParam);
-        long local_x = x - winrect.left;
-        long local_y = y - winrect.top;
-
-        if (x >= winrect.left && x < winrect.left + m_resize_border_width &&
-            y < winrect.bottom && y >= winrect.bottom - m_resize_border_width)
-        {
-            *result = HTBOTTOMLEFT;
-            return true;
-        }
-
-        if (x < winrect.right && x >= winrect.right - m_resize_border_width &&
-            y < winrect.bottom && y >= winrect.bottom - m_resize_border_width)
-        {
-            *result = HTBOTTOMRIGHT;
-            return true;
-        }
-
-        if (x >= winrect.left && x < winrect.left + m_resize_border_width &&
-            y >= winrect.top && y < winrect.top + m_resize_border_width)
-        {
-            *result = HTTOPLEFT;
-            return true;
-        }
-
-        if (x < winrect.right && x >= winrect.right - m_resize_border_width &&
-            y >= winrect.top && y < winrect.top + m_resize_border_width)
-        {
-            *result = HTTOPRIGHT;
-            return true;
-        }
-
-        if (x >= winrect.left && x < winrect.left + m_resize_border_width)
-        {
-            *result = HTLEFT;
-            return true;
-        }
-
-        if (x < winrect.right && x >= winrect.right - m_resize_border_width)
-        {
-            *result = HTRIGHT;
-            return true;
-        }
-
-        if (y < winrect.bottom && y >= winrect.bottom - m_resize_border_width)
-        {
-            *result = HTBOTTOM;
-            return true;
-        }
-
-        if (y >= winrect.top && y < winrect.top + m_resize_border_width)
-        {
-            *result = HTTOP;
-            return true;
-        }
-
-        // Check the area where the user can click to move the window.
-        if (determineNonClickableWidgetUnderMouse(m_custom_titlebar_layout, local_x, local_y))
-        {
-            *result = HTCAPTION;
-            return true;
-        }
-
-        *result = HTTRANSPARENT;
-        break;
-    }
-    case WM_SIZE: {
-        if (m_maximize_btn)
-        {
-            WINDOWPLACEMENT wp;
-            GetWindowPlacement(m_hwnd, &wp);
-            m_maximize_btn->setChecked(wp.showCmd == SW_MAXIMIZE ? true : false);
-        }
-        break;
-    }
-    default:
-        break;
-    }
-
-    return false;
+    return QMainWindow::nativeEvent(
+        eventType,
+        message,
+        result);
 }
-#endif // Q_OS_WIN
 
-// Общие методы (работают на всех платформах)
-// This is used to change the `active` state of widgets in custom title bar.
+
 bool MainWindow::event(QEvent *evt)
 {
     switch (evt->type())
     {
     case QEvent::WindowActivate: {
 #if QT_VERSION > QT_VERSION_CHECK(5, 0, 0)
-        m_close_btn->setStyleSheet(m_close_btn->styleSheet());
-        m_minimize_btn->setStyleSheet(m_minimize_btn->styleSheet());
-        m_maximize_btn->setStyleSheet(m_maximize_btn->styleSheet());
+
+        //Q_ASSERT(m_maximize_btn);
+        m_uiHelper->m_close_btn->setStyleSheet(m_uiHelper->m_close_btn->styleSheet());
+        m_uiHelper->m_minimize_btn->setStyleSheet(m_uiHelper->m_minimize_btn->styleSheet());
+        m_uiHelper->m_maximize_btn->setStyleSheet(m_uiHelper->m_maximize_btn->styleSheet());
 #endif
-        propagateActiveStateInCustomTitlebar(m_custom_titlebar_layout, true);
+        m_uiHelper->propagateActiveStateInCustomTitlebar(&m_uiHelper->getCustomTitlebarLayout(), true);
         break;
     }
 
     case QEvent::WindowDeactivate: {
 #if QT_VERSION > QT_VERSION_CHECK(5, 0, 0)
-        m_close_btn->setStyleSheet(m_close_btn->styleSheet());
-        m_minimize_btn->setStyleSheet(m_minimize_btn->styleSheet());
-        m_maximize_btn->setStyleSheet(m_maximize_btn->styleSheet());
+        m_uiHelper->m_close_btn->setStyleSheet(m_uiHelper->m_close_btn->styleSheet());
+        m_uiHelper->m_minimize_btn->setStyleSheet(m_uiHelper->m_minimize_btn->styleSheet());
+        m_uiHelper->m_maximize_btn->setStyleSheet(m_uiHelper->m_maximize_btn->styleSheet());
 #endif
-        propagateActiveStateInCustomTitlebar(m_custom_titlebar_layout, false);
+        m_uiHelper->propagateActiveStateInCustomTitlebar(&m_uiHelper->getCustomTitlebarLayout(), false);
         break;
     }
 
@@ -333,345 +90,3 @@ bool MainWindow::event(QEvent *evt)
 
     return QMainWindow::event(evt);
 }
-
-// Determine whether the current mouse coordinate is on the non-clickable widget or not using a recursive method.
-bool MainWindow::determineNonClickableWidgetUnderMouse(QLayout *layout, int x, int y)
-{
-    if (!layout->count() && layout->geometry().contains(x, y))
-        return true;
-
-    for (size_t i = 0; i < layout->count(); i++)
-    {
-        auto item = layout->itemAt(i)->widget();
-        if (item)
-        {
-            if (item->geometry().contains(x, y))
-                return !item->property("clickable widget").toBool();
-        }
-        else
-        {
-            auto child_layout = layout->itemAt(i)->layout();
-            if (child_layout && child_layout->geometry().contains(x, y))
-                return determineNonClickableWidgetUnderMouse(child_layout, x, y);
-        }
-    }
-    return false;
-}
-
-// Set `active' state using recursive method.
-void MainWindow::propagateActiveStateInCustomTitlebar(QLayout *layout, bool active_state)
-{
-    for (size_t i = 0; i < layout->count(); i++)
-    {
-        auto item = layout->itemAt(i)->widget();
-        if (item)
-        {
-            item->setProperty("active", active_state);
-            item->setStyleSheet(item->styleSheet());
-        }
-        else
-        {
-            auto child_layout = layout->itemAt(i)->layout();
-            if (child_layout)
-                propagateActiveStateInCustomTitlebar(child_layout, active_state);
-        }
-    }
-}
-
-QWidget &MainWindow::getContentWidget()
-{
-    return *m_content_widget;
-}
-
-QWidget &MainWindow::getTitlebarWidget()
-{
-    return *m_titlebar_widget;
-}
-
-QHBoxLayout &MainWindow::getCustomTitlebarLayout()
-{
-    return *m_custom_titlebar_layout;
-}
-
-void MainWindow::setResizeBorderWidth(const int &resize_border_width)
-{
-    m_resize_border_width = resize_border_width;
-}
-
-void MainWindow::setTitlebarHeight(const int &titlebar_height)
-{
-    m_titlebar_widget->setFixedHeight(titlebar_height);
-}
-
-// Render again when frame is moved to another monitor.
-void MainWindow::onScreenChanged(QScreen *screen)
-{
-#ifdef Q_OS_WIN
-    SetWindowPos(m_hwnd, NULL, 0, 0, 0, 0,
-                 SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER |
-                     SWP_NOOWNERZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE);
-#endif // Q_OS_WIN
-}
-
-void MainWindow::onMinimizeButtonClicked()
-{
-#ifdef Q_OS_WIN
-    SendMessage(m_hwnd, WM_SYSCOMMAND, SC_MINIMIZE, 0);
-#endif // Q_OS_WIN
-}
-
-void MainWindow::onMaximizeButtonClicked()
-{
-#ifdef Q_OS_WIN
-    SendMessage(m_hwnd, WM_SYSCOMMAND, m_maximize_btn->isChecked() ? SC_MAXIMIZE : SC_RESTORE, 0);
-
-    // UPD 08.02.2026: надо проверить как будет работать
-    // Remove the hover state from the maximize button.
-    m_maximize_btn->setAttribute(Qt::WA_UnderMouse, false);
-#endif
-
-}
-
-void MainWindow::onCloseButtonClicked()
-{
-#ifdef Q_OS_WIN
-    SendMessage(m_hwnd, WM_CLOSE, 0, 0);
-#endif
-}
-#else
-
-#ifdef Q_OS_WIN
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-bool MainWindow::nativeEvent(const QByteArray &event_type, void *message, long *result)
-#else
-bool MainWindow::nativeEvent(const QByteArray &event_type, void *message, qintptr *result)
-#endif
-{
-    MSG *msg = (MSG *)message;
-
-    switch (msg->message)
-    {
-    // Remove the default window frame by hooking the WM_NCCALCSIZE message.
-    case WM_NCCALCSIZE: {
-        if (msg->lParam)
-        {
-            WINDOWPLACEMENT wp;
-            GetWindowPlacement(m_hwnd, &wp);
-
-            if (wp.showCmd == SW_MAXIMIZE)
-            {
-                NCCALCSIZE_PARAMS *sz = (NCCALCSIZE_PARAMS *)msg->lParam;
-                sz->rgrc[0].left += 8;
-                sz->rgrc[0].top += 8;
-                sz->rgrc[0].right -= 8;
-                sz->rgrc[0].bottom -= 8;
-            }
-        }
-        return true;
-    }
-
-        // Process the mouse when it is on the window border.
-    case WM_NCHITTEST: {
-        RECT winrect;
-        GetWindowRect(msg->hwnd, &winrect);
-        long x = GET_X_LPARAM(msg->lParam);
-        long y = GET_Y_LPARAM(msg->lParam);
-        long local_x = x - winrect.left;
-        long local_y = y - winrect.top;
-
-        if (x >= winrect.left && x < winrect.left + m_resize_border_width &&
-            y < winrect.bottom && y >= winrect.bottom - m_resize_border_width)
-        {
-            *result = HTBOTTOMLEFT;
-            return true;
-        }
-
-        if (x < winrect.right && x >= winrect.right - m_resize_border_width &&
-            y < winrect.bottom && y >= winrect.bottom - m_resize_border_width)
-        {
-            *result = HTBOTTOMRIGHT;
-            return true;
-        }
-
-        if (x >= winrect.left && x < winrect.left + m_resize_border_width &&
-            y >= winrect.top && y < winrect.top + m_resize_border_width)
-        {
-            *result = HTTOPLEFT;
-            return true;
-        }
-
-        if (x < winrect.right && x >= winrect.right - m_resize_border_width &&
-            y >= winrect.top && y < winrect.top + m_resize_border_width)
-        {
-            *result = HTTOPRIGHT;
-            return true;
-        }
-
-        if (x >= winrect.left && x < winrect.left + m_resize_border_width)
-        {
-            *result = HTLEFT;
-            return true;
-        }
-
-        if (x < winrect.right && x >= winrect.right - m_resize_border_width)
-        {
-            *result = HTRIGHT;
-            return true;
-        }
-
-        if (y < winrect.bottom && y >= winrect.bottom - m_resize_border_width)
-        {
-            *result = HTBOTTOM;
-            return true;
-        }
-
-        if (y >= winrect.top && y < winrect.top + m_resize_border_width)
-        {
-            *result = HTTOP;
-            return true;
-        }
-
-        // Check the area where the user can click to move the window.
-        if (determineNonClickableWidgetUnderMouse(m_custom_titlebar_layout, local_x, local_y))
-        {
-            *result = HTCAPTION;
-            return true;
-        }
-
-        *result = HTTRANSPARENT;
-        break;
-    }
-    case WM_SIZE: {
-        if (m_maximize_btn)
-        {
-            WINDOWPLACEMENT wp;
-            GetWindowPlacement(m_hwnd, &wp);
-            m_maximize_btn->setChecked(wp.showCmd == SW_MAXIMIZE ? true : false);
-        }
-        break;
-    }
-    default:
-        break;
-    }
-
-    return false;
-}
-#endif // Q_OS_WIN
-
-//УПРАВЛЕНИЕ ОКНОМ (LINUX) ---
-
-void MainWindow::mousePressEvent(QMouseEvent *event) {
-    if (event->button() == Qt::LeftButton) {
-        const int x = event->pos().x();
-        const int y = event->pos().y();
-        const int w = width();
-        const int h = height();
-        const int border = m_resize_border_width + m_shadow_margin;
-
-        Qt::Edges edges;
-        if (x < border) edges |= Qt::LeftEdge;
-        if (x > w - border) edges |= Qt::RightEdge;
-        if (y < border) edges |= Qt::TopEdge;
-        if (y > h - border) edges |= Qt::BottomEdge;
-
-        if (edges != 0) {
-            windowHandle()->startSystemResize(edges);
-        } else if (m_titlebar_widget->geometry().translated(m_shadow_margin, m_shadow_margin).contains(event->pos())) {
-            // Сдвигаем координаты для проверки виджетов под мышью
-            if (determineNonClickableWidgetUnderMouse(m_custom_titlebar_layout, x - m_shadow_margin, y - m_shadow_margin)) {
-                windowHandle()->startSystemMove();
-            }
-        }
-    }
-    QMainWindow::mousePressEvent(event);
-}
-
-void MainWindow::mouseMoveEvent(QMouseEvent *event) {
-    const int x = event->pos().x();
-    const int y = event->pos().y();
-    const int b = m_resize_border_width + m_shadow_margin;
-    const int w = width();
-    const int h = height();
-
-    bool l = x < b; bool r = x > w - b; bool t = y < b; bool bot = y > h - b;
-    if ((l&&t) || (r&&bot)) setCursor(Qt::SizeFDiagCursor);
-    else if ((l&&bot) || (r&&t)) setCursor(Qt::SizeBDiagCursor);
-    else if (l || r) setCursor(Qt::SizeHorCursor);
-    else if (t || bot) setCursor(Qt::SizeVerCursor);
-    else setCursor(Qt::ArrowCursor);
-}
-
-
-
-bool MainWindow::determineNonClickableWidgetUnderMouse(QLayout *layout, int x, int y) {
-    for (int i = 0; i < layout->count(); ++i) {
-        QLayoutItem* item = layout->itemAt(i);
-        if (QWidget* w = item->widget()) {
-            if (w->geometry().contains(x, y)) return !w->property("clickable widget").toBool();
-        } else if (QLayout* l = item->layout()) {
-            if (determineNonClickableWidgetUnderMouse(l, x, y)) return true;
-        }
-    }
-    return true;
-}
-
-void MainWindow::onMinimizeButtonClicked() {
-#ifdef Q_OS_WIN
-    SendMessage(m_hwnd, WM_SYSCOMMAND, SC_MINIMIZE, 0);
-#else
-    showMinimized();
-#endif
-}
-
-void MainWindow::onMaximizeButtonClicked() {
-#ifdef Q_OS_WIN
-    SendMessage(m_hwnd, WM_SYSCOMMAND, m_maximize_btn->isChecked() ? SC_MAXIMIZE : SC_RESTORE, 0);
-#else
-    if (isMaximized()) showNormal(); else showMaximized();
-#endif
-}
-
-void MainWindow::onCloseButtonClicked() {
-#ifdef Q_OS_WIN
-    SendMessage(m_hwnd, WM_CLOSE, 0, 0);
-#else
-    close();
-#endif
-}
-
-
-// Геттеры и сеттеры (обязательны для сборки)
-QWidget &MainWindow::getContentWidget() { return *m_content_widget; }
-QWidget &MainWindow::getTitlebarWidget() { return *m_titlebar_widget; }
-QHBoxLayout &MainWindow::getCustomTitlebarLayout() { return *m_custom_titlebar_layout; }
-void MainWindow::setResizeBorderWidth(const int &w) { m_resize_border_width = w; }
-void MainWindow::setTitlebarHeight(const int &h) { m_titlebar_widget->setFixedHeight(h); }
-
-void MainWindow::onScreenChanged(QScreen *screen) {
-#ifdef Q_OS_WIN
-    SetWindowPos(m_hwnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE);
-#endif
-}
-
-
-bool MainWindow::event(QEvent *evt) {
-    if (evt->type() == QEvent::WindowActivate || evt->type() == QEvent::WindowDeactivate) {
-        propagateActiveStateInCustomTitlebar(m_custom_titlebar_layout, evt->type() == QEvent::WindowActivate);
-    }
-    return QMainWindow::event(evt);
-}
-
-void MainWindow::propagateActiveStateInCustomTitlebar(QLayout *layout, bool active) {
-    for (int i = 0; i < layout->count(); ++i) {
-        QLayoutItem* item = layout->itemAt(i);
-        if (QWidget* w = item->widget()) {
-            w->setProperty("active", active);
-            w->style()->unpolish(w); w->style()->polish(w);
-        } else if (QLayout* l = item->layout()) {
-            propagateActiveStateInCustomTitlebar(l, active);
-        }
-    }
-}
-
-#endif
-
