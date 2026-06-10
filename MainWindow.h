@@ -9,7 +9,6 @@
 #include "api/ui/window_main.h"
 #include "widget.h"
 
-
 namespace {
 
 QString loadFont() {

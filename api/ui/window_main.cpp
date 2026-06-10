@@ -147,7 +147,6 @@ void uiWindow::initCentralWidget(QMainWindow *parent) {
 
 }
 
-
 QWidget &uiWindow::getContentWidget() { return *m_content_widget; }
 
 QWidget &uiWindow::getTitlebarWidget() { return *m_title_bar_widget; }

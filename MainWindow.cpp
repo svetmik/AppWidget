@@ -5,8 +5,8 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    // !!!
-    this->setVisibleTitleBtns(true);
+    m_uiHelper = new uiWindow(this);
+    m_uiHelper->initCentralWidget(this);
 
     QWidget *non_clickable = new QWidget(this);
     non_clickable->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);

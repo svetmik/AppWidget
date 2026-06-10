@@ -15,6 +15,7 @@
 class uiWindowPalette : public QWidget {
 
     Q_OBJECT
+
     enum class schemeWidgetColor {
         darkWindow,
         darkHeader,
