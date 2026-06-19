@@ -6,7 +6,6 @@ Widget::Widget(QWidget *parent)
     : ui::uiWidget{parent}
 
 {
-
     fontWeight = this->font();
     fontWeight.setWeight(QFont::Weight::Normal);
 
@@ -96,6 +95,7 @@ Widget::Widget(QWidget *parent)
 
         overlay_box->show(); 
     });
+
 
 }
 

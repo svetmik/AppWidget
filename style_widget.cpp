@@ -1,4 +1,5 @@
 #include "style_widget.h"
+#include "qmainwindow.h"
 
 style_widget::style_widget(QWidget *parent)
     : QWidget{parent}
@@ -13,7 +14,7 @@ void style_widget::includeStyle() {
     readAll();
 }
 
-void style_widget::setStyle(QWidget *parent) {
+void style_widget::setStyle(QMainWindow *parent) {
 
     parent->setStyleSheet(getStyle());
 }

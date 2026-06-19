@@ -21,10 +21,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_uiHelper->getContentWidget().setLayout(main_widget_layout);
 
-    m_widget->qss.includeStyle();
-
-    m_widget->qss.setStyle(m_widget);
-
     if(FLAG_STATE) {
 
         QByteArray screen_data = m_widget->getScreenshotApp(0, "JPG", 30);
