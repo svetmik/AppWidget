@@ -11,7 +11,7 @@
 
 namespace {
 
-QString loadFont() {
+QString loadFont()   {
 
     Font initFontFamily;
 
@@ -22,7 +22,7 @@ QString loadFont() {
     return fontFamily;
 }
 
-QFont fontSettings() {
+QFont fontSettings()  {
 
     QFont qAppFontGlobal;
 

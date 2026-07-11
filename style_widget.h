@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QFile>
 #include <QString>
+#include <QMainWindow>
 
 namespace {
     constexpr char filePathUiStyle[] = ":/UI/style.qss";
@@ -19,6 +20,7 @@ public:
 
     void includeStyle();
 
+    void setStyle(QMainWindow *parent = nullptr);
     void setStyle(QWidget *parent = nullptr);
 
 private:

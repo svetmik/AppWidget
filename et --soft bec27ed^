@@ -1,0 +1,79 @@
+[33m1de2967[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mDEV_SMTP[m[33m)[m Remove check_version.h from Git, add to gitignore
+[33m98acad5[m Merge branch 'DEV_SMTP' of https://github.com/svetmik/AppWidget into DEV_SMTP
+[33m4669801[m new version
+[33m82c7398[m fix code suk
+[33mebde336[m fix code suk
+[33mbec27ed[m fix code suk
+[33mcf76a5a[m[33m ([m[1;31morigin/DEV_SMTP[m[33m)[m new version
+[33me9834f6[m fix code
+[33m3d10597[m fix code
+[33m89b3478[m global update main window
+[33mabbc48d[m ignore folder
+[33m8d95bfd[m remove files
+[33md88bfd1[m new fix...
+[33m9306d0e[m fix
+[33m0bf41b5[m fix code
+[33m42a18bc[m[33m ([m[1;33mtag: [m[1;33mv.1.0.2[m[33m)[m fix code
+[33m2849370[m object overlay
+[33me4c6e5a[m .vcode cmake
+[33m3e689d6[m fix code
+[33mcf09cae[m fix code
+[33m1c6e310[m fix code and new class added
+[33md8840dc[m[33m ([m[1;33mtag: [m[1;33mv1.0.1[m[33m)[m улучшил читаемость кода
+[33m577595e[m global update fix, code
+[33md4235a2[m global update, fix code
+[33mee0aae6[m add class
+[33m7da71f7[m fix
+[33mee7b870[m add min and max size app
+[33m6af238e[m added min and max size app
+[33m970ea45[m added link btn and del brush btn
+[33m7ec2aad[m fix code  alignText
+[33m2564347[m added linkButton class for Sidebar Panel
+[33m54db44f[m fix
+[33m1275ce1[m fix
+[33m96a3ecd[m fix
+[33m116dde7[m fix
+[33m083fb23[m Merge branch 'DEV_SMTP' of https://github.com/svetmik/AppWidget into DEV_SMTP
+[33meae97be[m fix
+[33m028c9ef[m fix
+[33m47a05d7[m fix
+[33m6956f2c[m[33m ([m[1;33mtag: [m[1;33mstable-version-HelperDesk-desktop-v.1.0.0[m[33m)[m добавлен новые функции, добавлена smtp поддержка заявок на почтк
+[33m078257c[m добавлены QLabels
+[33mf6e50aa[m fix
+[33m4dae544[m добавлена папка header_SMTP, добавлен код в sidebar
+[33ma4e7f3b[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m false state title btns
+[33md01bb71[m правдки кода
+[33m7c9b9c5[m правки кода
+[33mc186e4f[m del
+[33me85c194[m added resources
+[33m0d36c0d[m remove old img icon
+[33m42092c1[m change default color btn
+[33m89758d9[m new icon titleBar
+[33mf046868[m правки кода
+[33mbf62345[m мелкие правки кода
+[33ma4c0aa9[m added supports LINUX OS, бета тест
+[33m338e9b9[m update code and color btn
+[33m080d85c[m Merge branch 'main' of https://github.com/svetmik/AppWidget
+[33m8579455[m fix
+[33m3346e6b[m added class propAnimation
+[33m418da0f[m update code
+[33mf1de386[m change btnColor, added global defaultGlobal font for app
+[33m97dcda6[m[33m ([m[1;33mtag: [m[1;33mv1.0.0[m[33m)[m added new custom title bar 08.0.2.2026
+[33m927c3ae[m[33m ([m[1;33mtag: [m[1;33mversion-0.0.2[m[33m, [m[1;33mtag: [m[1;33mlist[m[33m)[m update code 31.01.2026
+[33me706530[m update 31.01.2026
+[33m10cf480[m updated code from 25.01.2026
+[33mab3dd69[m main
+[33md117430[m 
+[33md4105f1[m updated code
+[33m96ea27d[m fixet
+[33m439a3ab[m added new Button widgets files
+[33mb8a2a3a[m remove files
+[33m205dd07[m setDefault func constructor
+[33mbb3f65d[m added func updateState on toggle func
+[33mbdba66e[m create new func updateState
+[33m97a0786[m added new custom Button
+[33m00619aa[m updated code on func toggle
+[33me2fada6[m fix code
+[33m67e1713[m fix code
+[33mab1ac0d[m delete class deepwidget
+[33m75da425[m init App
