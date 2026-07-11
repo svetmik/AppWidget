@@ -75,7 +75,7 @@ void Sidebar_panel::setupMain(ScrollArea *parent) {
     const auto appName = infoRowText("HelperDesk");
     appName->setObjectName("widget_label_appName");
 
-    const auto appVersion = infoRowText("Версия 1.0.3 test x64");
+    const auto appVersion = infoRowText("Версия 1.0.4 x64");
     appVersion->setObjectName("widget_label_appVersion");
     appVersion->setContentsMargins(0,3,0,0);
     appVersion->setFont(infoLabelFont);
