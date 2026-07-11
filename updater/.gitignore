@@ -1,9 +1,9 @@
 # This file is used to ignore files which are generated
 # ----------------------------------------------------------------------------
 
-updater.cpp
+main.cpp
 updater.h
-updater/updater.cpp
+updater.cpp
 build/
 .vscode
 *~
