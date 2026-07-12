@@ -316,12 +316,15 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Resources/ApplicationIcon.ico
         Resources/ApplicationIcon.png
         check_version.cpp check_version.h
+        io.h
+
     )
 
     # Qt6 - updater (второй exe)
     qt_add_executable(Updater WIN32
         MANUAL_FINALIZATION
         ${UPDATER_SOURCES}
+
     )
 
 else()
@@ -381,6 +384,8 @@ install(TARGETS app
 install(TARGETS Updater
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
+
 
 # --- ФИНАЛИЗАЦИЯ ДЛЯ QT6 ---
 if(QT_VERSION_MAJOR EQUAL 6)

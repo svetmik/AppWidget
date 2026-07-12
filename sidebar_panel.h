@@ -4,6 +4,7 @@
 #include "UI/widgets/basewidget.h"
 #include "UI/widgets/button.h"
 
+#include "io.h"
 #include "container.h"
 #include "scrollarea.h"
 #include "systeminfo.h"

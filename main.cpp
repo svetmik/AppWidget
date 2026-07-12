@@ -12,7 +12,9 @@ int main(int argc, char *argv[])
     app.setFont(fontSettings());
 
     MainWindow window;
-    Updater update;
+
+    Updater updater;
+
     style_widget initStyle;
     initStyle.includeStyle();
     initStyle.setStyle(&window);
