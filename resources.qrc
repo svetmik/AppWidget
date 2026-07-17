@@ -12,4 +12,6 @@
         <file alias="button_minimize.png">Resources/title_button_minimize.png</file>
 
     </qresource>
+
+
 </RCC>

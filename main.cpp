@@ -1,3 +1,4 @@
+#include "updater/updater.h"
 #include "mainwindow.h"
 #include "style_widget.h"
 #include <QApplication>
@@ -12,6 +13,8 @@ int main(int argc, char *argv[])
 
     MainWindow window;
 
+    Updater updater;
+
     style_widget initStyle;
     initStyle.includeStyle();
     initStyle.setStyle(&window);
@@ -20,9 +23,6 @@ int main(int argc, char *argv[])
 
     window.setMinimumSize(550,350);
     window.setMaximumSize(550,350);
-
-
     window.show();
-
     return app.exec();
 }

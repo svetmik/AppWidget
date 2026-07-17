@@ -202,14 +202,14 @@ bool uiWindow::nativeEvent(const QByteArray &event_type, void *message, qintptr 
 
     MSG *msg = (MSG*)message;
 
-    qDebug() << "msg =" << Qt::hex << msg->message;
+    //qDebug() << "msg =" << Qt::hex << msg->message;
 
     switch (msg->message)
     {
     // Remove the default window frame by hooking the WM_NCCALCSIZE message.
     case WM_NCCALCSIZE: {
 
-        qDebug() << "WM_NCCALCSIZE";
+        //qDebug() << "WM_NCCALCSIZE";
 
         if (msg->lParam)
         {
@@ -231,7 +231,7 @@ bool uiWindow::nativeEvent(const QByteArray &event_type, void *message, qintptr 
         // Process the mouse when it is on the window border.
     case WM_NCHITTEST: {
 
-        qDebug() << "WM_NCHITTEST";
+        //qDebug() << "WM_NCHITTEST";
 
         RECT winrect;
         GetWindowRect(msg->hwnd, &winrect);
