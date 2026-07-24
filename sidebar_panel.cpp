@@ -35,7 +35,7 @@ void Sidebar_panel::setupHeader(QLayout *parentLayout) {
 
     if(!header_box) return;
 
-    header_box->setMinimumHeight(Ui::headerHeight);
+    header_box->setMinimumHeight(Ui::kHeaderHeight);
 
     header_box->setLayout(main_header_layout);
     main_header_layout->setContentsMargins(15,5,15,0);

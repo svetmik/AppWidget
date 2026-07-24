@@ -28,9 +28,7 @@
 
 
 #widget_module_box_caption_lbl {
-
     color: rgba(0, 150, 237, 255);
-
 }
 
 #widget_edit_test {

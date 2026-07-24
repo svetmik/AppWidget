@@ -5,6 +5,7 @@ OverlayBox::OverlayBox(QWidget *parent)
     : ui::uiWidget{parent} 
     
 {
+
     this->hide();
 
     setWindowFlags(Qt::FramelessWindowHint); // удаляет стандартную рамку и заголовок окна приложения
@@ -14,7 +15,10 @@ OverlayBox::OverlayBox(QWidget *parent)
     this->setStyleSheet("background-color: rgba(0, 0, 0, 40%);"); // 40% прозрачность окна
 
     init();
+
 }
+
+
 
 void OverlayBox::bodyText(const QString &text) {
     this->moduleBox->setCaption(text);

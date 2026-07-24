@@ -11,7 +11,7 @@
 #include "style_widget.h"
 
 namespace Ui {
-    constexpr int headerHeight = 100;
+    constexpr int kHeaderHeight = 100;
     constexpr int kMinHeight = 200;
 };
 

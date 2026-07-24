@@ -30,9 +30,7 @@ QFont fontSettings()  {
     qAppFontGlobal.setPointSizeF(10);
     qAppFontGlobal.setWeight(QFont::Weight::DemiBold);
     qAppFontGlobal.setStyle(QFont::StyleNormal);
-
     qAppFontGlobal.setStyleStrategy(QFont::PreferAntialias);
-
     qAppFontGlobal.setKerning(true);
 
     return qAppFontGlobal;
