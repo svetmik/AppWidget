@@ -6,6 +6,9 @@
 #include "font_styles.h"
 #include "UI/widgets/basewidget.h"
 
+
+
+
 class Font : public ui::uiWidget
 {
     Q_OBJECT
@@ -25,7 +28,9 @@ private:
     QString _data;
 
     int _idFont;
-signals:
+
 };
+
+
 
 #endif // FONT_H

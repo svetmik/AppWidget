@@ -34,7 +34,8 @@
 }
 
 #widget_edit_test {
-    font-size: 14px;
+    letter-spacing: .1px;
+
 }
 
 

@@ -34,8 +34,9 @@ Widget::Widget(QWidget *parent)
     v_controlLayoutMain->setContentsMargins(QMargins(0,6,5,5));
 
     _edit = new TextEdit(this);
-    _edit->setPlaceholderText("Описание");
+    _edit->setPlaceholderText("Сообщение...");
     _edit->setObjectName("widget_edit_test");
+    _edit->setFont(fontWeight);
     _submitButton = new Button("Отправить заявку в ИТ-отдел");
     _attachButton = new Button("Прикрепить файл");
     _exitAppButton = new Button("Закрыть программу");

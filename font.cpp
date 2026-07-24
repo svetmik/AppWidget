@@ -1,11 +1,12 @@
 #include "font.h"
 
+
+
 Font::Font(QWidget *parent)
     : ui::uiWidget{parent}
 {
 
 }
-
 
 void Font::loadFontForWidget(const QString &filename) {
 

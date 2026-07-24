@@ -3,7 +3,7 @@
 
 
 #include <QWidget>
-#include <QPrinter>
+#include <QPrinterInfo>
 #include <QTcpSocket>
 
 #include <QHostInfo>
@@ -12,7 +12,7 @@
 class SystemInfo {
 
 private:
-
+    QPrinterInfo m_infoPrinter;
 public:
 
     explicit SystemInfo();
@@ -22,6 +22,8 @@ public:
     QString localPrinterName();
 
     QString localHostName();
+
+
 
 };
 

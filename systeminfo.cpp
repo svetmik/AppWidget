@@ -1,11 +1,9 @@
 #include "systeminfo.h"
 
 
-
 SystemInfo::SystemInfo() {
-
+    m_infoPrinter = QPrinterInfo::defaultPrinter();
 }
-
 
 QString SystemInfo::localIpAddressPc()
 {
@@ -24,10 +22,7 @@ QString SystemInfo::localIpAddressPc()
 
 QString SystemInfo::localPrinterName()
 {
-    QPrinter printName;
-
-    return printName.printerName();
-
+    return  m_infoPrinter.defaultPrinterName();
 }
 
 QString SystemInfo::localHostName()

@@ -5,6 +5,7 @@
 #include "UI/Controller/filecontroller.h"
 #include "UI/overlay/overlay_box.h"
 
+#include "font.h"
 #include "global_objects.h"
 #include "textedit.h"
 #include "systeminfo.h"
@@ -12,7 +13,6 @@
 
 #include "zipwriter_p.h"
 #include "header/SmtpMime"
-
 #include "style_widget.h"
 
 class Widget : public ui::uiWidget
