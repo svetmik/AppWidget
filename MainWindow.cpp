@@ -1,6 +1,6 @@
 ﻿#include "MainWindow.h"
 
-
+// Какой-то комментарий
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
     m_minimize_btn{nullptr},
